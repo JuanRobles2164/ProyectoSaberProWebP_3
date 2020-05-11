@@ -20,21 +20,37 @@ namespace ProyectoSaberProWeb.Controllers
     {
 
         private ApplicationDbContext db = new ApplicationDbContext();
-
-        // GET: Administrador
-        public ActionResult Index(string Rol, string Nombre, string Apellido, string Correo)
+        private readonly string adminRole = "1";
+        private readonly string alumnoRole = "3";
+        private readonly string docenteRole = "2";
+        private IEnumerable<ApplicationUser> getUsersByRoleId(string role)
         {
-            /*
-             Filtrado por:
-             Rol, Nombre, apellido y/o correo
-             */
-            if (Rol == null && Nombre == null && Apellido == null && Correo == null)
-            {
-
-            }
-            return View();
+            var usuarios = db.Users.Where(user => user.Roles.All(urm => urm.RoleId == role));
+            return usuarios;
         }
 
+        // GET: Administrador
+        public ActionResult Index()
+        {
+            /*var usuariosAdmin = from usuarios in db.Users
+                                 join roles in db.Roles 
+                                 where usuarios.*/
+            //Trae todos los usuarios que sean admin
+            var adminUsers = this.getUsersByRoleId(adminRole);
+            //return View(db.Users.ToList());
+            return View(adminUsers);
+        }
+        public ActionResult IndexAlumnos()
+        {
+            var alumnoUsers = this.getUsersByRoleId(alumnoRole);
+
+            return View(alumnoUsers);
+        }
+        public ActionResult IndexDocentes()
+        {
+            var docenteUsers = this.getUsersByRoleId(docenteRole);
+            return View(docenteUsers);
+        }
         // GET: Administrador/Details/5
         public ActionResult Details(string id)
         {
@@ -58,23 +74,6 @@ namespace ProyectoSaberProWeb.Controllers
             return RedirectToAction("Register", "AccountController");
         }
 
-        // POST: Administrador/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public  ActionResult Create([Bind(Include = "Email,PasswordHash,Nombres,Apellidos")] ApplicationUser applicationUser)
-        {
-            if (ModelState.IsValid)
-            {
-                applicationUser.UserName = applicationUser.Email;
-                db.Users.Add(applicationUser);
-            }
-
-            //ViewBag.Ciudad_Id = new SelectList(db.ciudades, "ID", "Nombre", applicationUser.Ciudad_Id);
-            return View(applicationUser);
-        }
-
         // GET: Administrador/Edit/5
         public ActionResult Edit(string id)
         {
@@ -87,7 +86,7 @@ namespace ProyectoSaberProWeb.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Ciudad_Id = new SelectList(db.ciudades, "ID", "Nombre", applicationUser.Ciudad_Id);
+            ViewBag.Ciudades = new SelectList(db.ciudades, "ID", "Nombre", applicationUser.Ciudad_Id);
             return View(applicationUser);
         }
 

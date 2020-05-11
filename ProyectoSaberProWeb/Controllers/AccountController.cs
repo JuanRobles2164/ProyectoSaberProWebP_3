@@ -170,10 +170,15 @@ namespace ProyectoSaberProWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-               
+               /**
+                * Se adapta el método para poder ser usado, tanto por un admin logeado como 
+                * por el primer usuario
+                */
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, 
+                var user = new ApplicationUser { 
+                    UserName = model.Email, 
+                    Email = model.Email, 
                     Ciudad_Id = model.Ciudades, 
                     Nombres = model.Nombres, 
                     Apellidos = model.Apellidos
@@ -181,7 +186,7 @@ namespace ProyectoSaberProWeb.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     await UserManager.AddToRoleAsync(user.Id, "Administrador");
                     
                     // Para obtener más información sobre cómo habilitar la confirmación de cuentas y el restablecimiento de contraseña, visite https://go.microsoft.com/fwlink/?LinkID=320771
@@ -192,7 +197,7 @@ namespace ProyectoSaberProWeb.Controllers
 
 
                     //No olvidar que debería redirigir al index del administrador
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Administrador");
                 }
                 AddErrors(result);
             }
