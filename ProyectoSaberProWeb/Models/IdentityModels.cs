@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -10,10 +11,17 @@ namespace ProyectoSaberProWeb.Models
     // Para agregar datos de perfil del usuario, agregue más propiedades a su clase ApplicationUser. Visite https://go.microsoft.com/fwlink/?LinkID=317594 para obtener más información.
     public class ApplicationUser : IdentityUser
     {
+        [Required]
+        [StringLength(40, ErrorMessage = "Los nombres no pueden tener más de 40 caracteres")]
+        [Display(Name ="Nombres")]
         public string Nombres { get; set; }
+        [Required]
+        [StringLength(40, ErrorMessage = "Los nombres no puede tener más de 40 caracteres")]
+        [Display(Name = "Apellidos")]
         public string Apellidos { get; set; }
         [ForeignKey("Ciudad")]
-        public int? Ciudad_Id { get; set; }
+        [Display(Name = "Ciudad")]
+        public int Ciudad_Id { get; set; }
         public Ciudad Ciudad { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

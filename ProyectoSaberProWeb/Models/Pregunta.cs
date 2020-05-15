@@ -7,24 +7,37 @@ using System.Web;
 
 namespace ProyectoSaberProWeb.Models
 {
+    [Table("Pregunta")]
     public class Pregunta
     {
         public int ID { get; set; }
+        [Required]
+        [Display(Name ="Descripción de la pregunta")]
+        [StringLength(255, ErrorMessage = "La descripción no puede tener más de 255 caracteres")]
         public string Descripcion { get; set; }
-        public string Tipo_Pregunta { get; set; }
-        public float Peso_Pregunta { get; set; }
+        [Required]
+        [Display(Name ="Tipo de pregunta")]
+
+        public TipoPregunta TipoPregunta { get; set; }
+        [Required]
+        [NonZeroValueFloat]
+        [Display(Name = "Peso de la pregunta")]
+        public float PreguntaPeso { get; set; }
 
         /*----------------------------------------*/
         [ForeignKey("Competencia")]
-        public int Compentencia_Id { get; set; }
+        [Display(Name ="Competencia a la que pertenece")]
+        public int CompentenciaId { get; set; }
         public Competencia Competencia { get; set; }
         /*----------------------------------------*/
         [ForeignKey("Contexto")]
-        public int Contexto_Id { get; set; }
+        [Display(Name ="Contexto al que pertenece")]
+        public int ContextoId { get; set; }
         public Contexto Contexto { get; set; }
         /*----------------------------------------*/
         [ForeignKey("Prueba")]
-        public int Prueba_Id { get; set; }
+        [Display(Name ="Prueba a la que pertenece")]
+        public int PruebaId { get; set; }
         public Prueba Prueba { get; set; }
     }
 }

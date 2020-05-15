@@ -7,12 +7,15 @@ using System.Web;
 
 namespace ProyectoSaberProWeb.Models
 {
+    [Table("PruebaEstudiante")]
     public class Prueba_Estudiante
     {
         public int ID { get; set; }
-        public DateTime Fecha_Presentacion { get; set; }
-
+        [Required]
+        public DateTime FechaPresentacion { get; set; }
+        [Required]
         public Prueba Prueba { get; set; }
+        [Required]
         public virtual ApplicationUser ApplicationUser { get; set; }
     }
 }

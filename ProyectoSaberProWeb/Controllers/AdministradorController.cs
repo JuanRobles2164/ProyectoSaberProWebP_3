@@ -95,7 +95,7 @@ namespace ProyectoSaberProWeb.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Nombres,Apellidos,Ciudad_Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] ApplicationUser applicationUser)
+        public ActionResult Edit([Bind(Include = "Id,Nombres,Apellidos,Ciudad_Id,Email,PhoneNumber,UserName")] ApplicationUser applicationUser)
         {
             if (ModelState.IsValid)
             {
@@ -128,10 +128,7 @@ namespace ProyectoSaberProWeb.Controllers
         
         public ActionResult DeleteConfirmed(string id)
         {
-
             //var ciudad = db.ciudades.Where(x => x.Nombre.Contains("B"));
-            var ciudad = from x in db.ciudades where x.Nombre.Contains("B") select x;
-
             ApplicationUser applicationUser = db.Users.Find(id);
             db.Users.Remove(applicationUser);
             db.SaveChanges();

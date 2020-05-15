@@ -7,13 +7,17 @@ using System.Web;
 
 namespace ProyectoSaberProWeb.Models
 {
+    [Table("Pregunta_Estudiante")]
     public class Pregunta_Estudiante
     {
         public int ID { get; set; }
+        [Required]
+        [Display(Name = "Descripción")]
+        [StringLength(255, ErrorMessage = "La descripción no puede tener más de 255 caracteres")]
         public string Descripcion { get; set; }
 
         [ForeignKey("Pregunta")]
-        public int Id_Pregunta { get; set; }
+        public int Pregunta_Id { get; set; }
         public Pregunta Pregunta { get; set; }
 
         [ForeignKey("ApplicationUser")]
