@@ -19,7 +19,7 @@ namespace ProyectoSaberProWeb.Controllers
     public class AdministradorController : Controller
     {
 
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private readonly ApplicationDbContext db = new ApplicationDbContext();
         private readonly string adminRole = "1";
         private readonly string alumnoRole = "3";
         private readonly string docenteRole = "2";
@@ -32,23 +32,19 @@ namespace ProyectoSaberProWeb.Controllers
         // GET: Administrador
         public ActionResult Index()
         {
-            /*var usuariosAdmin = from usuarios in db.Users
-                                 join roles in db.Roles 
-                                 where usuarios.*/
             //Trae todos los usuarios que sean admin
-            var adminUsers = this.getUsersByRoleId(adminRole);
+            UserViewModel adminUsers = new UserViewModel(db, adminRole);
             //return View(db.Users.ToList());
             return View(adminUsers);
         }
         public ActionResult IndexAlumnos()
         {
-            var alumnoUsers = this.getUsersByRoleId(alumnoRole);
-
+            UserViewModel alumnoUsers = new UserViewModel(db, alumnoRole);
             return View(alumnoUsers);
         }
         public ActionResult IndexDocentes()
         {
-            var docenteUsers = this.getUsersByRoleId(docenteRole);
+            UserViewModel docenteUsers = new UserViewModel(db, docenteRole);
             return View(docenteUsers);
         }
         // GET: Administrador/Details/5
@@ -63,15 +59,8 @@ namespace ProyectoSaberProWeb.Controllers
             {
                 return HttpNotFound();
             }
-            return RedirectToAction("Index");
-            //return View(applicationUser);
-        }
-
-        // GET: Administrador/Create
-        public ActionResult Create()
-        {
-            ViewBag.Ciudades = new SelectList(db.ciudades, "ID", "Nombre");
-            return RedirectToAction("Register", "AccountController");
+            //return RedirectToAction("Index");
+            return View(applicationUser);
         }
 
         // GET: Administrador/Edit/5
@@ -95,7 +84,7 @@ namespace ProyectoSaberProWeb.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Nombres,Apellidos,Ciudad_Id,Email,PhoneNumber,UserName")] ApplicationUser applicationUser)
+        public ActionResult Edit(ApplicationUser applicationUser)
         {
             if (ModelState.IsValid)
             {

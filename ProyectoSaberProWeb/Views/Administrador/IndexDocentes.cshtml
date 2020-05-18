@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ProyectoSaberProWeb.Models.ApplicationUser>
+﻿@model ProyectoSaberProWeb.Models.ViewModels.UserViewModel
 
 @{
     ViewBag.Title = "Index";
@@ -8,21 +8,21 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Nombres)
+            @Html.DisplayNameFor(model => model.Usuario.Nombres)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Apellidos)
+            @Html.DisplayNameFor(model => model.Usuario.Apellidos)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Email)
+            @Html.DisplayNameFor(model => model.Usuario.Email)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UserName)
+            @Html.DisplayNameFor(model => model.Usuario.UserName)
         </th>
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.ListaUsuarios)
     {
         <tr>
             <td>
