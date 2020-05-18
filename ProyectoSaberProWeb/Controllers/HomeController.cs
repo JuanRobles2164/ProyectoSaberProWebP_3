@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProyectoSaberProWeb.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,8 +9,14 @@ namespace ProyectoSaberProWeb.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ApplicationDbContext db = new ApplicationDbContext();
         public ActionResult Index()
         {
+            //Si no encuenta algún usuario, redirije al registro
+            if (db.Users.ToList().Count == 0)
+            {
+                return RedirectToAction("Register", "Account");
+            }
             return View();
         }
 
