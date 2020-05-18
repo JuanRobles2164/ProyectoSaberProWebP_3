@@ -7,19 +7,42 @@ namespace ProyectoSaberProWeb.Models.ViewModels
 {
     public class UserViewModel
     {
-        public ApplicationUser UsuarioCreacion { get; set; }
         public IEnumerable<ApplicationUser> ListaUsuarios { get; set; }
+        public ApplicationUser Usuario { get; set; }
         public string Message { get; set; }
+        /// <summary>
+        /// Trae todos los usuarios que correspondan a un role
+        /// </summary>
+        public UserViewModel(ApplicationDbContext db, string role)
+        {
+            this.ListaUsuarios = getUsersByRoleId(role, db);
+        }
+        /// <summary>
+        /// Para crear y listar todos los usuarios
+        /// </summary>
         public UserViewModel(ApplicationDbContext db)
         {
-            //Para crear y listar usuarios
+            //Para crear y listar todos los usuarios
             Message = null;
-            UsuarioCreacion = new ApplicationUser();
             ListaUsuarios = db.Users.ToList();
         }
+        /// <summary>
+        /// Constructor vacío por siakas XD
+        /// </summary>
+
         public UserViewModel()
         {
-            //Constructor vacío por siacas xD
+
+        }
+
+
+        /// <summary>
+        /// Trae todos los usuarios que correspondan a un Role Especificado
+        /// </summary>
+        private IEnumerable<ApplicationUser> getUsersByRoleId(string role, ApplicationDbContext db)
+        {
+            var usuarios = db.Users.Where(user => user.Roles.All(urm => urm.RoleId == role));
+            return usuarios;
         }
     }
 }
