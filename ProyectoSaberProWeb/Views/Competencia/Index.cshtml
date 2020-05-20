@@ -1,0 +1,85 @@
+﻿@model IEnumerable<ProyectoSaberProWeb.Models.Competencia>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                <a class="btn btn-primary" data-toggle="modal" data-target="#modalDetalles" onclick="detallesCompetencia(@item.ID)">
+                    Detalles
+                </a>
+                |
+                @Html.ActionLink("Editar", "Edit", new { id = item.ID }, new { @class = "btn btn-warning" }) |
+                @Html.ActionLink("Eliminar", "Delete", new { id = item.ID }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="modalDetalles" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <label>
+                        Nombre:
+                    </label>
+                    <input type="text" disabled id="lbl_nombre"/>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    const uri = window.location.origin + "/Competencia/Details";
+    console.log(uri);
+    function detallesCompetencia(id_competencia) {
+
+        $.ajax({
+            url: uri,
+            contentType: 'application/json',
+            dataType: 'json',
+            data: { id: id_competencia },
+            success: function (response) {
+                $('#lbl_nombre').val(response.Nombre);
+            },
+            error: function (response) {
+                console.log("Error\n");
+                console.log(response);
+            }
+        });
+    }
+</script>

@@ -236,6 +236,8 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdministradorController.cs" />
+    <Compile Include="Controllers\CompetenciaController.cs" />
+    <Compile Include="Controllers\DocenteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -2073,9 +2075,15 @@
     <Content Include="vendor\jquery\jquery.slim.min.map" />
     <Content Include="Views\Administrador\IndexDocentes.cshtml" />
     <Content Include="Views\Administrador\IndexAlumnos.cshtml" />
+    <Content Include="Views\Competencia\Create.cshtml" />
+    <Content Include="Views\Competencia\Delete.cshtml" />
+    <Content Include="Views\Competencia\Details.cshtml" />
+    <Content Include="Views\Competencia\Edit.cshtml" />
+    <Content Include="Views\Competencia\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Docente\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
