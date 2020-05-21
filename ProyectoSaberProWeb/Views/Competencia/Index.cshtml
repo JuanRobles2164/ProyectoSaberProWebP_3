@@ -1,23 +1,24 @@
-﻿@model IEnumerable<ProyectoSaberProWeb.Models.Competencia>
+﻿@model ProyectoSaberProWeb.Models.ViewModels.CompetenciaViewModel
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
+<h2>Competencias</h2>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createModal">
+        Crear competencia
+    </button>
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Nombre)
+            @Html.DisplayNameFor(model => model.CompetenciaCreacion.Nombre)
         </th>
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.ListaCompetencias)
     {
         <tr>
             <td>
@@ -33,8 +34,10 @@
             </td>
         </tr>
     }
-
 </table>
+<a onclick="eventoAjax()" class="btn btn-primary" href="#">
+    button
+</a>
 
 <!-- Modal -->
 <div class="modal fade" id="modalDetalles" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -57,19 +60,57 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
 </div>
 
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Crear una competencia</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("Create", "Competencia", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-body">
+                    <div>
+                        <div class="form-horizontal">
+                            <h4>Competencia</h4>
+                            <hr />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.CompetenciaCreacion.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.CompetenciaCreacion.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.CompetenciaCreacion.Nombre, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Crear</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
 <script type="text/javascript">
-    const uri = window.location.origin + "/Competencia/Details";
-    console.log(uri);
+    const uriDetails = window.location.origin + "/Competencia/Details";
     function detallesCompetencia(id_competencia) {
 
         $.ajax({
-            url: uri,
+            url: uriDetails,
             contentType: 'application/json',
             dataType: 'json',
             data: { id: id_competencia },
@@ -81,5 +122,7 @@
                 console.log(response);
             }
         });
+
     }
 </script>
+

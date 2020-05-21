@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ProyectoSaberProWeb.Models;
+using ProyectoSaberProWeb.Models.ViewModels;
 
 namespace ProyectoSaberProWeb.Controllers
 {
@@ -17,7 +18,8 @@ namespace ProyectoSaberProWeb.Controllers
         // GET: Competencia
         public ActionResult Index()
         {
-            return View(db.competencias.ToList());
+            CompetenciaViewModel competencias = new CompetenciaViewModel(db);
+            return View(competencias);
         }
 
         // GET: Competencia/Details/5
@@ -30,28 +32,24 @@ namespace ProyectoSaberProWeb.Controllers
             Competencia competencia = db.competencias.Find(id);
             return Json(competencia, JsonRequestBehavior.AllowGet);
         }
-
-        // GET: Competencia/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
         // POST: Competencia/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Nombre")] Competencia competencia)
+        public ActionResult Create(CompetenciaViewModel competencia)
         {
             if (ModelState.IsValid)
             {
-                db.competencias.Add(competencia);
+                db.competencias.Add(competencia.CompetenciaCreacion);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                competencia.ListaCompetencias = db.competencias.ToList();
+                competencia.Message = "Exito";
+                return View("Index", competencia);
             }
-
-            return View(competencia);
+            competencia.ListaCompetencias = db.competencias.ToList();
+            competencia.Message = "Error";
+            return View("Index", competencia);
         }
 
         // GET: Competencia/Edit/5

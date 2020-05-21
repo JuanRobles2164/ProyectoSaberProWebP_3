@@ -240,6 +240,7 @@
     <Compile Include="Controllers\DocenteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PreguntasController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -263,6 +264,7 @@
     <Compile Include="Models\Prueba.cs" />
     <Compile Include="Models\Prueba_Estudiante.cs" />
     <Compile Include="Models\TipoPregunta.cs" />
+    <Compile Include="Models\ViewModels\CompetenciaViewModel.cs" />
     <Compile Include="Models\ViewModels\PreguntaViewModel.cs" />
     <Compile Include="Models\ViewModels\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -2075,11 +2077,14 @@
     <Content Include="vendor\jquery\jquery.slim.min.map" />
     <Content Include="Views\Administrador\IndexDocentes.cshtml" />
     <Content Include="Views\Administrador\IndexAlumnos.cshtml" />
-    <Content Include="Views\Competencia\Create.cshtml" />
     <Content Include="Views\Competencia\Delete.cshtml" />
-    <Content Include="Views\Competencia\Details.cshtml" />
     <Content Include="Views\Competencia\Edit.cshtml" />
     <Content Include="Views\Competencia\Index.cshtml" />
+    <Content Include="Views\Preguntas\Create.cshtml" />
+    <Content Include="Views\Preguntas\Delete.cshtml" />
+    <Content Include="Views\Preguntas\Details.cshtml" />
+    <Content Include="Views\Preguntas\Edit.cshtml" />
+    <Content Include="Views\Preguntas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
