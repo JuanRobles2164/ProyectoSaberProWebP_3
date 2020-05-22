@@ -1,0 +1,142 @@
+﻿@model ProyectoSaberProWeb.Models.ViewModels.PruebaViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PruebaCreacion.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PruebaCreacion.CantidadPreguntas)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PruebaCreacion.Estado)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.ListaPruebas)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CantidadPreguntas)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                <button type="button" 
+                        class="btn btn-primary" 
+                        data-toggle="modal" 
+                        data-target="#modalDetalles" 
+                        onclick="getDetallesPrueba(@item.ID)">
+                    Detalles
+                </button>
+
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div class="modal fade" id="modalDetalles" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Detalles de la prueba</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">
+                        ID
+                    </label>
+                    <div class="col-md-10">
+                        <input id="id_prueba" class="form-control" type="text" disabled />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2">
+                        Nombre de la prueba
+                    </label>
+                    <div class="col-md-10">
+                        <input id="nombre_prueba" class="form-control" type="text" disabled />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">
+                        Cantidad de preguntas
+                    </label>
+                    <div class="col-md-10">
+                        <input id="cantidad_preguntas_prueba" class="form-control" type="text" disabled />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">
+                        Estado
+                    </label>
+                    <div class="col-md-10">
+                        <input id="estado_prueba" class="form-control" disabled type="text" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2">
+                        Fecha de creación
+                    </label>
+                    <div class="col-md-10">
+                        <input id="fecha_creacion_prueba" class="form-control" disabled type="datetime" />
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    function getDetallesPrueba(id)
+    {
+        $.ajax({
+            url: window.location.hostname+'/Pruebas/Details',
+            async: true,
+            type: 'GET',
+            data: { id: id },
+            success: function (response) {
+                console.log(response);
+                $('#id_prueba').val(response.ID);
+                $('#nombre_prueba').val(response.Nombre);
+                $('#cantidad_preguntas_prueba').val(response.CantidadPreguntas);
+                $('#estado_prueba').val(response.Estado);
+                $('#fecha_creacion_prueba').val(response.FechaCreacion);
+            },
+            error: function (response) {
+                console.log("Error al realizar petición, llame a soporte...\n");
+                console.log(response);
+            }
+        });
+    }
+</script>

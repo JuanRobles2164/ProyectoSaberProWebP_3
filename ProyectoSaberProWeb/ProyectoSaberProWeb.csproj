@@ -237,10 +237,14 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdministradorController.cs" />
     <Compile Include="Controllers\CompetenciaController.cs" />
+    <Compile Include="Controllers\ContextoController.cs" />
     <Compile Include="Controllers\DocenteController.cs" />
+    <Compile Include="Controllers\EstudianteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\OpcionesController.cs" />
     <Compile Include="Controllers\PreguntasController.cs" />
+    <Compile Include="Controllers\PruebasController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -266,6 +270,7 @@
     <Compile Include="Models\TipoPregunta.cs" />
     <Compile Include="Models\ViewModels\CompetenciaViewModel.cs" />
     <Compile Include="Models\ViewModels\PreguntaViewModel.cs" />
+    <Compile Include="Models\ViewModels\PruebaViewModel.cs" />
     <Compile Include="Models\ViewModels\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -2085,6 +2090,22 @@
     <Content Include="Views\Preguntas\Details.cshtml" />
     <Content Include="Views\Preguntas\Edit.cshtml" />
     <Content Include="Views\Preguntas\Index.cshtml" />
+    <Content Include="Views\Pruebas\Index.cshtml" />
+    <Content Include="Views\Pruebas\Edit.cshtml" />
+    <Content Include="Views\Opciones\Create.cshtml" />
+    <Content Include="Views\Opciones\Delete.cshtml" />
+    <Content Include="Views\Opciones\Details.cshtml" />
+    <Content Include="Views\Opciones\Edit.cshtml" />
+    <Content Include="Views\Opciones\Index.cshtml" />
+    <Content Include="Views\Contexto\Create.cshtml" />
+    <Content Include="Views\Contexto\Delete.cshtml" />
+    <Content Include="Views\Contexto\Details.cshtml" />
+    <Content Include="Views\Contexto\Edit.cshtml" />
+    <Content Include="Views\Contexto\Index.cshtml" />
+    <Content Include="Views\Estudiante\Index.cshtml" />
+    <Content Include="Views\Estudiante\PresentaPrueba.cshtml" />
+    <Content Include="Views\Estudiante\MiraResultados.cshtml" />
+    <Content Include="Views\Estudiante\RespondePregunta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
