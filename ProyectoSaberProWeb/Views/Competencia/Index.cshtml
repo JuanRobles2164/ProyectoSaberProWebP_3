@@ -6,8 +6,8 @@
 
 <h2>Competencias</h2>
 <p>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createModal">
-        Crear competencia
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#createModal">
+        Crear nueva
     </button>
 </p>
 <table class="table">
@@ -15,7 +15,7 @@
         <th>
             @Html.DisplayNameFor(model => model.CompetenciaCreacion.Nombre)
         </th>
-        <th></th>
+        <th>Acciones</th>
     </tr>
 
     @foreach (var item in Model.ListaCompetencias)
@@ -25,19 +25,24 @@
                 @Html.DisplayFor(modelItem => item.Nombre)
             </td>
             <td>
-                <a class="btn btn-primary" data-toggle="modal" data-target="#modalDetalles" onclick="detallesCompetencia(@item.ID)">
-                    Detalles
+                <a href="@Url.Action("Edit", new { id = item.ID })">
+                    <i class="fas fa-pencil-alt">
+                    </i>
                 </a>
-                |
-                @Html.ActionLink("Editar", "Edit", new { id = item.ID }, new { @class = "btn btn-warning" }) |
-                @Html.ActionLink("Eliminar", "Delete", new { id = item.ID }, new { @class = "btn btn-danger" })
+                &nbsp;&nbsp;
+                <a href="#" data-toggle="modal" data-target="#modalDetalles" onclick="detallesCompetencia(@item.ID)">
+                    <i class="fas fa-search-plus">
+                    </i>
+                </a>
+                &nbsp;&nbsp;
+                <a href="@Url.Action("Delete", new { id = item.ID })">
+                    <i class="fas fa-trash-alt">
+                    </i>
+                </a>   
             </td>
         </tr>
     }
 </table>
-<a onclick="eventoAjax()" class="btn btn-primary" href="#">
-    button
-</a>
 
 <!-- Modal -->
 <div class="modal fade" id="modalDetalles" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -81,8 +86,7 @@
                 <div class="modal-body">
                     <div>
                         <div class="form-horizontal">
-                            <h4>Competencia</h4>
-                            <hr />
+
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                             <div class="form-group">
                                 @Html.LabelFor(model => model.CompetenciaCreacion.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -103,7 +107,23 @@
         </div>
     </div>
 </div>
+<style>
+    .fa-pencil-alt {
+        color: #EFD30B;
+    }
 
+        .fa-pencil-alt:hover {
+            color: #D3B70B;
+        }
+
+    .fa-trash-alt {
+        color: #DE0E0E;
+    }
+
+        .fa-trash-alt:hover {
+            color: #A00C0C;
+        }
+</style>
 
 <script type="text/javascript">
     const uriDetails = window.location.origin + "/Competencia/Details";

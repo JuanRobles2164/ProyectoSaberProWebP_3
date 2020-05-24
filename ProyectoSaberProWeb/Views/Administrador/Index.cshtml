@@ -4,10 +4,10 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Lista de Administradores</h2>
+<h2>Administradores</h2>
 
 <p>
-    @Html.ActionLink("Crear un administrador", "Register", "Account")
+    @Html.ActionLink("Crear nuevo", "Register", "Account", new { @class = "btn btn-success" })
 </p>
 <table class="table">
     <tr>
@@ -23,7 +23,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Usuario.UserName)
         </th>
-        <th></th>
+        <th> Acciones</th>
     </tr>
 
 @foreach (var item in Model.ListaUsuarios) {
@@ -41,11 +41,36 @@
             @Html.DisplayFor(modelItem => item.UserName)
         </td>
         <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Detalles", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Eliminar", "Delete", new { id=item.Id })
+            <a href="@Url.Action("Edit", new { id = item.Id })">
+                <i class="fas fa-pencil-alt">
+                </i>
+            </a>
+            &nbsp;&nbsp;
+            <a href="@Url.Action("Details", new { id = item.Id })">
+                <i class="fas fa-search-plus">
+                </i>
+            </a>
+            &nbsp;&nbsp;
+            <a href="@Url.Action("Delete", new { id = item.Id })">
+                <i class="fas fa-trash-alt">
+                </i>
+            </a>
         </td>
     </tr>
 }
 
 </table>
+<style>
+    .fa-pencil-alt {
+        color: #EFD30B;
+    }
+    .fa-pencil-alt:hover {
+        color: #D3B70B;
+    }
+    .fa-trash-alt {
+        color: #DE0E0E;
+    }
+    .fa-trash-alt:hover {
+        color: #A00C0C;
+    }
+</style>

@@ -7,7 +7,7 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Crear nueva", "Create", "Preguntas", new { @class = "btn btn-success" })
 </p>
 <table class="table">
     <tr>
@@ -29,7 +29,7 @@
         <th>
             @Html.DisplayNameFor(model => model.PreguntaPeso)
         </th>
-        <th></th>
+        <th>Acciones</th>
     </tr>
 
 @foreach (var item in Model) {
@@ -53,11 +53,39 @@
             @Html.DisplayFor(modelItem => item.PreguntaPeso)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            <a href="@Url.Action("Edit", new { id = item.ID })">
+                <i class="fas fa-pencil-alt">
+                </i>
+            </a>
+            &nbsp;&nbsp;
+            <a href="@Url.Action("Details", new { id = item.ID })">
+                <i class="fas fa-search-plus">
+                </i>
+            </a>
+            &nbsp;&nbsp;
+            <a href="@Url.Action("Delete", new { id = item.ID })">
+                <i class="fas fa-trash-alt">
+                </i>
+            </a>
         </td>
     </tr>
 }
 
 </table>
+<style>
+    .fa-pencil-alt {
+        color: #EFD30B;
+    }
+
+        .fa-pencil-alt:hover {
+            color: #D3B70B;
+        }
+
+    .fa-trash-alt {
+        color: #DE0E0E;
+    }
+
+        .fa-trash-alt:hover {
+            color: #A00C0C;
+        }
+</style>
