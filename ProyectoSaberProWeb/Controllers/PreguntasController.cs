@@ -50,10 +50,11 @@ namespace ProyectoSaberProWeb.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Descripcion,TipoPregunta,PreguntaPeso,CompentenciaId,ContextoId,PruebaId")] Pregunta pregunta)
+        public ActionResult Create(Pregunta pregunta)
         {
             if (ModelState.IsValid)
             {
+                
                 db.preguntas.Add(pregunta);
                 db.SaveChanges();
                 return RedirectToAction("Index");

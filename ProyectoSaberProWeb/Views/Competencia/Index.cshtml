@@ -60,7 +60,6 @@
                         Nombre:
                     </label>
                     <input type="text" disabled id="lbl_nombre"/>
-
                 </div>
             </div>
             <div class="modal-footer">
@@ -126,12 +125,14 @@
 </style>
 
 <script type="text/javascript">
+    const uri2 = '@Url.Action("Details", "Competencia")';
     const uriDetails = window.location.origin + "/Competencia/Details";
     function detallesCompetencia(id_competencia) {
 
         $.ajax({
             url: uriDetails,
             contentType: 'application/json',
+            type: 'GET',
             dataType: 'json',
             data: { id: id_competencia },
             success: function (response) {

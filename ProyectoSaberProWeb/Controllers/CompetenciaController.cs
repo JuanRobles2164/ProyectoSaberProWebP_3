@@ -30,7 +30,7 @@ namespace ProyectoSaberProWeb.Controllers
                 return Json("No encontrado");
             }
             Competencia competencia = db.competencias.Find(id);
-            return Json(competencia, JsonRequestBehavior.AllowGet);
+            return Json(competencia);
         }
         // POST: Competencia/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 

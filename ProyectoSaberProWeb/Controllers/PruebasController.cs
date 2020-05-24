@@ -29,8 +29,17 @@ namespace ProyectoSaberProWeb.Controllers
         }
 
         // GET: Pruebas/Create
-        public ActionResult Create()
+        public ActionResult Create(Prueba prueba)
         {
+            if (ModelState.IsValid)
+            {
+                var userId = User.Identity.Name;
+                //prueba.UserId 
+                    
+                db.pruebas.Add(prueba);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
             return View();
         }
 
