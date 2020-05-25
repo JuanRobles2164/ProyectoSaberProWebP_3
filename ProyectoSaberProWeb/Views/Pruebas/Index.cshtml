@@ -4,11 +4,13 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
+<h2>Pruebas</h2>
 <p>
-    @Html.ActionLink("Crear nueva", "Create", "Pruebas", new { @class = "btn btn-success" })
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createModal">
+        Crear Prueba
+    </button>
 </p>
+
 <table class="table">
     <tr>
         <th>
@@ -50,11 +52,66 @@
                     <i class="fas fa-trash-alt">
                     </i>
                 </a>
+                &nbsp;&nbsp;
+                <a href="@Url.Action("Index", "Preguntas", new { PruebaId = item.ID})">
+                    <i class="fas fa-archive"></i>
+                </a>
             </td>
         </tr>
     }
 
 </table>
+
+<div>
+    <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @using (Html.BeginForm("Create", "Pruebas", FormMethod.Post))
+                {
+            <div class="modal-body">
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PruebaCreacion.Nombre, htmlAttributes: new { @class = "control-label" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.PruebaCreacion.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PruebaCreacion.Nombre, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PruebaCreacion.CantidadPreguntas, htmlAttributes: new { @class = "control-label" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.PruebaCreacion.CantidadPreguntas, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PruebaCreacion.CantidadPreguntas, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PruebaCreacion.Estado, htmlAttributes: new { @class = "control-label" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.PruebaCreacion.Estado, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PruebaCreacion.Estado, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+            </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">Crear</button>
+                    </div>
+                }
+            </div>
+                
+        </div>
+    </div>
+</div>
+
 
 <div class="modal fade" id="modalDetalles" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -68,7 +125,7 @@
             <div class="modal-body">
 
                 <div class="form-group">
-                    <label class="control-label col-md-2">
+                    <label class="control-label col-md-4">
                         ID
                     </label>
                     <div class="col-md-10">
@@ -76,7 +133,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-2">
+                    <label class="control-label col-md-4">
                         Nombre de la prueba
                     </label>
                     <div class="col-md-10">
@@ -85,7 +142,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label col-md-2">
+                    <label class="control-label col-md-4">
                         Cantidad de preguntas
                     </label>
                     <div class="col-md-10">
@@ -94,7 +151,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label col-md-2">
+                    <label class="control-label col-md-4">
                         Estado
                     </label>
                     <div class="col-md-10">
@@ -102,7 +159,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-2">
+                    <label class="control-label col-md-4">
                         Fecha de creación
                     </label>
                     <div class="col-md-10">
@@ -140,10 +197,10 @@
     function getDetallesPrueba(id)
     {
         $.ajax({
-            url: window.location.hostname+'/Pruebas/Details',
+            url: '@Url.Action("Details","Pruebas")',
             async: true,
             type: 'GET',
-            data: { id: id },
+            data: { 'id': id },
             success: function (response) {
                 console.log(response);
                 $('#id_prueba').val(response.ID);

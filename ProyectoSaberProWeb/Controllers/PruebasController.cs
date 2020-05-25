@@ -1,4 +1,5 @@
 ﻿using ProyectoSaberProWeb.Models;
+using ProyectoSaberProWeb.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +14,8 @@ namespace ProyectoSaberProWeb.Controllers
         // GET: Pruebas
         public ActionResult Index()
         {
-
-            return View();
+            PruebaViewModel pvm = new PruebaViewModel(db);
+            return View(pvm);
         }
 
         // GET: Pruebas/Details/5
@@ -28,35 +29,20 @@ namespace ProyectoSaberProWeb.Controllers
             return Json(prueba, JsonRequestBehavior.AllowGet);
         }
 
-        // GET: Pruebas/Create
-        public ActionResult Create(Prueba prueba)
+        [HttpPost]
+        public ActionResult Create(PruebaViewModel prueba)
         {
+            var userEmail = User.Identity.Name;
+            var userQuery = db.Users.Where(x => x.Email == userEmail).First();
+            prueba.PruebaCreacion.UserId = userQuery.Id;
+            prueba.PruebaCreacion.ApplicationUser = userQuery;
             if (ModelState.IsValid)
             {
-                var userId = User.Identity.Name;
-                //prueba.UserId 
-                    
-                db.pruebas.Add(prueba);
+                db.pruebas.Add(prueba.PruebaCreacion);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", prueba);
             }
-            return View();
-        }
-
-        // POST: Pruebas/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return View("Index",prueba);
         }
 
         // GET: Pruebas/Edit/5

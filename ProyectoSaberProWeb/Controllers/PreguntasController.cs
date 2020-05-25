@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ProyectoSaberProWeb.Models;
+using ProyectoSaberProWeb.Models.ViewModels;
 
 namespace ProyectoSaberProWeb.Controllers
 {
@@ -15,11 +16,25 @@ namespace ProyectoSaberProWeb.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Preguntas
-        public ActionResult Index()
+        public ActionResult Index(int? PruebaId)
         {
-            var preguntas = db.preguntas.Include(p => p.Competencia).Include(p => p.Contexto).Include(p => p.Prueba);
-            return View(preguntas.ToList());
+            PreguntaViewModel pvm;
+            if (PruebaId == null)
+            {
+                pvm = new PreguntaViewModel(db);
+            }
+            else
+            {
+                pvm = new PreguntaViewModel(db, PruebaId);
+            }
+            //var preguntas = db.preguntas.Include(p => p.Competencia).Include(p => p.Contexto).Include(p => p.Prueba);
+            return View(pvm);
         }
+        /*public ActionResult Index(int PruebaId)
+        {
+
+            return View();
+        }*/
 
         // GET: Preguntas/Details/5
         public ActionResult Details(int? id)

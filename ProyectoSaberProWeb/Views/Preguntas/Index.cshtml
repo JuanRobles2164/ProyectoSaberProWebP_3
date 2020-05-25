@@ -1,48 +1,36 @@
-﻿@model IEnumerable<ProyectoSaberProWeb.Models.Pregunta>
+﻿@model ProyectoSaberProWeb.Models.ViewModels.PreguntaViewModel
 
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Index</h2>
-
 <p>
-    @Html.ActionLink("Crear nueva", "Create", "Preguntas", new { @class = "btn btn-success" })
+    <a href="@Url.Action("Index", "Pruebas")">
+        <i class="fas fa-arrow-left icono-caucho">| Volver |</i>
+    </a>
+</p>
+<p>
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#createModal">
+        Crear nueva
+    </button>
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Competencia.Nombre)
+            @Html.DisplayNameFor(model => model.PreguntaCreacion.Descripcion)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Contexto.Descripcion)
+            @Html.DisplayNameFor(model => model.PreguntaCreacion.TipoPregunta)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Prueba.Nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Descripcion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TipoPregunta)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PreguntaPeso)
+            @Html.DisplayNameFor(model => model.PreguntaCreacion.PreguntaPeso)
         </th>
         <th>Acciones</th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.ListaPreguntas) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Competencia.Nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Contexto.Descripcion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Prueba.Nombre)
-        </td>
         <td>
             @Html.DisplayFor(modelItem => item.Descripcion)
         </td>
@@ -67,11 +55,81 @@
                 <i class="fas fa-trash-alt">
                 </i>
             </a>
+            &nbsp;&nbsp;
+            <a href="#" onclick="">
+                <i class="fas fa-align-center">
+                    Opciones
+                </i>
+            </a>
         </td>
     </tr>
 }
-
 </table>
+
+<div>
+    <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @using (Html.BeginForm("Create", "Preguntas", FormMethod.Post))
+                {
+            <div class="modal-body">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PreguntaCreacion.Descripcion, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.PreguntaCreacion.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PreguntaCreacion.Descripcion, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PreguntaCreacion.TipoPregunta, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-10">
+                        @Html.EnumDropDownListFor(model => model.PreguntaCreacion.TipoPregunta, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.PreguntaCreacion.TipoPregunta, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PreguntaCreacion.PreguntaPeso, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.PreguntaCreacion.PreguntaPeso, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PreguntaCreacion.PreguntaPeso, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PreguntaCreacion.CompentenciaId, "CompentenciaId", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("CompentenciaId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.PreguntaCreacion.CompentenciaId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PreguntaCreacion.ContextoId, "ContextoId", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("ContextoId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.PreguntaCreacion.ContextoId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary">Crear</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
 <style>
     .fa-pencil-alt {
         color: #EFD30B;
@@ -87,5 +145,8 @@
 
         .fa-trash-alt:hover {
             color: #A00C0C;
+        }
+        .icono-caucho{
+            font-size: 20px;
         }
 </style>

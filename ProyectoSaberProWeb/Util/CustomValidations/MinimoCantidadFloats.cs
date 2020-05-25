@@ -26,7 +26,7 @@ namespace ProyectoSaberProWeb
                 return false;
             }
             var min = (IComparable)this.Minimun;
-            return min.CompareTo(val) >= 0.0f;
+            return min.CompareTo(val) <= 0.0f;
         }
         public override string FormatErrorMessage(string name)
         {
