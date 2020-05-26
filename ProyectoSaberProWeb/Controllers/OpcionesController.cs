@@ -7,11 +7,13 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ProyectoSaberProWeb.Models;
+using ProyectoSaberProWeb.Models.ViewModels;
 
 namespace ProyectoSaberProWeb.Controllers
 {
     public class OpcionesController : Controller
     {
+        private readonly string[,] JsonNotFound = { { "Status:" , "Not found"} };
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Opciones
@@ -22,18 +24,14 @@ namespace ProyectoSaberProWeb.Controllers
         }
 
         // GET: Opciones/Details/5
-        public ActionResult Details(int? id)
+        public JsonResult Details(int PreguntaId)
         {
-            if (id == null)
+            var opciones = db.opciones.Where(x => x.PreguntaId == PreguntaId).ToList();
+            if (opciones == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return Json(JsonNotFound);
             }
-            Opcion opcion = db.opciones.Find(id);
-            if (opcion == null)
-            {
-                return HttpNotFound();
-            }
-            return View(opcion);
+            return Json(opciones);
         }
 
         // GET: Opciones/Create
@@ -48,17 +46,28 @@ namespace ProyectoSaberProWeb.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Descripcion,Correcta,PreguntaId")] Opcion opcion)
+        public ActionResult Create(PreguntaViewModel Opciones)
         {
+
             if (ModelState.IsValid)
             {
-                db.opciones.Add(opcion);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                Opciones.OpcionB.PreguntaId = Opciones.OpcionA.PreguntaId;
+                Opciones.OpcionC.PreguntaId = Opciones.OpcionA.PreguntaId;
+                Opciones.OpcionD.PreguntaId = Opciones.OpcionA.PreguntaId;
+                List<Opcion> OpcionesCreacion = new List<Opcion>() 
+                { Opciones.OpcionA, 
+                    Opciones.OpcionB, 
+                    Opciones.OpcionC, 
+                    Opciones.OpcionD
+                };
+                foreach (var i in OpcionesCreacion)
+                {
+                    db.opciones.Add(i);
+                    db.SaveChanges();
+                }
+                return RedirectToAction("Index", "Preguntas");
             }
-
-            ViewBag.PreguntaId = new SelectList(db.preguntas, "ID", "Descripcion", opcion.PreguntaId);
-            return View(opcion);
+            return View("Index", "Preguntas", Opciones);
         }
 
         // GET: Opciones/Edit/5

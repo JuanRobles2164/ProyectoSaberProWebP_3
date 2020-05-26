@@ -20,7 +20,6 @@ namespace ProyectoSaberProWeb.Models
 
         public TipoPregunta TipoPregunta { get; set; }
         [Required]
-        [NonZeroValueFloat]
         [Display(Name = "Peso de la pregunta")]
         public float PreguntaPeso { get; set; }
 
