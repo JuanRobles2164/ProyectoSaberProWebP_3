@@ -20,13 +20,8 @@ namespace ProyectoSaberProWeb
             {
                 return false;
             }
-            var val = value as string;
-            if (string.IsNullOrEmpty(val))
-            {
-                return false;
-            }
             var min = (IComparable)this.Minimun;
-            return min.CompareTo(val) >= 0.0f;
+            return min.CompareTo(value) >= 0;
         }
         public override string FormatErrorMessage(string name)
         {

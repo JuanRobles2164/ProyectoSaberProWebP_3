@@ -1,48 +1,36 @@
-﻿@model IEnumerable<ProyectoSaberProWeb.Models.Pregunta>
+﻿@model ProyectoSaberProWeb.Models.ViewModels.PreguntaViewModel
 
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Index</h2>
-
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <a href="@Url.Action("Index", "Pruebas")">
+        <i class="fas fa-arrow-left icono-caucho">| Volver |</i>
+    </a>
+</p>
+<p>
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#createModal">
+        Crear nueva
+    </button>
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Competencia.Nombre)
+            @Html.DisplayNameFor(model => model.PreguntaCreacion.Descripcion)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Contexto.Descripcion)
+            @Html.DisplayNameFor(model => model.PreguntaCreacion.TipoPregunta)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Prueba.Nombre)
+            @Html.DisplayNameFor(model => model.PreguntaCreacion.PreguntaPeso)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Descripcion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TipoPregunta)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PreguntaPeso)
-        </th>
-        <th></th>
+        <th>Acciones</th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.ListaPreguntas) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Competencia.Nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Contexto.Descripcion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Prueba.Nombre)
-        </td>
         <td>
             @Html.DisplayFor(modelItem => item.Descripcion)
         </td>
@@ -53,11 +41,221 @@
             @Html.DisplayFor(modelItem => item.PreguntaPeso)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            <a href="@Url.Action("Edit", new { id = item.ID })">
+                <i class="fas fa-pencil-alt">
+                </i>
+            </a>
+            &nbsp;&nbsp;
+            <a href="@Url.Action("Details", new { id = item.ID })">
+                <i class="fas fa-search-plus">
+                </i>
+            </a>
+            &nbsp;&nbsp;
+            <a href="@Url.Action("Delete", new { id = item.ID })">
+                <i class="fas fa-trash-alt">
+                </i>
+            </a>
+            &nbsp;&nbsp;
+            <a href="#" onclick="setIdPregunta(@item.ID)" data-toggle="modal" data-target="#createOptionsModal">
+                <i class="fas fa-align-center">
+                    Opciones
+                </i>
+            </a>
         </td>
     </tr>
 }
-
 </table>
+
+<div>
+    <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @using (Html.BeginForm("Create", "Preguntas", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+            <div class="modal-body">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PreguntaCreacion.Descripcion, htmlAttributes: new { @class = "control-label" })
+                    <div class="col-md-4">
+                        @Html.EditorFor(model => model.PreguntaCreacion.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PreguntaCreacion.Descripcion, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PreguntaCreacion.TipoPregunta, htmlAttributes: new { @class = "control-label" })
+                    <div class="col-md-4">
+                        @Html.EnumDropDownListFor(model => model.PreguntaCreacion.TipoPregunta, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.PreguntaCreacion.TipoPregunta, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PreguntaCreacion.PreguntaPeso, htmlAttributes: new { @class = "control-label" })
+                    <div class="col-md-4">
+                        @Html.EditorFor(model => model.PreguntaCreacion.PreguntaPeso, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PreguntaCreacion.PreguntaPeso, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PreguntaCreacion.PruebaId, "Prueba", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(model => model.PreguntaCreacion.PruebaId, Model.ListaPruebas, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.PreguntaCreacion.PruebaId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PreguntaCreacion.CompentenciaId, "Competencia", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(model => model.PreguntaCreacion.CompentenciaId, Model.ListaCompetencias, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.PreguntaCreacion.CompentenciaId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PreguntaCreacion.ContextoId, "Contexto", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(model => model.PreguntaCreacion.ContextoId, Model.ListaContextos, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.PreguntaCreacion.ContextoId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">Crear</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <div class="modal fade" id="createOptionsModal" tabindex="-1" role="dialog" aria-labelledby="createOptionsModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Crear opciones</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @using (Html.BeginForm("Create", "Opciones", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="modal-body">
+
+                        @Html.HiddenFor(model => model.OpcionA.PreguntaId)
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.OpcionA.Descripcion, htmlAttributes: new { @class = "control-label" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.OpcionA.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.OpcionA.Descripcion, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.OpcionA.Correcta, htmlAttributes: new { @class = "control-label" })
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    @Html.EditorFor(model => model.OpcionA.Correcta, "true")
+                                    @Html.ValidationMessageFor(model => model.OpcionA.Correcta, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.OpcionB.Descripcion, htmlAttributes: new { @class = "control-label" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.OpcionB.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.OpcionB.Descripcion, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.OpcionB.Correcta, htmlAttributes: new { @class = "control-label" })
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    @Html.EditorFor(model => model.OpcionB.Correcta, "true")
+                                    @Html.ValidationMessageFor(model => model.OpcionB.Correcta, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.OpcionC.Descripcion, htmlAttributes: new { @class = "control-label" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.OpcionC.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.OpcionC.Descripcion, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.OpcionC.Correcta, htmlAttributes: new { @class = "control-label" })
+                        <div class="col-md-10">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.OpcionC.Correcta, "true")
+                                @Html.ValidationMessageFor(model => model.OpcionC.Correcta, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.OpcionD.Descripcion, htmlAttributes: new { @class = "control-label" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.OpcionD.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.OpcionD.Descripcion, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.OpcionD.Correcta, htmlAttributes: new { @class = "control-label" })
+                        <div class="col-md-10">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.OpcionD.Correcta, "true")
+                                @Html.ValidationMessageFor(model => model.OpcionD.Correcta, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .fa-pencil-alt {
+        color: #EFD30B;
+    }
+
+        .fa-pencil-alt:hover {
+            color: #D3B70B;
+        }
+
+    .fa-trash-alt {
+        color: #DE0E0E;
+    }
+
+        .fa-trash-alt:hover {
+            color: #A00C0C;
+        }
+        .icono-caucho{
+            font-size: 20px;
+        }
+</style>
+
+
+<script type="text/javascript">
+    function setIdPregunta(idPregunta) {
+        $('#OpcionA_PreguntaId').val(idPregunta);
+    }
+</script>

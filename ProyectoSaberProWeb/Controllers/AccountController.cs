@@ -402,7 +402,7 @@ namespace ProyectoSaberProWeb.Controllers
                     /*var usuario = UserManager.Users.Where(x => x.Email == loginInfo.Email).FirstOrDefault();
                     var roles = UserManager.GetRoles(usuario.Id).ToArray();
                     //Inicia la sesión de usuario, una vez verificado
-                    await SignInManager.SignInAsync(usuario, isPersistent: false, rememberBrowser: false);
+                    //await SignInManager.SignInAsync(usuario, isPersistent: false, rememberBrowser: false);
                     switch (roles[0])
                     {
                         case "Alumno":
@@ -414,7 +414,7 @@ namespace ProyectoSaberProWeb.Controllers
 
                             break;
                     }*/
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("Index", "Home");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:

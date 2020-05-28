@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ProyectoSaberProWeb.Models;
+using ProyectoSaberProWeb.Models.ViewModels;
 
 namespace ProyectoSaberProWeb.Controllers
 {
@@ -15,12 +16,20 @@ namespace ProyectoSaberProWeb.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Preguntas
-        public ActionResult Index()
+        public ActionResult Index(int? PruebaId)
         {
-            var preguntas = db.preguntas.Include(p => p.Competencia).Include(p => p.Contexto).Include(p => p.Prueba);
-            return View(preguntas.ToList());
+            PreguntaViewModel pvm;
+            if (PruebaId == null)
+            {
+                pvm = new PreguntaViewModel(db);
+            }
+            else
+            {
+                pvm = new PreguntaViewModel(db, PruebaId);
+            }
+            //var preguntas = db.preguntas.Include(p => p.Competencia).Include(p => p.Contexto).Include(p => p.Prueba);
+            return View(pvm);
         }
-
         // GET: Preguntas/Details/5
         public ActionResult Details(int? id)
         {
@@ -37,31 +46,28 @@ namespace ProyectoSaberProWeb.Controllers
         }
 
         // GET: Preguntas/Create
-        public ActionResult Create()
+        /*public ActionResult Create()
         {
             ViewBag.CompentenciaId = new SelectList(db.competencias, "ID", "Nombre");
             ViewBag.ContextoId = new SelectList(db.contexto, "ID", "Descripcion");
             ViewBag.PruebaId = new SelectList(db.pruebas, "ID", "Nombre");
             return View();
-        }
+        }*/
 
         // POST: Preguntas/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Descripcion,TipoPregunta,PreguntaPeso,CompentenciaId,ContextoId,PruebaId")] Pregunta pregunta)
+        public ActionResult Create(PreguntaViewModel pregunta)
         {
+            
             if (ModelState.IsValid)
             {
-                db.preguntas.Add(pregunta);
+                db.preguntas.Add(pregunta.PreguntaCreacion);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.CompentenciaId = new SelectList(db.competencias, "ID", "Nombre", pregunta.CompentenciaId);
-            ViewBag.ContextoId = new SelectList(db.contexto, "ID", "Descripcion", pregunta.ContextoId);
-            ViewBag.PruebaId = new SelectList(db.pruebas, "ID", "Nombre", pregunta.PruebaId);
             return View(pregunta);
         }
 

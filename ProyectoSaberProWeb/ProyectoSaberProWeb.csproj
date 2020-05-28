@@ -2106,6 +2106,9 @@
     <Content Include="Views\Estudiante\PresentaPrueba.cshtml" />
     <Content Include="Views\Estudiante\MiraResultados.cshtml" />
     <Content Include="Views\Estudiante\RespondePregunta.cshtml" />
+    <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Views\Shared\_LayoutDocente.cshtml" />
+    <Content Include="Views\Shared\_LayoutAlumno.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
