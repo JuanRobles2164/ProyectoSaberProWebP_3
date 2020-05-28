@@ -245,6 +245,7 @@
     <Compile Include="Controllers\OpcionesController.cs" />
     <Compile Include="Controllers\PreguntasController.cs" />
     <Compile Include="Controllers\PruebasController.cs" />
+    <Compile Include="Controllers\RespuestasController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -271,6 +272,7 @@
     <Compile Include="Models\ViewModels\CompetenciaViewModel.cs" />
     <Compile Include="Models\ViewModels\PreguntaViewModel.cs" />
     <Compile Include="Models\ViewModels\PruebaViewModel.cs" />
+    <Compile Include="Models\ViewModels\RespondeCompetenciaPruebaViewModel.cs" />
     <Compile Include="Models\ViewModels\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -2109,6 +2111,7 @@
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Views\Shared\_LayoutDocente.cshtml" />
     <Content Include="Views\Shared\_LayoutAlumno.cshtml" />
+    <Content Include="Views\Respuestas\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
