@@ -25,8 +25,18 @@ namespace ProyectoSaberProWeb.Controllers
         public ActionResult Create()
         {
             RespondeCompetenciaPruebaViewModel rcpv = new RespondeCompetenciaPruebaViewModel(db);
+            return View(rcpv);
+        }
+        [HttpPost]
+        public ActionResult Create(RespondeCompetenciaPruebaViewModel rcpv)
+        {
+            if (ModelState.IsValid)
+            {
+
+            }
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Pregunta_Estudiante pregunta_Estudiante)
