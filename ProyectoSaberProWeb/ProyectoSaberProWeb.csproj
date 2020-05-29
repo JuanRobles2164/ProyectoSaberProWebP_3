@@ -283,6 +283,7 @@
   <ItemGroup>
     <Content Include="Content\css\sb-admin-2.css" />
     <Content Include="Content\css\sb-admin-2.min.css" />
+    <Content Include="Content\css\StyleLogin.css" />
     <Content Include="Content\img\undraw_posting_photo.svg" />
     <Content Include="Content\js\demo\chart-area-demo.js" />
     <Content Include="Content\js\demo\chart-bar-demo.js" />
@@ -2112,6 +2113,7 @@
     <Content Include="Views\Shared\_LayoutDocente.cshtml" />
     <Content Include="Views\Shared\_LayoutAlumno.cshtml" />
     <Content Include="Views\Respuestas\Create.cshtml" />
+    <Content Include="Views\Home\_ExternalLoginsListPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

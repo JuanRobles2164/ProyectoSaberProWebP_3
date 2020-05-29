@@ -441,6 +441,7 @@ namespace ProyectoSaberProWeb.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
+                //redirigir por roles
                 return RedirectToAction("Index", "Manage");
             }
             if (ModelState.IsValid)

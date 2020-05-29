@@ -1,31 +1,37 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@using ProyectoSaberProWeb.Models 
+@model LoginViewModel
+@{
+    ViewBag.Title = "Login";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+<head>
+    <link rel="stylesheet" href="~/Content/css/StyleLogin.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div>
+        <img src="~/Content/img/unnamed.png" alt="avatar" class="avatar" />
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+    <form class="login-form">
+        
+        <h3>Iniciar Sesi&oacute;n / Registrarse</h3>
+
+        <div class="txtb"></div>
+        <div class="boton">
+            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+        </div>
+        <div class="logoUdi">
+            <img class="logo" src="~/Content/img/Logo-udi-web.png" alt="logo UDI" />
+        </div>
+    </form>
+    <script type="text/javascript">
+        $(".txtb input").on("focus", function () {
+            $(this).addClass("focus");
+        });
+        $(".txtb input").on("blur", function () {
+            if ($(this).val() == "")
+                $(this).removeClass("focus");
+        });
+    </script>
+</body>
