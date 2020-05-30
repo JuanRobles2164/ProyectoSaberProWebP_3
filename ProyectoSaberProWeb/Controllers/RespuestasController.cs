@@ -30,14 +30,14 @@ namespace ProyectoSaberProWeb.Controllers
         [HttpPost]
         public ActionResult Create(RespondeCompetenciaPruebaViewModel rcpv)
         {
-            if (ModelState.IsValid)
+            /*if (ModelState.IsValid)
             {
 
-            }
+            }*/
             return View();
         }
 
-        [HttpPost]
+        /*[HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Pregunta_Estudiante pregunta_Estudiante)
         {
@@ -49,7 +49,7 @@ namespace ProyectoSaberProWeb.Controllers
             }
 
             return View(pregunta_Estudiante);
-        }
+        }*/
 
         protected override void Dispose(bool disposing)
         {

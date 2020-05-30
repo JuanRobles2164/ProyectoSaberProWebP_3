@@ -11,7 +11,6 @@ namespace ProyectoSaberProWeb.Models.ViewModels
         public Prueba PruebaPresentando { get; set; }
         public IEnumerable<Pregunta> ListaPreguntas { get; set; }
         public Dictionary<int, IEnumerable<Opcion>> OpcionesPregunta { get; set; }
-        public IEnumerable<Opcion> ListaOpciones { get; set; }
         public string Message { get; set; }
 
         public RespondeCompetenciaPruebaViewModel() { }

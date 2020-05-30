@@ -6,39 +6,45 @@
 
 <h2>Create</h2>
 
-<div class="container">
-    @foreach (var item in Model.ListaPreguntas)
-    {
-    <div class="container-sm">
-        <h5>
-            @item.Contexto
-        </h5>
-        <label>
-            @item.Descripcion
-        </label>
-        @foreach (var i in Model.OpcionesPregunta.Where(x => x.Key == item.ID))
+@using (Html.BeginForm("Create", "Respuestas", FormMethod.Post))
+{
+    <div class="container">
+        @foreach (var item in Model.ListaPreguntas)
         {
-            foreach (var j in i.Value)
-            {
-                <div>
-                    @Html.RadioButtonFor(z => j.Correcta, "true", htmlAttributes: new { @class = "rb_custom", @Name="PreguntaId_"+j.PreguntaId, })
-                    <p>
-                        @j.Descripcion
-                    </p>
-                </div>
-            }
-            <br />
-            <br />
+            <div class="container-sm">
+                <h5>
+                    @item.Contexto
+                </h5>
+                <label>
+                    @item.Descripcion
+                </label>
+                @foreach (var i in Model.OpcionesPregunta.Where(x => x.Key == item.ID))
+                {
+                    foreach (var j in i.Value)
+                    {
+                        <div>
+                            @Html.RadioButtonFor(z => j.Correcta, "true", htmlAttributes: new { @class = "rb_custom", @Name = "PreguntaId_" + j.PreguntaId, })
+                            <p>
+                                @j.Descripcion
+                            </p>
+                        </div>
+                    }
+                    <br />
+                    <br />
+                }
+            </div>
         }
     </div>
-    }
-</div>
+    <button type="submit">
+        Enviar
+    </button>
+}
 
 
-@using (Html.BeginForm()) 
+@*@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Prueba_Estudiante</h4>
         <hr />
@@ -50,7 +56,7 @@
         </div>
     </div>
 }
-
+*@
 
 
 <script type="text/javascript">

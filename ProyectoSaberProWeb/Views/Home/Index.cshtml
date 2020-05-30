@@ -13,18 +13,20 @@
     <div>
         <img src="~/Content/img/unnamed.png" alt="avatar" class="avatar" />
     </div>
-    <form class="login-form">
+    <div class="login-form">
         
         <h3>Iniciar Sesi&oacute;n / Registrarse</h3>
 
         <div class="txtb"></div>
         <div class="boton">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+            <section id="socialLoginForm">
+                @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl})
+            </section>
         </div>
         <div class="logoUdi">
             <img class="logo" src="~/Content/img/Logo-udi-web.png" alt="logo UDI" />
         </div>
-    </form>
+    </div>
     <script type="text/javascript">
         $(".txtb input").on("focus", function () {
             $(this).addClass("focus");
