@@ -28,13 +28,29 @@ namespace ProyectoSaberProWeb.Controllers
             return View(rcpv);
         }
         [HttpPost]
-        public ActionResult Create(RespondeCompetenciaPruebaViewModel rcpv)
+        public JsonResult Create(Pregunta_Estudiante pe)
         {
-            /*if (ModelState.IsValid)
+            var userEmail = User.Identity.Name;
+            var userQuery = db.Users.Where(x => x.Email == userEmail).First();
+            pe.User_Id = userQuery.Id;
+            pe.ApplicationUser = userQuery;
+            bool resultValue = true;
+            try
             {
-
-            }*/
-            return View();
+                var peQuery = db.preguntas_estudiantes.First(x => x.PreguntaId == pe.PreguntaId && x.User_Id == pe.User_Id);
+                peQuery.OpcionId = pe.OpcionId;
+            }
+            catch (Exception)
+            {
+                db.preguntas_estudiantes.Add(pe);
+                resultValue = false;
+            }
+            finally
+            {
+                db.SaveChanges();
+            }
+            return Json(resultValue);
+            
         }
 
         /*[HttpPost]

@@ -23,7 +23,13 @@
                     foreach (var j in i.Value)
                     {
                         <div>
-                            @Html.RadioButtonFor(z => j.Correcta, "true", htmlAttributes: new { @class = "rb_custom", @Name = "PreguntaId_" + j.PreguntaId, })
+                            @Html.RadioButtonFor(z => j.Correcta, "true", 
+                            htmlAttributes: 
+                                new { 
+                                    @class = "rb_custom", 
+                                    @Name = "PreguntaId_" + j.PreguntaId, 
+                                    @Onclick = "guardaProgreso("+j.ID+", "+item.ID+")"
+                                    })
                             <p>
                                 @j.Descripcion
                             </p>
@@ -63,4 +69,21 @@
     $(document).ready(function () {
         $('rb_custom').attr('checked', '0');
     });
+    function guardaProgreso(opcionId, preguntaId){
+        $.ajax({
+            url: '@Url.Action("Create", "Respuestas")',
+            type: 'POST',
+            data: {
+                'OpcionId': opcionId,
+                'PreguntaId': preguntaId
+            },
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (response) {
+                console.log("Error: \n");
+                console.log(response);
+            }
+        });
+    }
 </script>
