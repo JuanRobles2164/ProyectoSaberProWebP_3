@@ -41,11 +41,6 @@ namespace ProyectoSaberProWeb.Models.ViewModels
                              select preguntas;
             */
             //ListaPreguntas = db.opciones.Include("Pregunta").Include("Prueba").Include("Contexto");
-            var numerito = 1;
-            if (numerito == 1)
-            {
-                Console.WriteLine("funciona");
-            }
         }
     }
 }

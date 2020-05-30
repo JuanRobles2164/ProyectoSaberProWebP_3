@@ -1,10 +1,39 @@
-﻿@model ProyectoSaberProWeb.Models.Prueba_Estudiante
+﻿@model ProyectoSaberProWeb.Models.ViewModels.RespondeCompetenciaPruebaViewModel
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Responder prueba";
 }
 
 <h2>Create</h2>
+
+<div class="container">
+    @foreach (var item in Model.ListaPreguntas)
+    {
+    <div class="container-sm">
+        <h5>
+            @item.Contexto
+        </h5>
+        <label>
+            @item.Descripcion
+        </label>
+        @foreach (var i in Model.OpcionesPregunta.Where(x => x.Key == item.ID))
+        {
+            foreach (var j in i.Value)
+            {
+                <div>
+                    @Html.RadioButtonFor(z => j.Correcta, "true", htmlAttributes: new { @class = "rb_custom", @Name="PreguntaId_"+j.PreguntaId, })
+                    <p>
+                        @j.Descripcion
+                    </p>
+                </div>
+            }
+            <br />
+            <br />
+        }
+    </div>
+    }
+</div>
+
 
 @using (Html.BeginForm()) 
 {
@@ -22,6 +51,10 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('rb_custom').attr('checked', '0');
+    });
+</script>
