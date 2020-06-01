@@ -1,15 +1,14 @@
 ﻿
-*{
+* {
     margin: 0;
     padding: 0;
     text-decoration: none;
-    font-family:Consolas;
+    font-family: Consolas;
     box-sizing: border-box;
 }
 body {
     min-height: 100vh;
     background-image: linear-gradient(120deg,#03A9F4,#2E7D32);
-
 }
 .login-form{
     width:500px;
@@ -66,7 +65,7 @@ body {
     height: 120px;
     border-radius: 20%;
     position: absolute;
-    top: 55px;
+    top: 100px;
     left: calc(50% - 60px);
     z-index: 1;
 }
