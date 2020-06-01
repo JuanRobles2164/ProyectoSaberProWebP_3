@@ -11,13 +11,12 @@ namespace ProyectoSaberProWeb.Models
     public class Pregunta_Estudiante
     {
         public int ID { get; set; }
-        [Required]
-        [Display(Name = "Descripción")]
-        [StringLength(255, ErrorMessage = "La descripción no puede tener más de 255 caracteres")]
-        public string Descripcion { get; set; }
+        [ForeignKey("Opcion")]
+        public int? OpcionId { get; set; }
+        public Opcion Opcion { get; set; }
 
         [ForeignKey("Pregunta")]
-        public int Pregunta_Id { get; set; }
+        public int PreguntaId { get; set; }
         public Pregunta Pregunta { get; set; }
 
         [ForeignKey("ApplicationUser")]

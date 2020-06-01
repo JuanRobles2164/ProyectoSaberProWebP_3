@@ -1,8 +1,6 @@
-﻿@using ProyectoSaberProWeb.Models
+﻿@model ProyectoSaberProWeb.Models.ExternalLoginListViewModel
 @using Microsoft.Owin.Security
-@model ExternalLoginListViewModel
 
-<h4>Utilice otro servicio para iniciar sesión.</h4>
 <hr />
 @{
     var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
