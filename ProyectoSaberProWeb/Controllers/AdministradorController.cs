@@ -30,21 +30,37 @@ namespace ProyectoSaberProWeb.Controllers
         }
 
         // GET: Administrador
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder)
         {
+            ViewBag.NombreSortParm = sortOrder == "Nombres" ? "Nombres_desc" : "Nombres";
+            ViewBag.ApellidosSortParm = sortOrder == "Apellidos" ? "Apellidos_desc" : "Apellidos";
+            ViewBag.EmailSortParm = sortOrder == "Email" ? "Email_desc" : "Email";
+            ViewBag.UserNameSortParm = sortOrder == "Username" ? "Username_desc" : "Username";
+
             //Trae todos los usuarios que sean admin
-            UserViewModel adminUsers = new UserViewModel(db, adminRole);
+            UserViewModel adminUsers = new UserViewModel(db, adminRole, sortOrder);
             //return View(db.Users.ToList());
             return View(adminUsers);
         }
-        public ActionResult IndexAlumnos()
+        public ActionResult IndexAlumnos(string sortOrder)
         {
-            UserViewModel alumnoUsers = new UserViewModel(db, alumnoRole);
+            ViewBag.NombreSortParm = sortOrder == "Nombres" ? "Nombres_desc" : "Nombres";
+            ViewBag.ApellidosSortParm = sortOrder == "Apellidos" ? "Apellidos_desc" : "Apellidos";
+            ViewBag.EmailSortParm = sortOrder == "Email" ? "Email_desc" : "Email";
+            ViewBag.UserNameSortParm = sortOrder == "Username" ? "Username_desc" : "Username";
+
+            UserViewModel alumnoUsers = new UserViewModel(db, alumnoRole, sortOrder);
+
             return View(alumnoUsers);
         }
-        public ActionResult IndexDocentes()
+        public ActionResult IndexDocentes(string sortOrder)
         {
-            UserViewModel docenteUsers = new UserViewModel(db, docenteRole);
+            ViewBag.NombreSortParm = sortOrder == "Nombres" ? "Nombres_desc" : "Nombres";
+            ViewBag.ApellidosSortParm = sortOrder == "Apellidos" ? "Apellidos_desc" : "Apellidos";
+            ViewBag.EmailSortParm = sortOrder == "Email" ? "Email_desc" : "Email";
+            ViewBag.UserNameSortParm = sortOrder == "Username" ? "Username_desc" : "Username";
+
+            UserViewModel docenteUsers = new UserViewModel(db, docenteRole, sortOrder);
             return View(docenteUsers);
         }
         // GET: Administrador/Details/5

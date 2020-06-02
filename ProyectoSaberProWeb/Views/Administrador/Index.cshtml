@@ -12,16 +12,27 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Usuario.Nombres)
+            <a href="@Url.Action("Index", "Administrador", new { sortOrder = ViewBag.NombreSortParm })">
+                @Html.DisplayNameFor(model => model.Usuario.Nombres)
+            </a>        
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Usuario.Apellidos)
+            <a href="@Url.Action("Index", "Administrador", new { sortOrder = ViewBag.ApellidosSortParm })">
+                @Html.DisplayNameFor(model => model.Usuario.Apellidos)
+            </a>
+            
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Usuario.Email)
+            <a href="@Url.Action("Index", "Administrador", new { sortOrder = ViewBag.EmailSortParm })">
+                @Html.DisplayNameFor(model => model.Usuario.Email)
+            </a>
+            
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Usuario.UserName)
+            <a href="@Url.Action("Index", "Administrador", new { sortOrder = ViewBag.UserNameSortParm })">
+                @Html.DisplayNameFor(model => model.Usuario.UserName)
+            </a>
+           
         </th>
         <th> Acciones</th>
     </tr>
