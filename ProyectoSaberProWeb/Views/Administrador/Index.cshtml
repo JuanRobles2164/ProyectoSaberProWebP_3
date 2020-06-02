@@ -7,14 +7,14 @@
 <h2>Administradores</h2>
 
 <p>
-    @Html.ActionLink("Crear nuevo", "Register", "Account", new { @class = "btn btn-success" })
+    @Html.ActionLink("Crear nuevo", "RedirectToRegister", new { @class = "btn btn-primary" })
 </p>
 <table class="table">
     <tr>
         <th>
             <a href="@Url.Action("Index", "Administrador", new { sortOrder = ViewBag.NombreSortParm })">
                 @Html.DisplayNameFor(model => model.Usuario.Nombres)
-            </a>        
+            </a>
         </th>
         <th>
             <a href="@Url.Action("Index", "Administrador", new { sortOrder = ViewBag.ApellidosSortParm })">

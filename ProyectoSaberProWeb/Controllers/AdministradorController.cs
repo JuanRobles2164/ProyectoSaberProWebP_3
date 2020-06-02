@@ -28,6 +28,10 @@ namespace ProyectoSaberProWeb.Controllers
             var usuarios = db.Users.Where(user => user.Roles.All(urm => urm.RoleId == role));
             return usuarios;
         }
+        public ActionResult RedirectToRegister()
+        {
+            return RedirectToAction("Register", "Account");
+        }
 
         // GET: Administrador
         public ActionResult Index(string sortOrder)

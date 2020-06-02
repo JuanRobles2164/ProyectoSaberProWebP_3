@@ -60,31 +60,31 @@ namespace ProyectoSaberProWeb.Models.ViewModels
             switch (sortOrder)
             {
                 case "Nombres":
-                    usuarios.OrderBy(s => s.Nombres);
+                    usuarios = usuarios.OrderBy(s => s.Nombres);
                     break;
                 case "Nombres_desc":
-                    usuarios.OrderByDescending(s => s.Nombres);
+                    usuarios = usuarios.OrderByDescending(s => s.Nombres);
                     break;
                 case "Apellidos":
-                    usuarios.OrderBy(s => s.Apellidos);
+                    usuarios = usuarios.OrderBy(s => s.Apellidos);
                     break;
                 case "Apellidos_desc":
-                    usuarios.OrderByDescending(s => s.Apellidos);
+                    usuarios = usuarios.OrderByDescending(s => s.Apellidos);
                     break;
                 case "Email":
-                    usuarios.OrderBy(s => s.Email);
+                    usuarios = usuarios.OrderBy(s => s.Email);
                     break;
                 case "Email_desc":
                     usuarios.OrderByDescending(s => s.Email);
                     break;
                 case "Username":
-                    usuarios.OrderBy(s => s.UserName);
+                    usuarios = usuarios.OrderBy(s => s.UserName);
                     break;
                 case "Username_desc":
-                    usuarios.OrderByDescending(s => s.UserName);
+                    usuarios = usuarios.OrderByDescending(s => s.UserName);
                     break;
                 default:
-                    usuarios.OrderBy(s => s.Id);
+                    usuarios = usuarios.OrderBy(s => s.Id);
                     break;
             }
             return usuarios;
