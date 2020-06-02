@@ -47,16 +47,24 @@ namespace ProyectoSaberProWeb.Models.ViewModels
         /// <summary>
         /// Trae todos los usuarios que correspondan a un Role con un ordenamiento determinado
         /// </summary>
-        public UserViewModel(ApplicationDbContext db, string role, string sortOrder)
+        public UserViewModel(ApplicationDbContext db, string role, string sortOrder, string searchString, int? page)
         {
-            this.ListaUsuarios = getUsersByRoleId(role, db, sortOrder);
+            this.ListaUsuarios = getUsersByRoleId(role, db, sortOrder, searchString, page);
         }
+
         /// <summary>
-        /// Trae todos los usuarios que correspondan a un Role Especificado con un ordenamiento determinado
+        ///Trae los usuarios de un rol especifico, ordenado por una columna o por id los cuales pertenecen a una pagina especifica
+        /// del paginado o se filtran por lo que se haya buscando en el cuadro de busqueda
         /// </summary>
-        private IEnumerable<ApplicationUser> getUsersByRoleId(string role, ApplicationDbContext db, string sortOrder)
+        private IEnumerable<ApplicationUser> getUsersByRoleId(string role, ApplicationDbContext db, string sortOrder, string searchString, int? page)
         {
             var usuarios = db.Users.Where(user => user.Roles.All(urm => urm.RoleId == role));
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                usuarios = usuarios.Where(s => s.Nombres.Contains(searchString) || s.Apellidos.Contains(searchString));
+            }
+
             switch (sortOrder)
             {
                 case "Nombres":
@@ -87,7 +95,10 @@ namespace ProyectoSaberProWeb.Models.ViewModels
                     usuarios = usuarios.OrderBy(s => s.Id);
                     break;
             }
-            return usuarios;
+
+            int pageSize = 8;
+            int pageNumber = (page ?? 1);
+            return usuarios.ToPagedList(pageNumber, pageSize);
         }
     }
 }

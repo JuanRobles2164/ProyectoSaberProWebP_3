@@ -5,72 +5,89 @@
 }
 
 <h2>Docentes</h2>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Usuario.Nombres)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Usuario.Apellidos)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Usuario.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Usuario.UserName)
-        </th>
-        <th>Acciones</th>
-    </tr>
-
-    @foreach (var item in Model.ListaUsuarios)
+<p>
+    @using (Html.BeginForm())
     {
+    <p align="right">
+        Buscar por Nombres o Apellidos: @Html.TextBox("SearchString")
+        <input type="submit" value="Buscar" class="btn btn-primary" />
+    </p>
+}
+    </p>
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombres)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Apellidos)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                <a href="@Url.Action("Edit", new { id = item.Id })">
-                    <i class="fas fa-pencil-alt">
-                    </i>
+            <th>
+                <a href="@Url.Action("IndexDocentes", "Administrador", new { sortOrder = ViewBag.NombreSortParm })">
+                    @Html.DisplayNameFor(model => model.Usuario.Nombres)
                 </a>
-                &nbsp;&nbsp;
-                <a href="@Url.Action("Details", new { id = item.Id })">
-                    <i class="fas fa-search-plus">
-                    </i>
+            </th>
+            <th>
+                <a href="@Url.Action("IndexDocentes", "Administrador", new { sortOrder = ViewBag.ApellidosSortParm })">
+                    @Html.DisplayNameFor(model => model.Usuario.Apellidos)
                 </a>
-                &nbsp;&nbsp;
-                <a href="@Url.Action("Delete", new { id = item.Id })">
-                    <i class="fas fa-trash-alt">
-                    </i>
+            </th>
+            <th>
+                <a href="@Url.Action("IndexDocentes", "Administrador", new { sortOrder = ViewBag.EmailSortParm })">
+                    @Html.DisplayNameFor(model => model.Usuario.Email)
                 </a>
-            </td>
+            </th>
+            <th>
+                <a href="@Url.Action("IndexDocentes", "Administrador", new { sortOrder = ViewBag.UserNameSortParm })">
+                    @Html.DisplayNameFor(model => model.Usuario.UserName)
+                </a>
+            </th>
+            <th>Acciones</th>
         </tr>
-    }
 
-</table>
-<style>
-    .fa-pencil-alt {
-        color: #EFD30B;
-    }
-
-        .fa-pencil-alt:hover {
-            color: #D3B70B;
+        @foreach (var item in Model.ListaUsuarios)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombres)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Apellidos)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    <a href="@Url.Action("Edit", new { id = item.Id })">
+                        <i class="fas fa-pencil-alt">
+                        </i>
+                    </a>
+                    &nbsp;&nbsp;
+                    <a href="@Url.Action("Details", new { id = item.Id })">
+                        <i class="fas fa-search-plus">
+                        </i>
+                    </a>
+                    &nbsp;&nbsp;
+                    <a href="@Url.Action("Delete", new { id = item.Id })">
+                        <i class="fas fa-trash-alt">
+                        </i>
+                    </a>
+                </td>
+            </tr>
         }
 
-    .fa-trash-alt {
-        color: #DE0E0E;
-    }
-
-        .fa-trash-alt:hover {
-            color: #A00C0C;
+    </table>
+    <style>
+        .fa-pencil-alt {
+            color: #EFD30B;
         }
-</style>
+
+            .fa-pencil-alt:hover {
+                color: #D3B70B;
+            }
+
+        .fa-trash-alt {
+            color: #DE0E0E;
+        }
+
+            .fa-trash-alt:hover {
+                color: #A00C0C;
+            }
+    </style>

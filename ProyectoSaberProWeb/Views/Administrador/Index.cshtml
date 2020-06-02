@@ -1,4 +1,6 @@
-﻿@model ProyectoSaberProWeb.Models.ViewModels.UserViewModel
+﻿@model PagedList.IPagedList<ProyectoSaberProWeb.Models.ViewModels.UserViewModel>
+@using PagedList.Mvc
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "Index";
@@ -7,81 +9,94 @@
 <h2>Administradores</h2>
 
 <p>
-    @Html.ActionLink("Crear nuevo", "RedirectToRegister", new { @class = "btn btn-primary" })
-</p>
-<table class="table">
-    <tr>
-        <th>
-            <a href="@Url.Action("Index", "Administrador", new { sortOrder = ViewBag.NombreSortParm })">
-                @Html.DisplayNameFor(model => model.Usuario.Nombres)
-            </a>
-        </th>
-        <th>
-            <a href="@Url.Action("Index", "Administrador", new { sortOrder = ViewBag.ApellidosSortParm })">
-                @Html.DisplayNameFor(model => model.Usuario.Apellidos)
-            </a>
-            
-        </th>
-        <th>
-            <a href="@Url.Action("Index", "Administrador", new { sortOrder = ViewBag.EmailSortParm })">
-                @Html.DisplayNameFor(model => model.Usuario.Email)
-            </a>
-            
-        </th>
-        <th>
-            <a href="@Url.Action("Index", "Administrador", new { sortOrder = ViewBag.UserNameSortParm })">
-                @Html.DisplayNameFor(model => model.Usuario.UserName)
-            </a>
-           
-        </th>
-        <th> Acciones</th>
-    </tr>
-
-@foreach (var item in Model.ListaUsuarios) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombres)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Apellidos)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserName)
-        </td>
-        <td>
-            <a href="@Url.Action("Edit", new { id = item.Id })">
-                <i class="fas fa-pencil-alt">
-                </i>
-            </a>
-            &nbsp;&nbsp;
-            <a href="@Url.Action("Details", new { id = item.Id })">
-                <i class="fas fa-search-plus">
-                </i>
-            </a>
-            &nbsp;&nbsp;
-            <a href="@Url.Action("Delete", new { id = item.Id })">
-                <i class="fas fa-trash-alt">
-                </i>
-            </a>
-        </td>
-    </tr>
+    <a href="@Url.Action("Register", "Account")" class="btn btn-success">
+        Crear nuevo
+    </a>
+    @using (Html.BeginForm("Index", "Administrador", FormMethod.Get))
+    {
+    <p align="right">
+        Buscar por Nombres o Apellidos: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Buscar" class="btn btn-primary" />
+    </p>
 }
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                <a href="@Url.Action("Index", "Administrador", new { sortOrder = ViewBag.NombreSortParm, currentFilter = ViewBag.CurrentFilter })">
+                    @Html.DisplayNameFor(model => model.Usuario.Nombres)
+                </a>
+            </th>
+            <th>
+                <a href="@Url.Action("Index", "Administrador", new { sortOrder = ViewBag.ApellidosSortParm, currentFilter = ViewBag.CurrentFilter })">
+                    @Html.DisplayNameFor(model => model.Usuario.Apellidos)
+                </a>
+            </th>
+            <th>
+                <a href="@Url.Action("Index", "Administrador", new { sortOrder = ViewBag.EmailSortParm, currentFilter = ViewBag.CurrentFilter })">
+                    @Html.DisplayNameFor(model => model.Usuario.Email)
+                </a>
+            </th>
+            <th>
+                <a href="@Url.Action("Index", "Administrador", new { sortOrder = ViewBag.UserNameSortParm, currentFilter = ViewBag.CurrentFilter })">
+                    @Html.DisplayNameFor(model => model.Usuario.UserName)
+                </a>
+            </th>
+            <th> Acciones</th>
+        </tr>
 
-</table>
-<style>
-    .fa-pencil-alt {
-        color: #EFD30B;
-    }
-    .fa-pencil-alt:hover {
-        color: #D3B70B;
-    }
-    .fa-trash-alt {
-        color: #DE0E0E;
-    }
-    .fa-trash-alt:hover {
-        color: #A00C0C;
-    }
-</style>
+        @foreach (var item in Model.ListaUsuarios)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombres)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Apellidos)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    <a href="@Url.Action("Edit", new { id = item.Id })">
+                        <i class="fas fa-pencil-alt">
+                        </i>
+                    </a>
+                    &nbsp;&nbsp;
+                    <a href="@Url.Action("Details", new { id = item.Id })">
+                        <i class="fas fa-search-plus">
+                        </i>
+                    </a>
+                    &nbsp;&nbsp;
+                    <a href="@Url.Action("Delete", new { id = item.Id })">
+                        <i class="fas fa-trash-alt">
+                        </i>
+                    </a>
+                </td>
+            </tr>
+        }
+
+    </table>
+    <br />
+    Pagina @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    <style>
+        .fa-pencil-alt {
+            color: #EFD30B;
+        }
+
+            .fa-pencil-alt:hover {
+                color: #D3B70B;
+            }
+
+        .fa-trash-alt {
+            color: #DE0E0E;
+        }
+
+            .fa-trash-alt:hover {
+                color: #A00C0C;
+            }
+    </style>
