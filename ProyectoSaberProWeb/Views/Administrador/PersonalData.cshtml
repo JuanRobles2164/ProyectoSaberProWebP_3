@@ -1,0 +1,34 @@
+﻿@model ProyectoSaberProWeb.Models.ViewModels.PersonalDataViewModel
+
+@{
+    ViewBag.Title = "PersonalData";
+}
+
+<h2>PersonalData</h2>
+<div class="container">
+    @using (Html.BeginForm(FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.HiddenFor(model => model.UsuarioPerfil.Id)
+
+        @Html.LabelFor(model => model.UsuarioPerfil.Nombres)
+        @Html.EditorFor(model => model.UsuarioPerfil.Nombres)
+
+        @Html.LabelFor(model => model.UsuarioPerfil.Apellidos)
+        @Html.EditorFor(model => model.UsuarioPerfil.Nombres)
+
+        @Html.LabelFor(model => model.UsuarioPerfil.Email)
+        @Html.EditorFor(model => model.UsuarioPerfil.Nombres)
+
+        @Html.LabelFor(model => model.UsuarioPerfil.UserName)
+        @Html.EditorFor(model => model.UsuarioPerfil.UserName)
+
+        @Html.LabelFor(model => model.UsuarioPerfil.Ciudad)
+        @Html.DropDownListFor(model => model.Ciudades, Model.Ciudades)
+
+        <button type="submit">
+            Editar
+        </button>
+    }
+</div>

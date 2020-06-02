@@ -270,6 +270,8 @@
     <Compile Include="Models\Prueba_Estudiante.cs" />
     <Compile Include="Models\TipoPregunta.cs" />
     <Compile Include="Models\ViewModels\CompetenciaViewModel.cs" />
+    <Compile Include="Models\ViewModels\EstudianteViewModel.cs" />
+    <Compile Include="Models\ViewModels\PersonalDataViewModel.cs" />
     <Compile Include="Models\ViewModels\PreguntaViewModel.cs" />
     <Compile Include="Models\ViewModels\PruebaViewModel.cs" />
     <Compile Include="Models\ViewModels\RespondeCompetenciaPruebaViewModel.cs" />
@@ -2115,10 +2117,14 @@
     <Content Include="Views\Shared\_LayoutAlumno.cshtml" />
     <Content Include="Views\Respuestas\Create.cshtml" />
     <Content Include="Views\Home\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account\InvalidAccount.cshtml" />
+    <Content Include="Views\Docente\Index.cshtml" />
+    <Content Include="Views\Administrador\PersonalData.cshtml" />
+    <Content Include="Views\Estudiante\PersonalData.cshtml" />
+    <Content Include="Views\Docente\PersonalData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Docente\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

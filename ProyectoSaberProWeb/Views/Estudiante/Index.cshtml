@@ -1,7 +1,17 @@
-﻿
+﻿@model ProyectoSaberProWeb.Models.ViewModels.EstudianteViewModel
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Index</h2>
 
+<div class="container">
+    @using (Html.BeginForm())
+    {
+        @Html.LabelFor(model => model.PruebaLabels.Nombre)
+
+        <button type="button">
+            Responder
+        </button>
+    }
+</div>

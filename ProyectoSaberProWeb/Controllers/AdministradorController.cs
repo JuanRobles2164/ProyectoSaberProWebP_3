@@ -143,6 +143,12 @@ namespace ProyectoSaberProWeb.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        public ActionResult PersonalData()
+        {
+            var id = User.Identity.GetUserId();
+            PersonalDataViewModel pdvm = new PersonalDataViewModel(db, id);
+            return View(pdvm);
+        }
 
         protected override void Dispose(bool disposing)
         {
