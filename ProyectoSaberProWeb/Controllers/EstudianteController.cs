@@ -15,16 +15,18 @@ namespace ProyectoSaberProWeb.Controllers
         // GET: Estudiante
         public ActionResult Index()
         {
-            return View();
+            RespondeCompetenciaPruebaViewModel rcpvm = new RespondeCompetenciaPruebaViewModel(db);
+            return View(rcpvm);
         }
 
         /// <summary>
         /// Este método sólo retornará la vista con la tabla de las pruebas calificadas
         /// </summary>
         /// <returns></returns>
-        public ActionResult MiraResultados()
+        [HttpPost]
+        public ActionResult ResolverPrueba(RespondeCompetenciaPruebaViewModel rcpvm)
         {
-            return View();
+            return RedirectToAction("Responder","Respuestas",new { PruebaId = rcpvm.PruebaPresentando.ID, CompetenciaId = rcpvm.CompetenciaPresentando.ID });
         }
 
         /// <summary>
@@ -43,7 +45,7 @@ namespace ProyectoSaberProWeb.Controllers
         /// </summary>
         /// <param name="pruebaId">int</param>
         /// <returns></returns>
-        public ActionResult PresentaPrueba(int? pruebaId)
+        public ActionResult PresentaPrueba(int? PruebaId, int? CompetenciaId)
         {
             return View();
         }
@@ -53,7 +55,7 @@ namespace ProyectoSaberProWeb.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult RespondePregunta(int id)
+        public ActionResult SiguienteCompetencia(int id)
         {
             return View();
         }
@@ -61,59 +63,6 @@ namespace ProyectoSaberProWeb.Controllers
         /// Recoge la respuesta enviada por un estudiante y devuelve la vista de la siguiente
         /// </summary>
         /// <returns></returns>
-        [HttpPost]
-        public ActionResult RespondePregunta()
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-
-        // POST: Estudiante/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Estudiante/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Estudiante/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
         public ActionResult PersonalData()
         {
             var id = User.Identity.GetUserId();

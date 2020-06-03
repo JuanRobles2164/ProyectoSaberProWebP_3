@@ -1,4 +1,4 @@
-﻿@model ProyectoSaberProWeb.Models.ViewModels.EstudianteViewModel
+﻿@model ProyectoSaberProWeb.Models.ViewModels.RespondeCompetenciaPruebaViewModel
 @{
     ViewBag.Title = "Index";
 }
@@ -6,12 +6,17 @@
 <h2>Index</h2>
 
 <div class="container">
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("ResolverPrueba", "Estudiante",FormMethod.Post))
     {
-        @Html.LabelFor(model => model.PruebaLabels.Nombre)
 
-        <button type="button">
-            Responder
+        @Html.LabelFor(model => model.PruebaPresentando.Nombre)
+        @Html.DropDownListFor(model => model.PruebaPresentando.ID, Model.ListaPruebas, new { @class = "form-control" })
+        <br />
+        @Html.LabelFor(model => model.CompetenciaPresentando.Nombre)
+        @Html.DropDownListFor(model => model.CompetenciaPresentando.ID, Model.ListaCompetencias, new { @class = "form-control" })
+        <br />
+        <button type="submit" class="btn btn-primary">
+            Siguiente competencia
         </button>
     }
 </div>

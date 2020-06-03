@@ -11,6 +11,9 @@ namespace ProyectoSaberProWeb.Models.ViewModels
         public Prueba PruebaLabels { get; set; }
         public IEnumerable<Competencia> ListaCompetencias { get; set; }
         public IEnumerable<Prueba> ListaPruebas { get; set; }
+        private int competenciaActualId { get; set; }
+        private int competenciaSiguienteId { get; set; }
+        private int competenciaAnteriorId { get; set; }
         private void setAllData()
         {
             CompetenciaLabels = new Competencia();
@@ -27,6 +30,10 @@ namespace ProyectoSaberProWeb.Models.ViewModels
         public EstudianteViewModel(ApplicationDbContext db)
         {
             setAllData(db);
+        }
+        public EstudianteViewModel(ApplicationDbContext db, int CompetenciaId, int PruebaId)
+        {
+
         }
     }
 }

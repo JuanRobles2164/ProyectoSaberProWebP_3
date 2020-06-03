@@ -22,13 +22,33 @@ namespace ProyectoSaberProWeb.Controllers
         /// <param name="pregunta_Estudiante"></param>
         /// <returns></returns>
         
-        public ActionResult Create()
+        public ActionResult Responder(int? CompetenciaId, int? PruebaId)
         {
-            RespondeCompetenciaPruebaViewModel rcpv = new RespondeCompetenciaPruebaViewModel(db);
-            return View(rcpv);
+            int competencia_id;
+            int prueba_id;
+            if (CompetenciaId == null)
+            {
+                competencia_id = ViewBag.CompetenciaId;
+            }
+            else
+            {
+                competencia_id = Int32.Parse(""+ CompetenciaId);
+            }
+            if (PruebaId == null)
+            {
+                prueba_id = ViewBag.PruebaId;
+            }
+            else
+            {
+                prueba_id = Int32.Parse(""+PruebaId);
+            }
+            RespondeCompetenciaPruebaViewModel rcpv = new RespondeCompetenciaPruebaViewModel(db, competencia_id, prueba_id);
+            ViewBag.CompetenciaId = competencia_id;
+            ViewBag.PruebaId = prueba_id;
+            return View("Create", rcpv);
         }
         [HttpPost]
-        public JsonResult Create(Pregunta_Estudiante pe)
+        public JsonResult GuardaRespuesta(Pregunta_Estudiante pe)
         {
             var userEmail = User.Identity.Name;
             var userQuery = db.Users.Where(x => x.Email == userEmail).First();

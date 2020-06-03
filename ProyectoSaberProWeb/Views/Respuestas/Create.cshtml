@@ -4,31 +4,46 @@
     ViewBag.Title = "Responder prueba";
 }
 
-<h2>Create</h2>
+<h1>
+    Presentando la prueba:
+    @Model.PruebaPresentando.Nombre
+</h1>
+<br />
+<h2>
+    Competencia:
+    @Model.CompetenciaPresentando.Nombre
+</h2>
 
-@using (Html.BeginForm("Create", "Respuestas", FormMethod.Post))
-{
+
+    @Html.HiddenFor(model => model.CompetenciaPresentando, Model.CompetenciaPresentando)
+    @Html.HiddenFor(model => model.PruebaPresentando.ID, Model.PruebaPresentando)
     <div class="container">
         @foreach (var item in Model.ListaPreguntas)
         {
             <div class="container-sm">
                 <h5>
-                    @item.Contexto
+                    @foreach (var con in Model.PreguntaContexto.Where(x => x.Key == item.ID).ToList())
+                    {
+
+                        @con.Value.Descripcion
+
+                    }
                 </h5>
                 <label>
                     @item.Descripcion
                 </label>
-                @foreach (var i in Model.OpcionesPregunta.Where(x => x.Key == item.ID))
+                @foreach (var i in Model.OpcionesPregunta.Where(x => x.Key == item.ID).ToList())
                 {
                     foreach (var j in i.Value)
                     {
                         <div>
-                            @Html.RadioButtonFor(z => j.Correcta, "true", 
-                            htmlAttributes: 
-                                new { 
-                                    @class = "rb_custom", 
-                                    @Name = "PreguntaId_" + j.PreguntaId, 
-                                    @Onclick = "guardaProgreso("+j.ID+", "+item.ID+")"
+                            @Html.RadioButtonFor(z => j.Correcta, "true",
+                            htmlAttributes:
+                                new
+                                     {
+                                    @class = "rb_custom",
+                                    @Name = "PreguntaId_" + j.PreguntaId,
+                                    @Onclick = "guardaProgreso(" + j.ID + ", " + item.ID + ")"
                                     })
                             <p>
                                 @j.Descripcion
@@ -41,27 +56,25 @@
             </div>
         }
     </div>
-    <button type="submit">
-        Enviar
-    </button>
-}
+    @Url.Action("", "", new { })
+
 
 
 @*@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+    {
+        @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>Prueba_Estudiante</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+        <div class="form-horizontal">
+            <h4>Prueba_Estudiante</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
             </div>
         </div>
-    </div>
-}
+    }
 *@
 
 
@@ -71,7 +84,7 @@
     });
     function guardaProgreso(opcionId, preguntaId){
         $.ajax({
-            url: '@Url.Action("Create", "Respuestas")',
+            url: '@Url.Action("GuardaRespuesta", "Respuestas")',
             type: 'POST',
             data: {
                 'OpcionId': opcionId,
