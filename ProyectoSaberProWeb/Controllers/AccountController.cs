@@ -414,7 +414,12 @@ namespace ProyectoSaberProWeb.Controllers
 
                             break;
                     }*/
-                    return RedirectToAction("Index", "Home");
+                    var user = db.Users.Where(x => x.Email == loginInfo.Email).First();
+                    if (UserManager.IsInRole(user.Id, "Docente"))
+                    {
+                        return RedirectToAction("Index", "Docente");
+                    }
+                    return RedirectToAction("Index", "Estudiante");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -439,10 +444,18 @@ namespace ProyectoSaberProWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
         {
+            if (!model.Email.Contains("@udi.edu.co"))
+            {
+                return View("InvalidAccount");
+            }
             if (User.Identity.IsAuthenticated)
             {
-                //redirigir por roles
-                return RedirectToAction("Index", "Manage");
+                var user = db.Users.Where(x => x.Email == model.Email).First();
+                if (UserManager.IsInRole(user.Id, "Docente"))
+                {
+                    return RedirectToAction("Index", "Docente");
+                }
+                return RedirectToAction("Index", "Estudiante");
             }
             if (ModelState.IsValid)
             {

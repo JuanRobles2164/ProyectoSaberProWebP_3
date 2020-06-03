@@ -34,37 +34,74 @@ namespace ProyectoSaberProWeb.Controllers
         }
 
         // GET: Administrador
-        public ActionResult Index(string sortOrder)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            //Ordenamiento por columnas
+            ViewBag.CurrentSort = sortOrder;
+            //Se le asigna al viewbag el valor dependiendo del valor que traiga para alternal el ordenamiento entre ascendente y descendente
             ViewBag.NombreSortParm = sortOrder == "Nombres" ? "Nombres_desc" : "Nombres";
             ViewBag.ApellidosSortParm = sortOrder == "Apellidos" ? "Apellidos_desc" : "Apellidos";
             ViewBag.EmailSortParm = sortOrder == "Email" ? "Email_desc" : "Email";
             ViewBag.UserNameSortParm = sortOrder == "Username" ? "Username_desc" : "Username";
+            //condicional para saber si se tiene algun valor de textbox de busqueda
 
-            //Trae todos los usuarios que sean admin
-            UserViewModel adminUsers = new UserViewModel(db, adminRole, sortOrder);
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewBag.CurrentFilter = searchString;
+            //Trae todos los usuarios que sean admin ordenados y paginados
+            //Se le pasa la base de datos el tipo de rol de los usuarios que se quiere traer, lo que contiene el cuadro de busqueda, la pagina y el ordenamiento
+            UserViewModel adminUsers = new UserViewModel(db, adminRole, sortOrder, searchString, page);
+
+
             //return View(db.Users.ToList());
             return View(adminUsers);
         }
-        public ActionResult IndexAlumnos(string sortOrder)
+        public ActionResult IndexAlumnos(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            ViewBag.CurrentSort = sortOrder;
             ViewBag.NombreSortParm = sortOrder == "Nombres" ? "Nombres_desc" : "Nombres";
             ViewBag.ApellidosSortParm = sortOrder == "Apellidos" ? "Apellidos_desc" : "Apellidos";
             ViewBag.EmailSortParm = sortOrder == "Email" ? "Email_desc" : "Email";
             ViewBag.UserNameSortParm = sortOrder == "Username" ? "Username_desc" : "Username";
 
-            UserViewModel alumnoUsers = new UserViewModel(db, alumnoRole, sortOrder);
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewBag.CurrentFilter = searchString;
+            UserViewModel alumnoUsers = new UserViewModel(db, alumnoRole, sortOrder, searchString, page);
 
             return View(alumnoUsers);
         }
-        public ActionResult IndexDocentes(string sortOrder)
+        public ActionResult IndexDocentes(string sortOrder, string currentFilter, string searchString, int? page)
         {
+            ViewBag.CurrentSort = sortOrder;
             ViewBag.NombreSortParm = sortOrder == "Nombres" ? "Nombres_desc" : "Nombres";
             ViewBag.ApellidosSortParm = sortOrder == "Apellidos" ? "Apellidos_desc" : "Apellidos";
             ViewBag.EmailSortParm = sortOrder == "Email" ? "Email_desc" : "Email";
             ViewBag.UserNameSortParm = sortOrder == "Username" ? "Username_desc" : "Username";
 
-            UserViewModel docenteUsers = new UserViewModel(db, docenteRole, sortOrder);
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewBag.CurrentFilter = searchString;
+            UserViewModel docenteUsers = new UserViewModel(db, docenteRole, sortOrder, searchString, page);
+
             return View(docenteUsers);
         }
         // GET: Administrador/Details/5
@@ -142,6 +179,12 @@ namespace ProyectoSaberProWeb.Controllers
             db.Users.Remove(applicationUser);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+        public ActionResult PersonalData()
+        {
+            var id = User.Identity.GetUserId();
+            PersonalDataViewModel pdvm = new PersonalDataViewModel(db, id);
+            return View(pdvm);
         }
 
         protected override void Dispose(bool disposing)

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using ProyectoSaberProWeb.Models;
+using ProyectoSaberProWeb.Models.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +11,7 @@ namespace ProyectoSaberProWeb.Controllers
 {
     public class EstudianteController : Controller
     {
+        private readonly ApplicationDbContext db = new ApplicationDbContext();
         // GET: Estudiante
         public ActionResult Index()
         {
@@ -109,6 +113,12 @@ namespace ProyectoSaberProWeb.Controllers
             {
                 return View();
             }
+        }
+        public ActionResult PersonalData()
+        {
+            var id = User.Identity.GetUserId();
+            PersonalDataViewModel pdvm = new PersonalDataViewModel(db, id);
+            return View(pdvm);
         }
     }
 }
