@@ -1,4 +1,5 @@
-﻿@model PagedList.IPagedList<ProyectoSaberProWeb.Models.ViewModels.UserViewModel>
+﻿<!--model  PagedList.IPagedList<ProyectoSaberProWeb.Models.ViewModels.UserViewModel>-->
+@model ProyectoSaberProWeb.Models.ViewModels.UserViewModel
 @using PagedList.Mvc
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
@@ -81,8 +82,8 @@
 
     </table>
     <br />
-    Pagina @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
-    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    <!-- Pagina (Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de Model.PageCount
+     Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))-->
     <style>
         .fa-pencil-alt {
             color: #EFD30B;
