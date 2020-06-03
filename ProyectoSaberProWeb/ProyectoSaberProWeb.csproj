@@ -267,12 +267,14 @@
     <Compile Include="Models\Contexto.cs" />
     <Compile Include="Models\Departamento.cs" />
     <Compile Include="Models\Estado.cs" />
+    <Compile Include="Models\EstadoCompetencia.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Opcion.cs" />
     <Compile Include="Models\Pregunta.cs" />
     <Compile Include="Models\Pregunta_Estudiante.cs" />
     <Compile Include="Models\Prueba.cs" />
+    <Compile Include="Models\CompetenciaPrueba.cs" />
     <Compile Include="Models\Prueba_Estudiante.cs" />
     <Compile Include="Models\TipoPregunta.cs" />
     <Compile Include="Models\ViewModels\CompetenciaViewModel.cs" />

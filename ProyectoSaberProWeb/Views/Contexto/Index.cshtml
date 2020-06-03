@@ -1,4 +1,6 @@
-﻿@model IEnumerable<ProyectoSaberProWeb.Models.Contexto>
+﻿@model PagedList.IPagedList<ProyectoSaberProWeb.Models.Contexto>
+@using PagedList.Mvc
+@Styles.Render("~/Content/PagedList.css")
 
 @{
     ViewBag.Title = "Index";
@@ -8,60 +10,72 @@
 
 <p>
     @Html.ActionLink("Crear nuevo", "Create", "Contexto", new { @class = "btn btn-success" })
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Descripcion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Estado)
-        </th>
-        <th>Acciones</th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Descripcion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Estado)
-        </td>
-        <td>
-            <a href="@Url.Action("Edit", new { id = item.ID })">
-                <i class="fas fa-pencil-alt">
-                </i>
-            </a>
-            &nbsp;&nbsp;
-            <a href="@Url.Action("Details", new { id = item.ID })">
-                <i class="fas fa-search-plus">
-                </i>
-            </a>
-            &nbsp;&nbsp;
-            <a href="@Url.Action("Delete", new { id = item.ID })">
-                <i class="fas fa-trash-alt">
-                </i>
-            </a>
-        </td>
-    </tr>
+    @using (Html.BeginForm("Index", "Contexto", FormMethod.Get))
+    {
+    <p align="right">
+        Buscar por Descripcion: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Buscar" class="btn btn-primary" />
+    </p>
 }
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.ActionLink("Descripcion", "Index", new { sortOrder = ViewBag.DescripcionSortParm, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink("Estado", "Index", new { sortOrder = ViewBag.EstadoSortParm, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th>Acciones</th>
+        </tr>
 
-</table>
-<style>
-    .fa-pencil-alt {
-        color: #EFD30B;
-    }
-
-        .fa-pencil-alt:hover {
-            color: #D3B70B;
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Estado)
+                </td>
+                <td>
+                    <a href="@Url.Action("Edit", new { id = item.ID })">
+                        <i class="fas fa-pencil-alt">
+                        </i>
+                    </a>
+                    &nbsp;&nbsp;
+                    <a href="@Url.Action("Details", new { id = item.ID })">
+                        <i class="fas fa-search-plus">
+                        </i>
+                    </a>
+                    &nbsp;&nbsp;
+                    <a href="@Url.Action("Delete", new { id = item.ID })">
+                        <i class="fas fa-trash-alt">
+                        </i>
+                    </a>
+                </td>
+            </tr>
         }
 
-    .fa-trash-alt {
-        color: #DE0E0E;
-    }
+    </table>
+    Pagina @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
 
-        .fa-trash-alt:hover {
-            color: #A00C0C;
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    <style>
+        .fa-pencil-alt {
+            color: #EFD30B;
         }
-</style>
+
+            .fa-pencil-alt:hover {
+                color: #D3B70B;
+            }
+
+        .fa-trash-alt {
+            color: #DE0E0E;
+        }
+
+            .fa-trash-alt:hover {
+                color: #A00C0C;
+            }
+    </style>

@@ -9,6 +9,7 @@ namespace ProyectoSaberProWeb.Models.ViewModels
     public class UserViewModel
     {
         public IEnumerable<ApplicationUser> ListaUsuarios { get; set; }
+        public IPagedList<ApplicationUser> ListaUsuariosP { get; set; }
         public ApplicationUser Usuario { get; set; }
         public string Message { get; set; }
         /// <summary>
@@ -50,18 +51,18 @@ namespace ProyectoSaberProWeb.Models.ViewModels
         /// </summary>
         public UserViewModel(ApplicationDbContext db, string role, string sortOrder, string searchString, int? page)
         {
-            this.ListaUsuarios = getUsersByRoleId(role, db, sortOrder, searchString, page);
+            this.ListaUsuariosP = getUsersByRoleId(role, db, sortOrder, searchString, page);
         }
 
         /// <summary>
         ///Trae los usuarios de un rol especifico, ordenado por una columna o por id los cuales pertenecen a una pagina especifica
         /// del paginado o se filtran por lo que se haya buscando en el cuadro de busqueda
         /// </summary>
-        private IEnumerable<ApplicationUser> getUsersByRoleId(string role, ApplicationDbContext db, string sortOrder, string searchString, int? page)
+        private IPagedList<ApplicationUser> getUsersByRoleId(string role, ApplicationDbContext db, string sortOrder, string searchString, int? page)
         {
             var usuarios = db.Users.Where(user => user.Roles.All(urm => urm.RoleId == role));
 
-            if (!String.IsNullOrEmpty(searchString))
+            if (!string.IsNullOrEmpty(searchString))
             {
                 usuarios = usuarios.Where(s => s.Nombres.Contains(searchString) || s.Apellidos.Contains(searchString));
             }
@@ -84,7 +85,7 @@ namespace ProyectoSaberProWeb.Models.ViewModels
                     usuarios = usuarios.OrderBy(s => s.Email);
                     break;
                 case "Email_desc":
-                    usuarios.OrderByDescending(s => s.Email);
+                    usuarios = usuarios.OrderByDescending(s => s.Email);
                     break;
                 case "Username":
                     usuarios = usuarios.OrderBy(s => s.UserName);
