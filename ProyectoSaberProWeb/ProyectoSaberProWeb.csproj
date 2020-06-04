@@ -277,6 +277,7 @@
     <Compile Include="Models\CompetenciaPrueba.cs" />
     <Compile Include="Models\Prueba_Estudiante.cs" />
     <Compile Include="Models\TipoPregunta.cs" />
+    <Compile Include="Models\ViewModels\CalificarPruebaViewModel.cs" />
     <Compile Include="Models\ViewModels\CompetenciaViewModel.cs" />
     <Compile Include="Models\ViewModels\EstudianteViewModel.cs" />
     <Compile Include="Models\ViewModels\PersonalDataViewModel.cs" />

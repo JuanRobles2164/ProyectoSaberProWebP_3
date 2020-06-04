@@ -37,7 +37,7 @@ namespace ProyectoSaberProWeb.Models.ViewModels
                 OpcionesC =  (int) db.opciones.Where(a => a.Correcta == true && a.PreguntaId == p.ID).Select(a => a.ID).First();
                 OpcionesCorrectas.Add(db.opciones.Where(a => a.Correcta == true && a.PreguntaId == p.ID).First());
                 OpcionC.Add(p.ID, OpcionesC);
-                OpcionesR =(int) db.preguntas_estudiantes.Where(a => a.User_Id == idUser && a.PreguntaId == p.ID).Select(a => a.OpcionId).First());
+                OpcionesR =(int) db.preguntas_estudiantes.Where(a => a.User_Id == idUser && a.PreguntaId == p.ID).Select(a => a.OpcionId).First();
                 OpcionesRespondidas.Add(db.preguntas_estudiantes.Where(a => a.User_Id == idUser && a.PreguntaId == p.ID).First());
                 OR.Add(OpcionesR);
                 foreach (var Or in OR)

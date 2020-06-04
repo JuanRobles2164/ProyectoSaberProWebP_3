@@ -2,11 +2,27 @@
 
 @{
     ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h2>Eliminar Competencia</h2>
+<div class="form-horizontal">
+    <div class="form-row">
+        <div class="col">
+            <h3>Esta seguro de eliminar esta competencia?</h3>
+        </div>
+        <div class="col" align="right">
+            &nbsp;
+            <a href="@Url.Action("index")">
+                <i class="far fa-arrow-alt-circle-left fa-2x">
+                </i>
+            </a>
+            <!--Aqui debe mirar a cual index debe volver-->
+        </div>
+    </div>
+</div>
+
 <div>
     <h4>Competencia</h4>
     <hr />
@@ -21,12 +37,12 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Delete" class="btn btn-danger" /> 
         </div>
     }
 </div>

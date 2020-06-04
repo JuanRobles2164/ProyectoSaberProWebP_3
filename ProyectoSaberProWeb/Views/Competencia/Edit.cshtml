@@ -2,16 +2,26 @@
 
 @{
     ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-
-<h2>Edit</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
     <div class="form-horizontal">
-        <h4>Competencia</h4>
+        <div class="form-row">
+            <div class="col">
+                <h2>Editar Competencia</h2>
+            </div>
+            <div class="col" align="right">
+                &nbsp;
+                <a href="@Url.Action("index")">
+                    <i class="far fa-arrow-alt-circle-left fa-2x">
+                    </i>
+                </a>
+                <!--Aqui debe mirar a cual index debe volver-->
+            </div>
+        </div>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.ID)
@@ -26,12 +36,9 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-success" />
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
