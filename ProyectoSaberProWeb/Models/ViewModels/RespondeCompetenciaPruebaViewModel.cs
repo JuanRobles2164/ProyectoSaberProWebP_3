@@ -37,12 +37,61 @@ namespace ProyectoSaberProWeb.Models.ViewModels
         /// El int representa al id de la pregunta a la que le corresponden esas opciones
         /// </summary>
         
-        public int SiguienteCompetencia { get; set; }
         public Dictionary<int, IEnumerable<Opcion>> OpcionesPregunta { get; set; }
         public string Message { get; set; }
-        private void determinaSiguienteCompetencia(ApplicationDbContext db, int CompetenciaActual)
+
+        public IEnumerable<CompetenciaPrueba> CompetenciasFaltantes { get; set; }
+        public IEnumerable<Pregunta_Estudiante> Respuestas { get; set; }
+        public void DeterminarCompetenciasFaltantes(ApplicationDbContext db, string UserId, int PruebaId)
         {
 
+        }
+        /// <summary>
+        /// Marca una competencia como completada
+        /// Lo usaremos cada que inicie empiece a responder una
+        /// </summary>
+        /// <param name="db"></param>
+        /// <param name="UserId"></param>
+        /// <param name="CompetenciaId"></param>
+        /// /// <param name="PruebaId"></param>
+        
+        public void CompletarCompetencia(ApplicationDbContext db, string UserId, int CompetenciaId, int PruebaId)
+        {
+            if (PrimeraVez(db, UserId, PruebaId) == 0)
+            {
+                //Si es la primera vez que abre la prueba, todas las competencias están sin responder
+                var Competencias = db.competencias.ToList();
+                foreach (var i in Competencias)
+                {
+                    CompetenciaPrueba Cp = new CompetenciaPrueba();
+                    Cp.Estado = EstadoCompetencia.SinResponder;
+                    Cp.CompetenciaId = i.ID;
+                    Cp.UserId = UserId;
+                    Cp.PruebaId = PruebaId;
+
+                    //guarda en la BD
+                    db.competencias_pruebas.Add(Cp);
+                }
+                db.SaveChanges();
+            }
+
+            //La competencia que intentará responder a continuación, quedará marcada como completada
+            var CompetenciaActualiza = db.competencias_pruebas.Where(x => x.CompetenciaId == CompetenciaId
+                                                        && x.PruebaId == PruebaId
+                                                        && x.UserId == UserId)
+                                                 .First();
+            CompetenciaActualiza.Estado = EstadoCompetencia.Presentada;
+            db.SaveChanges();
+            //Consulta las competencias que no ha empezado a responder
+            CompetenciasFaltantes = db.competencias_pruebas.Where(x => x.Estado == EstadoCompetencia.SinResponder 
+                                                                    && x.PruebaId == PruebaId 
+                                                                    && x.UserId == UserId)
+                                        .ToList();
+
+        }
+        private int PrimeraVez(ApplicationDbContext db, string UserId, int PruebaId)
+        {
+            return db.competencias_pruebas.Where(x => x.UserId == UserId && x.PruebaId == PruebaId).ToList().Count;
         }
         private void initializeData(ApplicationDbContext db) 
         {

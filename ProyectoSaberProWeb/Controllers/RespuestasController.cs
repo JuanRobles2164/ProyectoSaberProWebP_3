@@ -43,6 +43,10 @@ namespace ProyectoSaberProWeb.Controllers
                 prueba_id = Int32.Parse(""+PruebaId);
             }
             RespondeCompetenciaPruebaViewModel rcpv = new RespondeCompetenciaPruebaViewModel(db, competencia_id, prueba_id);
+            var userEmail = User.Identity.Name;
+            var userQuery = db.Users.Where(x => x.Email == userEmail).First();
+
+            rcpv.CompletarCompetencia(db, userQuery.Id, competencia_id, prueba_id);
             ViewBag.CompetenciaId = competencia_id;
             ViewBag.PruebaId = prueba_id;
             return View("Create", rcpv);

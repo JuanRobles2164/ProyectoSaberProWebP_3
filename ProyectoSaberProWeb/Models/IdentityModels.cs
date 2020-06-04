@@ -52,6 +52,7 @@ namespace ProyectoSaberProWeb.Models
         public DbSet<Pregunta> preguntas { get; set; }
         public DbSet<Pregunta_Estudiante> preguntas_estudiantes { get;set;}
         public DbSet<Prueba> pruebas { get; set; }
+        public DbSet<CompetenciaPrueba> competencias_pruebas { get; set; }
 
         //public System.Data.Entity.DbSet<ProyectoSaberProWeb.Models.ApplicationUser> ApplicationUsers { get; set; }
         //public DbSet<> {get;set;}

@@ -19,10 +19,9 @@ namespace ProyectoSaberProWeb.Models
         [Display(Name = "Competencia completada")]
         public int CompetenciaId { get; set; }
         public virtual Competencia Competencia { get; set; }
-        [Required]
         [ForeignKey("User")]
         [Display(Name = "Estudiante que presento")]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public virtual ApplicationUser User { get; set; }
         
         [Required]
