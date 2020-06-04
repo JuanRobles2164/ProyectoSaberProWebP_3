@@ -15,12 +15,13 @@ namespace ProyectoSaberProWeb.Util
             var usuarios = db.Users.Where(user => user.Roles.All(urm => urm.RoleId == role));
             return usuarios;
         }
-        public static void SendEmail(string MailAdressTo, string body)
+        public static void SendEmail(string MailAdressTo, string body, bool isBodyHtml)
         {
             MailMessage msg = new MailMessage();
             msg.From = new MailAddress("CorreoDelSistema");
             msg.To.Add(MailAdressTo);
             msg.Subject = "GEA";
+            msg.IsBodyHtml = isBodyHtml == true ? true : false;
             msg.Body = body;
             SmtpClient sc = new SmtpClient("smtp.gmail.com");
             sc.Port = 25;
