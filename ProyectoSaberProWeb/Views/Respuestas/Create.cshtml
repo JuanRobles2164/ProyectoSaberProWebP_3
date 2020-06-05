@@ -15,52 +15,52 @@
 </h2>
 
 
-    @Html.HiddenFor(model => model.CompetenciaPresentando, Model.CompetenciaPresentando)
-    @Html.HiddenFor(model => model.PruebaPresentando.ID, Model.PruebaPresentando)
-    <div class="container">
-        @foreach (var item in Model.ListaPreguntas)
-        {
-            <div class="container-sm">
-                <h5>
-                    @foreach (var con in Model.PreguntaContexto.Where(x => x.Key == item.ID).ToList())
-                    {
-
-                        @con.Value.Descripcion
-
-                    }
-                </h5>
-                <label>
-                    @item.Descripcion
-                </label>
-                @foreach (var i in Model.OpcionesPregunta.Where(x => x.Key == item.ID).ToList())
+@Html.HiddenFor(model => model.CompetenciaPresentando, Model.CompetenciaPresentando)
+@Html.HiddenFor(model => model.PruebaPresentando.ID, Model.PruebaPresentando)
+<div class="container">
+    @foreach (var item in Model.ListaPreguntas)
+    {
+        <div class="container-sm">
+            <h5>
+                @foreach (var con in Model.PreguntaContexto.Where(x => x.Key == item.ID).ToList())
                 {
-                    foreach (var j in i.Value)
-                    {
-                        <div>
-                            @Html.RadioButtonFor(z => j.Correcta, "true",
-                            htmlAttributes:
-                                new
-                                     {
-                                    @class = "rb_custom",
-                                    @Name = "PreguntaId_" + j.PreguntaId,
-                                    @Onclick = "guardaProgreso(" + j.ID + ", " + item.ID + ")"
-                                    })
-                            <p>
-                                @j.Descripcion
-                            </p>
-                        </div>
-                    }
-                    <br />
-                    <br />
+
+                    @con.Value.Descripcion
+
                 }
-            </div>
-        }
-    </div>
+            </h5>
+            <label>
+                @item.Descripcion
+            </label>
+            @foreach (var i in Model.OpcionesPregunta.Where(x => x.Key == item.ID).ToList())
+            {
+                foreach (var j in i.Value)
+                {
+                    <div>
+                        @Html.RadioButtonFor(z => j.Correcta, "true",
+                        htmlAttributes:
+                            new
+                                 {
+                                @class = "rb_custom",
+                                @Name = "PreguntaId_" + j.PreguntaId,
+                                @Onclick = "guardaProgreso(" + j.ID + ", " + item.ID + ")"
+                                })
+                        <p>
+                            @j.Descripcion
+                        </p>
+                    </div>
+                }
+                <br />
+                <br />
+            }
+        </div>
+    }
+</div>
 
 }
 
-@Html.HiddenFor(model => model.PruebaPresentando.ID, htmlAttributes: new { @id="PruebaIdPresentando"})
-@Html.HiddenFor(model => model.CompetenciaPresentando.ID, htmlAttributes: new { @id="CompetenciaIdPresentando"})
+@Html.HiddenFor(model => model.PruebaPresentando.ID, htmlAttributes: new { @id = "PruebaIdPresentando" })
+@Html.HiddenFor(model => model.CompetenciaPresentando.ID, htmlAttributes: new { @id = "CompetenciaIdPresentando" })
 
 @Url.Action("Responder", "Respuestas", new { CompetenciaId = Model.CompetenciasFaltantes.ToList().First().ID, PruebaId = Model.PruebaPresentando.ID })
 
