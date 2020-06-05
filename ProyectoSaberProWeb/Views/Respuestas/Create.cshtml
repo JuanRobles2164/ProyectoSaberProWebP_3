@@ -59,10 +59,18 @@
 
 }
 
+@using (Html.BeginForm("Responder", "Respuestas"))
+{
+    @Html.HiddenFor(model => model.PruebaId, Model.PruebaPresentando.ID)
+    @Html.DropDownListFor(model => model.CompetenciaId, new SelectList(Model.ListaCompetencias, "Value", "Text"), new { @class = "form-control" })
+    <button type="submit" class="btn btn-outline-success">
+        Siguiente competencia
+    </button>
+}
+
 @Html.HiddenFor(model => model.PruebaPresentando.ID, htmlAttributes: new { @id = "PruebaIdPresentando" })
 @Html.HiddenFor(model => model.CompetenciaPresentando.ID, htmlAttributes: new { @id = "CompetenciaIdPresentando" })
 
-@Url.Action("Responder", "Respuestas", new { CompetenciaId = Model.CompetenciasFaltantes.ToList().First().ID, PruebaId = Model.PruebaPresentando.ID })
 
 @*@using (Html.BeginForm())
     {

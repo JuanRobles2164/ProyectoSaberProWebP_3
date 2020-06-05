@@ -12,7 +12,8 @@ namespace ProyectoSaberProWeb.Models.ViewModels
         /// Obtiene el contexto que le pertenece a una pregunta
         /// </summary>
         public Dictionary<int, Contexto> PreguntaContexto { get; set; }
-
+        public int CompetenciaId { get; set; }
+        public int PruebaId { get; set; }
         /// <summary>
         /// Para seleccionar por cual competencia quiere empezar
         /// </summary>
@@ -44,10 +45,26 @@ namespace ProyectoSaberProWeb.Models.ViewModels
         public IEnumerable<Pregunta_Estudiante> Respuestas { get; set; }
         public void DeterminarCompetenciasFaltantes(ApplicationDbContext db, string UserId, int PruebaId)
         {
-            CompetenciasFaltantes = db.competencias_pruebas.Where(x => x.Estado == EstadoCompetencia.SinResponder
+            this.PruebaId = PruebaId;
+            ListaCompetencias = new List<SelectListItem>();
+            int cantidadCompetencias = db.competencias_pruebas.Where(x => x.Estado == EstadoCompetencia.SinResponder
+                                                                    && x.PruebaId == PruebaId
+                                                                    && x.UserId == UserId).ToList().Count;
+            //No tiene ninguna competencia faltante
+            if (cantidadCompetencias == 0)
+            {
+                ListaCompetencias.Add(new SelectListItem() { Value = "-1", Text = "RESPONDISTE TODO" });
+            }
+            else
+            {
+                CompetenciasFaltantes = db.competencias_pruebas.Where(x => x.Estado == EstadoCompetencia.SinResponder
                                                                     && x.PruebaId == PruebaId
                                                                     && x.UserId == UserId).ToList();
-
+                foreach (var i in CompetenciasFaltantes)
+                {
+                    this.ListaCompetencias.Add(new SelectListItem() { Value = i.Competencia.ID.ToString(), Text = i.Competencia.Nombre });
+                }
+            }
         }
         /// <summary>
         /// Marca una competencia como completada

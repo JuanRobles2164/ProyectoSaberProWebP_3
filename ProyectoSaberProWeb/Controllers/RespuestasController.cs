@@ -14,6 +14,7 @@ namespace ProyectoSaberProWeb.Controllers
     public class RespuestasController : Controller
     {
         private readonly ApplicationDbContext db = new ApplicationDbContext();
+        private readonly int PRUEBA_FINALIZADA = -1;
         // POST: Respuestas/Create
 
         /// <summary>
@@ -26,6 +27,10 @@ namespace ProyectoSaberProWeb.Controllers
         {
             int competencia_id;
             int prueba_id;
+            if (CompetenciaId == PRUEBA_FINALIZADA)
+            {
+                return RedirectToAction("Index", "Estudiante");
+            }
             if (CompetenciaId == null)
             {
                 competencia_id = ViewBag.CompetenciaId;
@@ -47,6 +52,7 @@ namespace ProyectoSaberProWeb.Controllers
             var userQuery = db.Users.Where(x => x.Email == userEmail).First();
 
             rcpv.CompletarCompetencia(db, userQuery.Id, competencia_id, prueba_id);
+            rcpv.DeterminarCompetenciasFaltantes(db, userQuery.Id, prueba_id);
             ViewBag.CompetenciaId = competencia_id;
             ViewBag.PruebaId = prueba_id;
             return View("Create", rcpv);
