@@ -3,121 +3,111 @@
 @Styles.Render("~/Content/PagedList.css")
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Administradores";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-
-<p>
-    
-</p>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h3 class="m-0 font-weight-bold text-primary">Administradores</h3>
+        <h4 class="m-0 font-weight-bold text-primary">Administradores</h4>
     </div>
     <div class="card-body">
-            <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                <div class="row">
-                    <div class="col-sm-12 col-md-6">
-                        <div class="dataTables_length" id="dataTable_length">
-                            <a href="@Url.Action("Register", "Account")" class="btn btn-success btn-icon-split">
-                                <span class="icon text-white-50">
-                                    <i class="fas fa-check"></i>
-                                </span>
-                                <span class="text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Crear nuevo</font></font></span>
-                            </a>
-                            <a href="" class="btn btn-success">
-                                Crear nuevo
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-4">
-                        <div id="dataTable_filter" class="dataTables_filter">
-                            <font style="vertical-align: inherit;">
-                                @using (Html.BeginForm("Index", "Administrador", FormMethod.Get))
-                                {
-                                    <form class="d-none d-sm-inline-block" align="right">
-                                        <div class="input-group">
-                                            @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control bg-light border-0 small" })
-                                            <div class="input-group-append">
-                                                <button class="btn btn-primary" type="button">
-                                                    <i class="fas fa-search fa-sm"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                }
-                            </font>
-                        </div>
+        <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <div class="dataTables_length" id="dataTable_length">
+                        <a href="@Url.Action("Register", "Account")" class="btn btn-success btn-icon-split">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                            <span class="text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Crear nuevo</font></font></span>
+                        </a>
                     </div>
                 </div>
-                <label></label>
-                <table class="table table-responsive-lg table-borderless" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>
-                                <a href="@Url.Action("Index", "Administrador", new { sortOrder = ViewBag.NombreSortParm, currentFilter = ViewBag.CurrentFilter })">
-                                    @Html.DisplayNameFor(model => model.Usuario.Nombres)
-                                </a>
-                            </th>
-                            <th>
-                                <a href="@Url.Action("Index", "Administrador", new { sortOrder = ViewBag.ApellidosSortParm, currentFilter = ViewBag.CurrentFilter })">
-                                    @Html.DisplayNameFor(model => model.Usuario.Apellidos)
-                                </a>
-                            </th>
-                            <th>
-                                <a href="@Url.Action("Index", "Administrador", new { sortOrder = ViewBag.EmailSortParm, currentFilter = ViewBag.CurrentFilter })">
-                                    @Html.DisplayNameFor(model => model.Usuario.Email)
-                                </a>
-                            </th>
-                            <th>
-                                <a href="@Url.Action("Index", "Administrador", new { sortOrder = ViewBag.UserNameSortParm, currentFilter = ViewBag.CurrentFilter })">
-                                    @Html.DisplayNameFor(model => model.Usuario.UserName)
-                                </a>
-                            </th>
-                            <th> Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.ListaUsuariosP)
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Nombres)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Apellidos)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Email)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.UserName)
-                                </td>
-                                <td>
-                                    <a href="@Url.Action("Edit", new { id = item.Id })">
-                                        <i class="fas fa-pencil-alt">
-                                        </i>
-                                    </a>
-                                    &nbsp;&nbsp;
-                                    <a href="@Url.Action("Details", new { id = item.Id })">
-                                        <i class="fas fa-search-plus">
-                                        </i>
-                                    </a>
-                                    &nbsp;&nbsp;
-                                    <a href="@Url.Action("Delete", new { id = item.Id })" class="btn btn-danger btn-sm">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
-                                    <a href="@Url.Action("Delete", new { id = item.Id })">
-                                        <i class="fas fa-trash-alt">
-                                        </i>
-                                    </a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+                <div class="col-sm-12 col-md-4">
+                    <div id="dataTable_filter" class="dataTables_filter">
+                        <font style="vertical-align: inherit;">
+                            @using (Html.BeginForm("Index", "Administrador", FormMethod.Get))
+                            {
+                                <form class="d-none d-sm-inline-block" align="right">
+                                    <div class="input-group">
+                                        @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control bg-light border-0 small" })
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="submit" value="buscar">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            }
+                        </font>
+                    </div>
+                </div>
             </div>
+            <label></label>
+            <table class="table table-responsive-lg table-borderless" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>
+                            <a href="@Url.Action("Index", "Administrador", new { sortOrder = ViewBag.NombreSortParm, currentFilter = ViewBag.CurrentFilter })">
+                                @Html.DisplayNameFor(model => model.Usuario.Nombres)
+                            </a>
+                        </th>
+                        <th>
+                            <a href="@Url.Action("Index", "Administrador", new { sortOrder = ViewBag.ApellidosSortParm, currentFilter = ViewBag.CurrentFilter })">
+                                @Html.DisplayNameFor(model => model.Usuario.Apellidos)
+                            </a>
+                        </th>
+                        <th>
+                            <a href="@Url.Action("Index", "Administrador", new { sortOrder = ViewBag.EmailSortParm, currentFilter = ViewBag.CurrentFilter })">
+                                @Html.DisplayNameFor(model => model.Usuario.Email)
+                            </a>
+                        </th>
+                        <th>
+                            <a href="@Url.Action("Index", "Administrador", new { sortOrder = ViewBag.UserNameSortParm, currentFilter = ViewBag.CurrentFilter })">
+                                @Html.DisplayNameFor(model => model.Usuario.UserName)
+                            </a>
+                        </th>
+                        <th> Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ListaUsuariosP)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nombres)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Apellidos)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UserName)
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Edit", new { id = item.Id })">
+                                    <i class="fas fa-pencil-alt">
+                                    </i>
+                                </a>
+                                &nbsp;&nbsp;
+                                <a href="@Url.Action("Details", new { id = item.Id })">
+                                    <i class="fas fa-search-plus">
+                                    </i>
+                                </a>
+                                &nbsp;&nbsp;
+                                <a href="@Url.Action("Delete", new { id = item.Id })">
+                                    <i class="fas fa-trash-alt">
+                                    </i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
         Pagina @(Model.ListaUsuariosP.PageCount < Model.ListaUsuariosP.PageNumber ? 0 : Model.ListaUsuariosP.PageNumber) de @Model.ListaUsuariosP.PageCount
 
         @Html.PagedListPager(Model.ListaUsuariosP, page => Url.Action("Index",
@@ -125,21 +115,89 @@
     </div>
 </div>
 <br />
+<br />
+<br />
+<div bgcolor="#ffffff" style="font-family:Roboto,Helvetica,Arial,sans-serif;margin:0;padding:0">
 
-                    <style>
-                        .fa-pencil-alt {
-                            color: #EFD30B;
-                        }
+    <table bgcolor="#fafafa" border="0" cellpadding="0" cellspacing="0" role="presentation" style="border:1px solid #f0f0f0;border-bottom:1px solid #c0c0c0;border-bottom-left-radius:3px;border-bottom-right-radius:3px;border-top:0" width="100%">
+        <tbody>
+            <tr>
+                <td rowspan="3" width="24px"></td>
+                <td colspan="2" height="24px"></td>
+                <td rowspan="3" width="24px"></td>
+            </tr>
+            <tr>
+                <td style="padding-right:24px" valign="top" width="72px">
+                    <div aria-hidden="true" style="border-radius:50%;background-color:#137333;height:72px;width:72px">
+                        <table border="0" cellpadding="0" cellspacing="0" height="72px" role="presentation" style="color:#ffffff;font-size:16px;font-weight:400;text-align:center" width="72px">
+                            <tbody>
+                                <tr>
+                                    <td rowspan="2" width="16px"></td>
+                                    <td style="border-bottom:1px solid #ffffff;padding-bottom:4px;vertical-align:bottom">5</td>
+                                    <td rowspan="2" width="16px"></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-top:4px;vertical-align:top">5</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--<img aria-label="5 puntos de 5" height="1" width="1" style="height:1px;width:1px;opacity:0.0001" class="CToWUd">-->
+                </td>
+                <td>
+                    <table cellpadding="0" cellspacing="0" role="presentation">
+                        <tbody>
+                            <tr>
+                                <td style="color:#212121;font-size:14px;font-weight:400"></td>
+                            </tr>
+                            <tr height="0"></tr>
+                            <tr>
+                                <td style="color:#212121;font-size:20px;font-weight:500">Trabajo</td>
+                            </tr>
+                            <tr height="0"></tr>
+                            <tr>
+                                <td style="color:#737373;font-size:14px;font-weight:400"></td>
+                            </tr>
+                            <tr height="16px"></tr>
+                            <tr>
+                                <td>
+                                    <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;display:inline-block">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <a href="#" style="border-radius:3px;box-sizing:border-box;display:inline-block;font-size:14px;font-weight:700;height:32px;line-height:32px;padding:0 24px;text-align:center;text-decoration:none;text-transform:uppercase;vertical-align:middle;background-color:#4285f4;color:#ffffff" target="_blank">ABRIR</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" height="24px"></td>
+            </tr>
+        </tbody>
+    </table>
 
-                            .fa-pencil-alt:hover {
-                                color: #D3B70B;
-                            }
+</div>
+<style>
+    .fa-pencil-alt {
+        color: #EFD30B;
+    }
 
-                        .fa-trash-alt {
-                            color: #DE0E0E;
-                        }
+        .fa-pencil-alt:hover {
+            color: #D3B70B;
+        }
 
-                            .fa-trash-alt:hover {
-                                color: #A00C0C;
-                            }
-                    </style>
+    .fa-trash-alt {
+        color: #DE0E0E;
+    }
+
+        .fa-trash-alt:hover {
+            color: #A00C0C;
+        }
+</style>
+
