@@ -4,64 +4,81 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutDocente.cshtml";
 }
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h4 class="m-0 font-weight-bold text-primary">Pruebas</h4>
+        </div>
+        <div class="card-body">
+            <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="dataTables_length" id="dataTable_length">
+                            <a href="#" data-toggle="modal" data-target="#createModal"class="btn btn-success btn-icon-split">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-plus"></i>
+                                </span>
+                                <span class="text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Crear nuevo</font></font></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <label></label>
+                <table class="table table-responsive-lg table-borderless" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.PruebaCreacion.Nombre)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.PruebaCreacion.CantidadPreguntas)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.PruebaCreacion.Estado)
+                            </th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ListaPruebas)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Nombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CantidadPreguntas)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Estado)
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("Edit", new { id = item.ID })">
+                                        <i class="fas fa-pencil-alt">
+                                        </i>
+                                    </a>
+                                    &nbsp;&nbsp;
+                                    <a href="#" data-toggle="modal" data-target="#modalDetalles" onclick="getDetallesPrueba(@item.ID)">
+                                        <i class="fas fa-search-plus">
+                                        </i>
+                                    </a>
+                                    &nbsp;&nbsp;
+                                    <a href="@Url.Action("Delete", new { id = item.ID })">
+                                        <i class="fas fa-trash-alt">
+                                        </i>
+                                    </a>
+                                    &nbsp;&nbsp;
+                                    <a href="@Url.Action("Index", "Preguntas", new { PruebaId = item.ID})">
+                                        <i class="fas fa-archive"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
 
-<h2>Pruebas</h2>
-<p>
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#createModal">
-        Crear Prueba
-    </button>
-</p>
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.PruebaCreacion.Nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PruebaCreacion.CantidadPreguntas)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PruebaCreacion.Estado)
-        </th>
-        <th>Acciones</th>
-    </tr>
-
-    @foreach (var item in Model.ListaPruebas)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CantidadPreguntas)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
-            <td>
-                <a href="@Url.Action("Edit", new { id = item.ID })">
-                    <i class="fas fa-pencil-alt">
-                    </i>
-                </a>
-                &nbsp;&nbsp;
-                <a href="#" data-toggle="modal" data-target="#modalDetalles" onclick="getDetallesPrueba(@item.ID)">
-                    <i class="fas fa-search-plus">
-                    </i>
-                </a>
-                &nbsp;&nbsp;
-                <a href="@Url.Action("Delete", new { id = item.ID })">
-                    <i class="fas fa-trash-alt">
-                    </i>
-                </a>
-                &nbsp;&nbsp;
-                <a href="@Url.Action("Index", "Preguntas", new { PruebaId = item.ID})">
-                    <i class="fas fa-archive"></i>
-                </a>
-            </td>
-        </tr>
-    }
-
-</table>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
 <div>
     <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

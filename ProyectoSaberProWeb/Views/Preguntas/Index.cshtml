@@ -5,68 +5,82 @@
     Layout = "~/Views/Shared/_LayoutDocente.cshtml";
 }
 
-<h2>Index</h2>
-<p>
-    <a href="@Url.Action("Index", "Pruebas")">
-        <i class="fas fa-arrow-left icono-caucho">| Volver |</i>
-    </a>
-</p>
-<p>
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#createModal">
-        Crear nueva
-    </button>
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.PreguntaCreacion.Descripcion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PreguntaCreacion.TipoPregunta)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PreguntaCreacion.PreguntaPeso)
-        </th>
-        <th>Acciones</th>
-    </tr>
-
-    @foreach (var item in Model.ListaPreguntas)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TipoPregunta)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PreguntaPeso)
-            </td>
-            <td>
-                <a href="@Url.Action("Edit", new { id = item.ID })">
-                    <i class="fas fa-pencil-alt">
-                    </i>
-                </a>
-                &nbsp;&nbsp;
-                <a href="@Url.Action("Details", new { id = item.ID })">
-                    <i class="fas fa-search-plus">
-                    </i>
-                </a>
-                &nbsp;&nbsp;
-                <a href="@Url.Action("Delete", new { id = item.ID })">
-                    <i class="fas fa-trash-alt">
-                    </i>
-                </a>
-                &nbsp;&nbsp;<!--setIdPregunta(item.ID)-->
-                <a href="#" onclick="CoV(@item.ID)" data-toggle="modal">
-                    <i class="fas fa-align-center">
-                        Opciones
-                    </i>
-                </a>
-            </td>
-        </tr>
-    }
-</table>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h4 class="m-0 font-weight-bold text-primary">Preguntas</h4>
+        </div>
+        <div class="card-body">
+            <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="dataTables_length" id="dataTable_length">
+                            <a href="#" data-toggle="modal" data-target="#createModal" class="btn btn-success btn-icon-split">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-plus"></i>
+                                </span>
+                                <span class="text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Crear nuevo</font></font></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <label></label>
+                <table class="table table-responsive-lg table-borderless" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.PreguntaCreacion.Descripcion)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.PreguntaCreacion.TipoPregunta)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.PreguntaCreacion.PreguntaPeso)
+                            </th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ListaPreguntas)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Descripcion)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TipoPregunta)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PreguntaPeso)
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("Edit", new { id = item.ID })">
+                                        <i class="fas fa-pencil-alt">
+                                        </i>
+                                    </a>
+                                    &nbsp;&nbsp;
+                                    <a href="@Url.Action("Details", new { id = item.ID })">
+                                        <i class="fas fa-search-plus">
+                                        </i>
+                                    </a>
+                                    &nbsp;&nbsp;
+                                    <a href="@Url.Action("Delete", new { id = item.ID })">
+                                        <i class="fas fa-trash-alt">
+                                        </i>
+                                    </a>
+                                    &nbsp;&nbsp;<!--setIdPregunta(item.ID)-->
+                                    <a href="#" onclick="CoV(@item.ID, @item.PruebaId)" data-toggle="modal">
+                                        <i class="fas fa-align-center">
+                                            Opciones
+                                        </i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
 <div>
     <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -315,16 +329,16 @@
      $(document).ready(function () {
         $('rb_custom').attr('checked', '0');
     });
-    function CoV(idPregunta){
+    function CoV(idPregunta, idPrueba){
         $.ajax({
             url: '@Url.Action("getOpcionesNT", "Preguntas")',
             type: 'GET',
+            async: true,
             data: {
-                'PreguntaId': preguntaId
+                'PreguntaId': idPregunta,
+                'PruebaId': idPrueba
             },
             success: function (response) {
-                alert('funciona!');
-                console.log(response);
                 if (response > 0) {
                     getIdPregunta(preguntaId);
                     $('#createOptionsModal').modal().hide();
@@ -336,9 +350,9 @@
                 }
             },
             error: function (response) {
-                console.log("Error: \n");
                 console.log(response);
             }
         });
     }
+
 </script>

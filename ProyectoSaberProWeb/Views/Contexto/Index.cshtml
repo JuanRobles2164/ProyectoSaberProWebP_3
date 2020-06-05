@@ -6,63 +6,94 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutDocente.cshtml";
 }
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h4 class="m-0 font-weight-bold text-primary">Index</h4>
+        </div>
+        <div class="card-body">
+            <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="dataTables_length" id="dataTable_length">
+                            <a href="@Url.Action("Create", "Contexto")" class="btn btn-success btn-icon-split">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-plus"></i>
+                                </span>
+                                <span class="text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Crear nuevo</font></font></span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <div id="dataTable_filter" class="dataTables_filter">
+                            <font style="vertical-align: inherit;">
+                                @using (Html.BeginForm("Index", "Contexto", FormMethod.Get))
+                                {
+                                    <form class="d-none d-sm-inline-block" align="right">
+                                        <div class="input-group">
+                                            @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control bg-light border-0 small" })
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary" type="submit" value="buscar">
+                                                    <i class="fas fa-search fa-sm"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                }
+                            </font>
+                        </div>
+                    </div>
+                </div>
+                <label></label>
+                <table class="table table-responsive-lg table-borderless" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.ActionLink("Descripcion", "Index", new { sortOrder = ViewBag.DescripcionSortParm, currentFilter = ViewBag.CurrentFilter })
+                            </th>
+                            <th>
+                                @Html.ActionLink("Estado", "Index", new { sortOrder = ViewBag.EstadoSortParm, currentFilter = ViewBag.CurrentFilter })
+                            </th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Descripcion)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Estado)
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("Edit", new { id = item.ID })">
+                                        <i class="fas fa-pencil-alt">
+                                        </i>
+                                    </a>
+                                    &nbsp;&nbsp;
+                                    <a href="@Url.Action("Details", new { id = item.ID })">
+                                        <i class="fas fa-search-plus">
+                                        </i>
+                                    </a>
+                                    &nbsp;&nbsp;
+                                    <a href="@Url.Action("Delete", new { id = item.ID })">
+                                        <i class="fas fa-trash-alt">
+                                        </i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            Pagina @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
 
-<h2>Index</h2>
+            @Html.PagedListPager(Model, page => Url.Action("Index",
+                new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+        </div>
+    </div>
 
-<p>
-    @Html.ActionLink("Crear nuevo", "Create", "Contexto", new { @class = "btn btn-success" })
-    @using (Html.BeginForm("Index", "Contexto", FormMethod.Get))
-    {
-    <p align="right">
-        Buscar por Descripcion: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-        <input type="submit" value="Buscar" class="btn btn-primary" />
-    </p>
-}
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.ActionLink("Descripcion", "Index", new { sortOrder = ViewBag.DescripcionSortParm, currentFilter = ViewBag.CurrentFilter })
-            </th>
-            <th>
-                @Html.ActionLink("Estado", "Index", new { sortOrder = ViewBag.EstadoSortParm, currentFilter = ViewBag.CurrentFilter })
-            </th>
-            <th>Acciones</th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Descripcion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Estado)
-                </td>
-                <td>
-                    <a href="@Url.Action("Edit", new { id = item.ID })">
-                        <i class="fas fa-pencil-alt">
-                        </i>
-                    </a>
-                    &nbsp;&nbsp;
-                    <a href="@Url.Action("Details", new { id = item.ID })">
-                        <i class="fas fa-search-plus">
-                        </i>
-                    </a>
-                    &nbsp;&nbsp;
-                    <a href="@Url.Action("Delete", new { id = item.ID })">
-                        <i class="fas fa-trash-alt">
-                        </i>
-                    </a>
-                </td>
-            </tr>
-        }
-
-    </table>
-    Pagina @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
-
-    @Html.PagedListPager(Model, page => Url.Action("Index",
-        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
     <style>
         .fa-pencil-alt {
             color: #EFD30B;
