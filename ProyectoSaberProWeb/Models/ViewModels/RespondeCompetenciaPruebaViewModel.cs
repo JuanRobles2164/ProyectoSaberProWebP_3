@@ -44,6 +44,9 @@ namespace ProyectoSaberProWeb.Models.ViewModels
         public IEnumerable<Pregunta_Estudiante> Respuestas { get; set; }
         public void DeterminarCompetenciasFaltantes(ApplicationDbContext db, string UserId, int PruebaId)
         {
+            CompetenciasFaltantes = db.competencias_pruebas.Where(x => x.Estado == EstadoCompetencia.SinResponder
+                                                                    && x.PruebaId == PruebaId
+                                                                    && x.UserId == UserId).ToList();
 
         }
         /// <summary>
