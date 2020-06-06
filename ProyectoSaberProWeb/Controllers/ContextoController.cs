@@ -11,6 +11,7 @@ using ProyectoSaberProWeb.Models;
 
 namespace ProyectoSaberProWeb.Controllers
 {
+    [Authorize(Roles ="Docente,Administrador")]
     public class ContextoController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

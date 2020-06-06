@@ -16,6 +16,7 @@ using Microsoft.Owin.Security;
 
 namespace ProyectoSaberProWeb.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class AdministradorController : Controller
     {
 

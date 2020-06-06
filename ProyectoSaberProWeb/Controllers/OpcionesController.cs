@@ -11,6 +11,7 @@ using ProyectoSaberProWeb.Models.ViewModels;
 
 namespace ProyectoSaberProWeb.Controllers
 {
+    [Authorize(Roles = "Docente,Administrador")]
     public class OpcionesController : Controller
     {
         private readonly string[,] JsonNotFound = { { "Status:" , "Not found"} };

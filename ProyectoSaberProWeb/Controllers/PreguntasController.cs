@@ -11,6 +11,7 @@ using ProyectoSaberProWeb.Models.ViewModels;
 
 namespace ProyectoSaberProWeb.Controllers
 {
+    [Authorize(Roles = "Alumno")]
     public class PreguntasController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
