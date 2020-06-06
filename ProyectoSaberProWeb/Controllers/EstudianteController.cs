@@ -29,15 +29,24 @@ namespace ProyectoSaberProWeb.Controllers
             return RedirectToAction("Responder","Respuestas",new { PruebaId = rcpvm.PruebaPresentando.ID, CompetenciaId = rcpvm.CompetenciaPresentando.ID });
         }
 
+        
+        public ActionResult PruebasPresentadas()
+        {
+            var user = db.Users.Find(User.Identity.GetUserId());
+            PruebaPresentadaViewModel ppvm = new PruebaPresentadaViewModel(db, user.Email);
+            return View(ppvm);
+        }
+
         /// <summary>
         /// Retorna los resultados específicos de una prueba
         /// Por AJAX
         /// </summary>
         /// <param name="pruebaId"></param>
         /// <returns></returns>
-        public JsonResult MiraResultados(int? pruebaId)
+        public ActionResult MiraResultados(int pruebaId, int competenciaId)
         {
-            return Json("true");
+            
+            return View();
         }
         /// <summary>
         /// Desde el index llama al método para responder 
