@@ -3,63 +3,136 @@
     ViewBag.Title = "Registrarse";
 }
 
-<h2>@ViewBag.Title.</h2>
-
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Cree una cuenta nueva.</h4>
-    <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Nombres, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Nombres, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Apellidos, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Apellidos, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Departamentos, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(m => m.Departamentos, new SelectList(ViewBag.Departamentos, "Value", "Text"), new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Ciudades, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(m => m.Ciudades, new SelectList(ViewBag.Ciudades, "Value", "Text"), new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Registrarse" />
-        </div>
-    </div>
-}
+    <body class="bg-gradient-dark">
+        <div class="container">
+            <div class="card o-hidden border-0 shadow-lg my-4">
+                <div class="card-body p-0" style="height: 600px">
+                    <!-- Nested Row within Card Body -->
+                    <div class="row">
+                        <div class="col-lg-5 d-none d-lg-block" style="background-image: url(/Content/img/register-admin.jpg); height: 700px;">
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-4">@ViewBag.Title</h1>
+                                </div>
+                                @Html.ValidationSummary("", new { @class = "text-danger" })
+                                <form class="user">
+                                    <div class="form-group row">
+                                        <div class="col-sm-6 mb-3 mb-sm-0">
+                                            @Html.LabelFor(m => m.Nombres, new { @class = "control-label" })
+                                            @Html.TextBoxFor(m => m.Nombres, new { @class = "form-control form-control-user" })
+                                        </div>
+                                        <div class="col-sm-6">
+                                            @Html.LabelFor(m => m.Apellidos, new { @class = "control-label" })
+                                            @Html.TextBoxFor(m => m.Apellidos, new { @class = "form-control form-control-user" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control form-control-user" })
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6 mb-3 mb-sm-0">
+                                            @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+                                            @Html.PasswordFor(m => m.Password, new { @class = "form-control form-control-user" })
+                                        </div>
+                                        <div class="col-sm-6">
+                                            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label" })
+                                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control form-control-user" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6 mb-3 mb-sm-0">
+                                            @Html.LabelFor(m => m.Departamentos, new { @class = "control-label" })
+                                            @Html.DropDownListFor(m => m.Departamentos, new SelectList(ViewBag.Departamentos, "Value", "Text"), new { @class = "form-control" })
+                                        </div>
+                                        <div class="col-sm-6">
+                                            @Html.LabelFor(m => m.Ciudades, new { @class = "control-label" })
+                                            @Html.DropDownListFor(m => m.Ciudades, new SelectList(ViewBag.Ciudades, "Value", "Text"), new { @class = "form-control" })
+                                        </div>
+                                    </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+                                    <hr>
+                                    <button type="submit" class="btn btn-primary btn-user btn-block" value="Registrarse">
+                                        Registrar Cuenta
+                                    </button>
+
+                                </form>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            .text-danger {
+                font-size: smaller;
+            }
+        </style>
+        <script type="text/javascript">
+            $(function () {
+                $("select").each(function () {
+                    if ($(this).find("option").length <= 1) {
+                        $(this).attr("disabled", "disabled");
+                    }
+                });
+
+                $("#Departamentos").change(function () {
+                    var value = 0;
+                    if ($(this).val() != "") {
+                        value = $(this).val();
+                    }
+
+                    $.ajax({
+                        type: "POST",
+                        url: window.location,
+                        data: '{ value: ' + value + '}',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (response) {
+                            var list;
+                            console.log(response);
+
+                            DisableDropDown("#Ciudades");
+                            PopulateDropDown("#Ciudades", list);
+
+                        },
+                        failure: function (response) {
+                            alert("No se ha podido establecer la conexion con el servidor");
+                        },
+                        error: function (response) {
+                            console.log(response.Text);
+                        }
+                    });
+                });
+            });
+
+            function DisableDropDown(dropDownId) {
+                $(dropDownId).attr("disabled", "disabled");
+                $(dropDownId).empty().append('<option selected="selected" value="0">Selecciona uno</option>');
+            }
+
+            function PopulateDropDown(dropDownId, list) {
+                if (list != null && list.length > 0) {
+                    $(dropDownId).removeAttr("disabled");
+                    $.each(list, function () {
+                        $(dropDownId).append($("<option></option>").val(this['Value']).html(this['Text']));
+                    });
+                }
+            }
+
+        </script>
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+            @Scripts.Render("~/vendor/jquery/jquery.min.js")
+            @Scripts.Render("~/vendor/bootstrap/js/bootstrap.bundle.min.js")
+            @Scripts.Render("~/vendor/jquery-easing/jquery.easing.min.js")
+        }
+    </body>
 }

@@ -2,95 +2,117 @@
 
 @{
     ViewBag.Title = "Responder prueba";
+    Layout = "~/Views/Shared/_LayoutAlumno.cshtml";
 }
-
-<h1>
-    Presentando la prueba:
-    @Model.PruebaPresentando.Nombre
-</h1>
-<br />
-<h2>
-    Competencia:
-    @Model.CompetenciaPresentando.Nombre
-</h2>
-
-
-@Html.HiddenFor(model => model.CompetenciaPresentando, Model.CompetenciaPresentando)
-@Html.HiddenFor(model => model.PruebaPresentando.ID, Model.PruebaPresentando)
-<div class="container">
-    @foreach (var item in Model.ListaPreguntas)
-    {
-        <div class="container-sm">
-            <h5>
-                @foreach (var con in Model.PreguntaContexto.Where(x => x.Key == item.ID).ToList())
-                {
-
-                    @con.Value.Descripcion
-
-                }
-            </h5>
-            <label>
-                @item.Descripcion
-            </label>
-            @foreach (var i in Model.OpcionesPregunta.Where(x => x.Key == item.ID).ToList())
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h4 class="m-0 font-weight-bold text-success">
+            Presentando la prueba:
+            @Model.PruebaPresentando.Nombre
+        </h4>
+    </div>
+    <div class="card-body">
+        <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+            <center>
+                <h5>
+                    Competencia:
+                    @Model.CompetenciaPresentando.Nombre
+                </h5>
+            </center>
+            @Html.HiddenFor(model => model.CompetenciaPresentando, Model.CompetenciaPresentando)
+            @Html.HiddenFor(model => model.PruebaPresentando.ID, Model.PruebaPresentando)
+            @foreach (var item in Model.ListaPreguntas)
             {
-                foreach (var j in i.Value)
+                <form class="user" style="padding: 30px 40px">
+                    <div class="form-group row" align="justify">
+                        @foreach (var con in Model.PreguntaContexto.Where(x => x.Key == item.ID).ToList())
+                        {
+                            @con.Value.Descripcion
+                        }
+                    </div>
+                    <div class="form-group row" align="justify">
+                        @item.Descripcion
+                    </div>
+
+                    @foreach (var i in Model.OpcionesPregunta.Where(x => x.Key == item.ID).ToList())
+                    {
+                        foreach (var j in i.Value)
+                        {
+                            <div class="form-group row">
+                                <div class="col-1">
+                                    <p>
+                                        <!--COLOCAR A,B,C,D-->
+                                        A
+                                    </p>
+                                </div>
+                                <div class="col-1">
+                                    @Html.RadioButtonFor(z => j.Correcta, "true",
+                               htmlAttributes:
+                                   new
+                                   {
+                                       @class = "rb_custom",
+                                       @Name = "PreguntaId_" + j.PreguntaId,
+                                       @Onclick = "guardaProgreso(" + j.ID + ", " + item.ID + ")"
+                                   })
+                                </div>
+                                <div class="col-sm-8" align="justify">
+                                    <p>
+                                        @j.Descripcion
+                                    </p>
+                                </div>
+                            </div>
+                        }
+                    }
+                </form>
+            }
+            <form class="user" style="padding: 30px 40px">
+                @using (Html.BeginForm("Responder", "Respuestas"))
                 {
-                    <div>
-                        @Html.RadioButtonFor(z => j.Correcta, "true",
-                        htmlAttributes:
-                            new
-                                 {
-                                @class = "rb_custom",
-                                @Name = "PreguntaId_" + j.PreguntaId,
-                                @Onclick = "guardaProgreso(" + j.ID + ", " + item.ID + ")"
-                                })
-                        <p>
-                            @j.Descripcion
-                        </p>
+                    @Html.HiddenFor(model => model.PruebaId, Model.PruebaPresentando.ID)
+                    @Html.DropDownListFor(model => model.CompetenciaId, new SelectList(Model.ListaCompetencias, "Value", "Text"), new { @class = "form-control col-sm-11 col-md-12" })
+                    <label></label>
+                    <div class="col-sm-12 col-md-12" align="right">
+                        <div class="dataTables_length" id="dataTable_length">
+                            <a href="#" type="submit" class="btn btn-success btn-icon-split">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-arrow-right"></i>
+                                </span>
+                                <span class="text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Siguiente competencia</font></font></span>
+                            </a>
+                        </div>
                     </div>
                 }
-                <br />
-                <br />
-            }
+                </form>
         </div>
-    }
-</div>
-
-}
-
-@using (Html.BeginForm("Responder", "Respuestas"))
-{
-    @Html.HiddenFor(model => model.PruebaId, Model.PruebaPresentando.ID)
-    @Html.DropDownListFor(model => model.CompetenciaId, new SelectList(Model.ListaCompetencias, "Value", "Text"), new { @class = "form-control" })
-    <button type="submit" class="btn btn-outline-success">
-        Siguiente competencia
-    </button>
-}
-
-@Html.HiddenFor(model => model.PruebaPresentando.ID, htmlAttributes: new { @id = "PruebaIdPresentando" })
-@Html.HiddenFor(model => model.CompetenciaPresentando.ID, htmlAttributes: new { @id = "CompetenciaIdPresentando" })
+    </div>
+    </div>
 
 
-@*@using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
 
-        <div class="form-horizontal">
-            <h4>Prueba_Estudiante</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
+
+    @Html.HiddenFor(model => model.PruebaPresentando.ID, htmlAttributes: new { @id = "PruebaIdPresentando" })
+    @Html.HiddenFor(model => model.CompetenciaPresentando.ID, htmlAttributes: new { @id = "CompetenciaIdPresentando" })
+
+
+    @*@using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <h4>Prueba_Estudiante</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
                 </div>
             </div>
-        </div>
-    }
-*@
+        }
+    *@
 
 
-<script type="text/javascript">
+    <script type="text/javascript">
     $(document).ready(function () {
         $('rb_custom').attr('checked', '0');
     });
@@ -111,4 +133,4 @@
             }
         });
     }
-</script>
+    </script>

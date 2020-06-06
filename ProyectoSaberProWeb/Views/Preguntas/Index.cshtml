@@ -5,140 +5,131 @@
     Layout = "~/Views/Shared/_LayoutDocente.cshtml";
 }
 
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h4 class="m-0 font-weight-bold text-primary">Preguntas</h4>
-        </div>
-        <div class="card-body">
-            <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                <div class="row">
-                    <div class="col-sm-12 col-md-6">
-                        <div class="dataTables_length" id="dataTable_length">
-                            <a href="#" data-toggle="modal" data-target="#createModal" class="btn btn-success btn-icon-split">
-                                <span class="icon text-white-50">
-                                    <i class="fas fa-plus"></i>
-                                </span>
-                                <span class="text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Crear nuevo</font></font></span>
-                            </a>
-                        </div>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h4 class="m-0 font-weight-bold text-primary">Preguntas</h4>
+    </div>
+    <div class="card-body">
+        <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <div class="dataTables_length" id="dataTable_length">
+                        <a href="#" data-toggle="modal" data-target="#createModal" class="btn btn-success btn-icon-split">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                            <span class="text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Crear nuevo</font></font></span>
+                        </a>
                     </div>
                 </div>
-                <label></label>
-                <table class="table table-responsive-lg table-borderless" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.PreguntaCreacion.Descripcion)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.PreguntaCreacion.TipoPregunta)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.PreguntaCreacion.PreguntaPeso)
-                            </th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.ListaPreguntas)
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Descripcion)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.TipoPregunta)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.PreguntaPeso)
-                                </td>
-                                <td>
-                                    <a href="@Url.Action("Edit", new { id = item.ID })">
-                                        <i class="fas fa-pencil-alt">
-                                        </i>
-                                    </a>
-                                    &nbsp;&nbsp;
-                                    <a href="@Url.Action("Details", new { id = item.ID })">
-                                        <i class="fas fa-search-plus">
-                                        </i>
-                                    </a>
-                                    &nbsp;&nbsp;
-                                    <a href="@Url.Action("Delete", new { id = item.ID })">
-                                        <i class="fas fa-trash-alt">
-                                        </i>
-                                    </a>
-                                    &nbsp;&nbsp;<!--setIdPregunta(item.ID)-->
-                                    <a href="#" onclick="CoV(@item.ID, @item.PruebaId)" data-toggle="modal">
-                                        <i class="fas fa-align-center">
-                                            Opciones
-                                        </i>
-                                    </a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
             </div>
+            <label></label>
+            <table class="table table-responsive-lg table-borderless" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PreguntaCreacion.Descripcion)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PreguntaCreacion.TipoPregunta)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PreguntaCreacion.PreguntaPeso)
+                        </th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ListaPreguntas)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Descripcion)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TipoPregunta)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PreguntaPeso)
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Edit", new { id = item.ID })">
+                                    <i class="fas fa-pencil-alt">
+                                    </i>
+                                </a>
+                                &nbsp;&nbsp;
+                                <a href="@Url.Action("Details", new { id = item.ID })">
+                                    <i class="fas fa-search-plus">
+                                    </i>
+                                </a>
+                                &nbsp;&nbsp;
+                                <a href="@Url.Action("Delete", new { id = item.ID })">
+                                    <i class="fas fa-trash-alt">
+                                    </i>
+                                </a>
+                                &nbsp;&nbsp;<!--setIdPregunta(item.ID)-->
+                                <a href="#" onclick="CoV(@item.ID, @item.PruebaId)" data-toggle="modal">
+                                    <i class="fas fa-align-center">
+                                    </i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
 
 <div>
     <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                @using (Html.BeginForm("Create", "Preguntas", FormMethod.Post))
-                {
-                    @Html.AntiForgeryToken()
+            @using (Html.BeginForm("Create", "Preguntas", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Crear Pregunta</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
                     <div class="modal-body">
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.PreguntaCreacion.Descripcion, htmlAttributes: new { @class = "control-label" })
-                            <div class="col-md-4">
-                                @Html.EditorFor(model => model.PreguntaCreacion.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.PreguntaCreacion.Descripcion, htmlAttributes: new { @class = "control-label" })
+                                @Html.TextAreaFor(model => model.PreguntaCreacion.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.PreguntaCreacion.Descripcion, "", new { @class = "text-danger" })
                             </div>
-                        </div>
-                        <br />
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.PreguntaCreacion.TipoPregunta, htmlAttributes: new { @class = "control-label" })
-                            <div class="col-md-4">
+
+                        <div class="form-group row">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                @Html.LabelFor(model => model.PreguntaCreacion.TipoPregunta, htmlAttributes: new { @class = "control-label" })
                                 @Html.EnumDropDownListFor(model => model.PreguntaCreacion.TipoPregunta, htmlAttributes: new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.PreguntaCreacion.TipoPregunta, "", new { @class = "text-danger" })
                             </div>
-                        </div>
-                        <br />
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.PreguntaCreacion.PreguntaPeso, htmlAttributes: new { @class = "control-label" })
-                            <div class="col-md-4">
+                            <div class="col-sm-6">
+                                @Html.LabelFor(model => model.PreguntaCreacion.PreguntaPeso, htmlAttributes: new { @class = "control-label" })
                                 @Html.EditorFor(model => model.PreguntaCreacion.PreguntaPeso, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.PreguntaCreacion.PreguntaPeso, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                        <br />
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.PreguntaCreacion.PruebaId, "Prueba", htmlAttributes: new { @class = "control-label" })
-                            <div class="col-md-4">
+                        <div class="form-group row">
+                            <div class="col-sm-8 mb-3 mb-sm-0">
+                                @Html.LabelFor(model => model.PreguntaCreacion.PruebaId, "Prueba", htmlAttributes: new { @class = "control-label" })
                                 @Html.DropDownListFor(model => model.PreguntaCreacion.PruebaId, Model.ListaPruebas, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.PreguntaCreacion.PruebaId, "", new { @class = "text-danger" })
                             </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.PreguntaCreacion.CompentenciaId, "Competencia", htmlAttributes: new { @class = "control-label" })
-                            <div class="col-md-4">
+                            <div class="col-sm-4">
+                                @Html.LabelFor(model => model.PreguntaCreacion.CompentenciaId, "Competencia", htmlAttributes: new { @class = "control-label" })
                                 @Html.DropDownListFor(model => model.PreguntaCreacion.CompentenciaId, Model.ListaCompetencias, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.PreguntaCreacion.CompentenciaId, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                        <br />
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.PreguntaCreacion.ContextoId, "Contexto", htmlAttributes: new { @class = "control-label" })
-                            <div class="col-md-4">
+                        <div class="form-group row">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                @Html.LabelFor(model => model.PreguntaCreacion.ContextoId, "Contexto", htmlAttributes: new { @class = "control-label" })
                                 @Html.DropDownListFor(model => model.PreguntaCreacion.ContextoId, Model.ListaContextos, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.PreguntaCreacion.ContextoId, "", new { @class = "text-danger" })
                             </div>
@@ -148,8 +139,9 @@
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                         <button type="submit" class="btn btn-primary">Crear</button>
                     </div>
-                }
-            </div>
+                   
+                </div>
+            }
         </div>
     </div>
 </div>
@@ -289,11 +281,11 @@
                 </tr>
 
             </table>
-                <br />
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                </div>
+            <br />
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+            </div>
             }
         </div>
     </div>

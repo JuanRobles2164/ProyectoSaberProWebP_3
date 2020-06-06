@@ -1,7 +1,20 @@
 ﻿
 @{
-    ViewBag.Title = "InvalidAccount";
+    ViewBag.Title = "Cuenta invalida";
 }
+<br />
+<br />
+    <div class="alert alert-danger" role="alert">
+        <h2 style="color:#000000">Cuenta Invalida</h2>
 
-<h2>InvalidAccount</h2>
+        <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading"> Error!</h4>
+            <p>
+                No puede ingresar con una cuenta que no sea del dominio udi.edu.co
+                <hr>
+                <a href="@Url.Action("Index", "Home")" class="btn btn-dark">
+                    Volver al Login
+                </a>
+        </div>
+    </div>
 
