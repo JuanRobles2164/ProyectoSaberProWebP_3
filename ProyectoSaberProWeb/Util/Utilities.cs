@@ -17,7 +17,7 @@ namespace ProyectoSaberProWeb.Util
         }
         public static void SendEmail(string MailAdressTo, string body, bool isBodyHtml)
         {
-            MailMessage msg = new MailMessage();
+            /*MailMessage msg = new MailMessage();
             msg.From = new MailAddress("CorreoDelSistema");
             msg.To.Add(MailAdressTo);
             msg.Subject = "GEA";
@@ -27,7 +27,7 @@ namespace ProyectoSaberProWeb.Util
             sc.Port = 25;
             sc.Credentials = new NetworkCredential("CorreoDelSistema", "La clave del correo");
             sc.EnableSsl = true;
-            sc.Send(msg);
+            sc.Send(msg);*/
         }
     }
 }

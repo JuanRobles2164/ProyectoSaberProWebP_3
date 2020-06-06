@@ -95,5 +95,16 @@ namespace ProyectoSaberProWeb.Controllers
             PersonalDataViewModel pdvm = new PersonalDataViewModel(db, id);
             return View(pdvm);
         }
+        [HttpPost]
+        public ActionResult PersonalData(PersonalDataViewModel pdvm)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(pdvm).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(pdvm);
+        }
     }
 }

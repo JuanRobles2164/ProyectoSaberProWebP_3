@@ -33,8 +33,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="#" style="text-align:center">
-                    <!--Action link para el Home del administrador-->
+                <a class="nav-link" href="@Url.Action("Index", "Estudiante")" style="text-align:center">
                     <i class="fas fa-fw fa-home"></i>
                     <span>INICIO</span>
                 </a>
@@ -43,7 +42,7 @@
                     <i class="fas fa-fw fa-qrcode"></i>
                     <span>PRESENTAR PRUEBA</span>
                 </a>
-                <a class="nav-link" href="#" style="text-align:center">
+                <a class="nav-link" href="@Url.Action("PruebasPresentadas", "Estudiante")" style="text-align:center">
                     <!--Action link para el Home del administrador-->
                     <i class="fas fa-fw fa-chart-pie"></i>
                     <span>RESULTADOS</span>
@@ -66,17 +65,19 @@
                     <!-- Nav Item - User Information -->
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link" href="#">
-                                <!--Action link para el Home del administrador-->
+                            <a class="nav-link" href="@Url.Action("PersonalData", "Estudiante")">
                                 <i class="fas fa-users-cog fa-2x"></i>
                             </a>
                             <!--<button type="button" class="btn btn-outline-warning"></button>-->
                         </li>
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link" href="#">
-                                <!--Action link para el Home del administrador-->
-                                <i class="fas fa-power-off fa-2x"></i>
-                            </a>
+                            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="nav-link">
+                                    <i class="fas fa-power-off fa-2x"></i>
+                                </button>
+                            }
                             <!--<button type="button" class="btn btn-outline-dark"></button>-->
                         </li>
                     </ul>

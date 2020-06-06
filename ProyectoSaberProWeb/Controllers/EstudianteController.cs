@@ -33,7 +33,7 @@ namespace ProyectoSaberProWeb.Controllers
         public ActionResult PruebasPresentadas()
         {
             var user = db.Users.Find(User.Identity.GetUserId());
-            PruebaPresentadaViewModel ppvm = new PruebaPresentadaViewModel(db, user.Email);
+            PruebaPresentadaViewModel ppvm = new PruebaPresentadaViewModel(db, user.Id);
             return View(ppvm);
         }
 
@@ -43,10 +43,10 @@ namespace ProyectoSaberProWeb.Controllers
         /// </summary>
         /// <param name="pruebaId"></param>
         /// <returns></returns>
-        public ActionResult MiraResultados(int pruebaId, int competenciaId)
+        public ActionResult MiraResultados(PruebaPresentadaViewModel ppvm)
         {
-            
-            return View();
+            CalificarPruebaViewModel cpvm = new CalificarPruebaViewModel(db, ppvm.PruebaId, User.Identity.GetUserId(), ppvm.CompetenciaId);
+            return View(cpvm);
         }
         /// <summary>
         /// Desde el index llama al método para responder 
@@ -58,16 +58,6 @@ namespace ProyectoSaberProWeb.Controllers
         {
             return View();
         }
-
-        /// <summary>
-        /// Retorna la vista de una pregunta para poder ser respondida
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public ActionResult SiguienteCompetencia(int id)
-        {
-            return View();
-        }
         /// <summary>
         /// Recoge la respuesta enviada por un estudiante y devuelve la vista de la siguiente
         /// </summary>
@@ -76,6 +66,18 @@ namespace ProyectoSaberProWeb.Controllers
         {
             var id = User.Identity.GetUserId();
             PersonalDataViewModel pdvm = new PersonalDataViewModel(db, id);
+            return View(pdvm);
+        }
+
+        [HttpPost]
+        public ActionResult PersonalData(PersonalDataViewModel pdvm)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(pdvm).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
             return View(pdvm);
         }
     }

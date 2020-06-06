@@ -53,7 +53,7 @@ namespace ProyectoSaberProWeb.Models.ViewModels
             //No tiene ninguna competencia faltante
             if (cantidadCompetencias == 0)
             {
-                ListaCompetencias.Add(new SelectListItem() { Value = "-1", Text = "RESPONDISTE TODO" });
+                ListaCompetencias.Add(new SelectListItem() { Value = "-1", Text = "FINALIZAR PRUEBA" });
             }
             else
             {

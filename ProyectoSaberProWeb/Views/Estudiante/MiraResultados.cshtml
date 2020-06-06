@@ -1,11 +1,61 @@
-﻿@model  IEnumerable<ProyectoSaberProWeb.Models.Prueba>
+﻿@model  ProyectoSaberProWeb.Models.ViewModels.CalificarPruebaViewModel
 @{
     ViewBag.Title = "MiraResultados";
     Layout = "~/Views/Shared/_LayoutAlumno.cshtml";
 }
 
-<h2>MiraResultados</h2>
+<h2>PRUEBA: @Model.CompetenciaActual.Nombre</h2>
+<h3>
+    PUNTAJE PRUEBA: @Model.PuntajePrueba DE @Model.PuntajePosible
+</h3>
+<h3>
+    PUNTAJE DE LA COMPETENCIA: @Model.PuntajeCompetencia
+</h3>
 
-@*Aquí debería salirle una tabla con las pruebas que ha presentado*@
+<div class="container">
 
+    <div class="container-sm">
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>
+                        PREGUNTAS
+                    </td>
+                    <td>
+                        OPCIONES CORRECTAS
+                    </td>
+                    <td>
+                        OPCION MARCADA
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    
+                    @foreach(var i in Model.ListaPreguntas)
+                    {
+                    <td>
+                        @i.Descripcion
+                    </td>
+                    <td>
+                        @foreach (var j in Model.OpcionesCorrectas.Where(x => x.PreguntaId == i.ID))
+                        {
+                            @j.ID
+                        }
+                    </td>
+                    <td>
+                        @foreach (var k in Model.OpcionesRespondidas.Where(x => x.PreguntaId == i.ID))
+                        {
+                            @k.ID
+                        }
+                    </td>
+                    }
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <a href="@Url.Action("PruebasPresentadas", "Estudiante")" class="btn btn-primary">
+        Volver a las pruebas
+    </a>
+</div>
 

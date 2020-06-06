@@ -10,19 +10,31 @@ namespace ProyectoSaberProWeb.Models.ViewModels
     public class CalificarPruebaViewModel
     {
         public int PuntajePrueba { get; set; }
-        public Competencia Competencia { get; set; }
+        public Competencia CompetenciaActual { get; set; }
+        public Prueba PruebaPresentada { get; set; } = new Prueba();
         public int PuntajeCompetencia { get; set; }
         public int PuntajePosible { get; set; }
-        public List<Pregunta> ListaPreguntas { get; set; } = new List<Pregunta>(); 
+        public IEnumerable<Pregunta> ListaPreguntas { get; set; }
         public List<Opcion> OpcionesCorrectas { get; set; } = new List<Opcion>();
         public List<Pregunta_Estudiante> OpcionesRespondidas { get; set; } = new List<Pregunta_Estudiante>();
 
         /// <summary>
         /// Diccionario para saber si el estudiante respondio correctamente la pregunta Dictionary <int (pregunta), int (opcion)>
         /// </summary>
-        public void CalcularPuntajePrueba()
+        public void CalcularPuntajePrueba(ApplicationDbContext db, string idUser)
         {
-            //suma de los puntajes de las competencias (esto podria mandarse por correo)
+            var i = OpcionesCorrectas.GetEnumerator();
+            var j = OpcionesRespondidas.GetEnumerator();
+            var k = ListaPreguntas.GetEnumerator();
+            while (i.MoveNext() && j.MoveNext() && k.MoveNext())
+            {
+                if (i.Current.ID == j.Current.OpcionId)
+                {
+                    PuntajePrueba += (int) k.Current.PreguntaPeso;
+                }
+            }
+            var user = db.Users.Find(idUser);
+            Util.Utilities.SendEmail(user.Email, "El puntaje de la prueba "+ this.PruebaPresentada.Nombre + " fué "+PuntajePrueba + "/"+PuntajePosible, false);
         }
         public CalificarPruebaViewModel(ApplicationDbContext db, int? PruebaId , string idUser, int idCompetencia)
         {
@@ -31,6 +43,8 @@ namespace ProyectoSaberProWeb.Models.ViewModels
             List<int> OR = new List<int>();
             int OpcionesR;
             int OpcionesC;
+            CompetenciaActual = db.competencias.Find(idCompetencia);
+            PruebaPresentada = db.pruebas.Find(PruebaId);
             ListaPreguntas = db.preguntas.Where(a => a.PruebaId == PruebaId && a.CompentenciaId == idCompetencia).ToList();
             foreach(var p in ListaPreguntas)
             {
@@ -50,6 +64,7 @@ namespace ProyectoSaberProWeb.Models.ViewModels
                     PuntajePosible += PesoPregunta;
                 }
             }
+            CalcularPuntajePrueba(db, idUser);
         }
     }
 }

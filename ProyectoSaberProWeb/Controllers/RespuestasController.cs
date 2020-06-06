@@ -53,7 +53,7 @@ namespace ProyectoSaberProWeb.Controllers
             {
                 prueba_id = Int32.Parse(""+PruebaId);
             }
-            if (db.pruebas_estudiantes.Where(x => x.UserId== userQuery.Id && x.ID == prueba_id).ToList().Count <= 1)
+            if (db.pruebas_estudiantes.Where(x => x.UserId== userQuery.Id && x.ID == prueba_id).ToList().Count >= 1)
             {
                 ViewBag.Advertencia = "Usted ya presentó esta prueba";
                 return RedirectToAction("Index", "Estudiante");
