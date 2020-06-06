@@ -25,10 +25,16 @@ namespace ProyectoSaberProWeb.Controllers
         
         public ActionResult Responder(int? CompetenciaId, int? PruebaId)
         {
+            var userEmail = User.Identity.Name;
+            var userQuery = db.Users.Where(x => x.Email == userEmail).First();
             int competencia_id;
             int prueba_id;
             if (CompetenciaId == PRUEBA_FINALIZADA)
             {
+                var PruebaPresentada = db.pruebas.Find(PruebaId);
+                Prueba_Estudiante pe = new Prueba_Estudiante() { ApplicationUser = userQuery, Prueba = PruebaPresentada };
+                db.pruebas_estudiantes.Add(pe);
+                db.SaveChanges();
                 return RedirectToAction("Index", "Estudiante");
             }
             if (CompetenciaId == null)
@@ -47,9 +53,12 @@ namespace ProyectoSaberProWeb.Controllers
             {
                 prueba_id = Int32.Parse(""+PruebaId);
             }
+            if (db.pruebas_estudiantes.Where(x => x.UserId== userQuery.Id && x.ID == prueba_id).ToList().Count <= 1)
+            {
+                ViewBag.Advertencia = "Usted ya presentó esta prueba";
+                return RedirectToAction("Index", "Estudiante");
+            }
             RespondeCompetenciaPruebaViewModel rcpv = new RespondeCompetenciaPruebaViewModel(db, competencia_id, prueba_id);
-            var userEmail = User.Identity.Name;
-            var userQuery = db.Users.Where(x => x.Email == userEmail).First();
 
             rcpv.CompletarCompetencia(db, userQuery.Id, competencia_id, prueba_id);
             rcpv.DeterminarCompetenciasFaltantes(db, userQuery.Id, prueba_id);

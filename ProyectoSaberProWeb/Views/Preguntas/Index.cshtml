@@ -313,15 +313,16 @@
     }
 </style>
 
-
+ 
 <script type="text/javascript">
     function setIdPregunta(idPregunta) {
         $('#OpcionA_PreguntaId').val(idPregunta);
     }
      $(document).ready(function () {
         $('rb_custom').attr('checked', '0');
-    });
-    function CoV(idPregunta, idPrueba){
+     });
+    function CoV(idPregunta, idPrueba) {
+        console.log(idPregunta, idPrueba);
         $.ajax({
             url: '@Url.Action("getOpcionesNT", "Preguntas")',
             type: 'GET',
@@ -347,4 +348,4 @@
         });
     }
 
-</script>
+    </script>

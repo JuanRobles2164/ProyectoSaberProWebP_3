@@ -284,6 +284,7 @@
     <Compile Include="Models\ViewModels\EstudianteViewModel.cs" />
     <Compile Include="Models\ViewModels\PersonalDataViewModel.cs" />
     <Compile Include="Models\ViewModels\PreguntaViewModel.cs" />
+    <Compile Include="Models\ViewModels\PruebaPresentadaViewModel.cs" />
     <Compile Include="Models\ViewModels\PruebaViewModel.cs" />
     <Compile Include="Models\ViewModels\RespondeCompetenciaPruebaViewModel.cs" />
     <Compile Include="Models\ViewModels\UserViewModel.cs" />
@@ -2142,9 +2143,7 @@
     <Content Include="Views\Contexto\Edit.cshtml" />
     <Content Include="Views\Contexto\Index.cshtml" />
     <Content Include="Views\Estudiante\Index.cshtml" />
-    <Content Include="Views\Estudiante\PresentaPrueba.cshtml" />
     <Content Include="Views\Estudiante\MiraResultados.cshtml" />
-    <Content Include="Views\Estudiante\RespondePregunta.cshtml" />
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Views\Shared\_LayoutDocente.cshtml" />
     <Content Include="Views\Shared\_LayoutAlumno.cshtml" />
@@ -2165,6 +2164,7 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Estudiante\BodyCuerpoMsg.cshtml" />
+    <Content Include="Views\Estudiante\PruebasPresentadas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
