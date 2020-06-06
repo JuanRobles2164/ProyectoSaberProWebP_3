@@ -11,6 +11,7 @@ using ProyectoSaberProWeb.Models.ViewModels;
 
 namespace ProyectoSaberProWeb.Controllers
 {
+    [Authorize(Roles = "Administrador")]
     public class CompetenciaController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

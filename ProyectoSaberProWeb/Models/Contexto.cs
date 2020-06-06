@@ -13,7 +13,7 @@ namespace ProyectoSaberProWeb.Models
         public int ID { get; set; }
         [Required]
         [Display(Name = "Descripcion")]
-        [StringLength(255, ErrorMessage = "La descripción no puede tener más de 255 caracteres")]
+        [StringLength(1024, ErrorMessage = "La descripción no puede tener más de 1024 caracteres")]
         public string Descripcion { get; set; }
         [Required]
         [Display(Name = "Estado")]

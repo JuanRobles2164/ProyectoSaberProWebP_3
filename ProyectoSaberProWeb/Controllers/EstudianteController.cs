@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace ProyectoSaberProWeb.Controllers
 {
-    [Authorize(Roles = "Estudiante")]
+    [Authorize(Roles = "Alumno")]
     public class EstudianteController : Controller
     {
         private readonly ApplicationDbContext db = new ApplicationDbContext();
