@@ -13,10 +13,10 @@ namespace ProyectoSaberProWeb.Controllers
         public ActionResult Index()
         {
             //Si no encuenta algún usuario, redirije al registro
-            //if (db.Users.ToList().Count == 0)
-            //{
-            //    return RedirectToAction("Register", "Account");
-            //}
+            if (db.Users.ToList().Count == 0)
+            {
+                return RedirectToAction("Register", "Account");
+            }
             return View();
         }
 
