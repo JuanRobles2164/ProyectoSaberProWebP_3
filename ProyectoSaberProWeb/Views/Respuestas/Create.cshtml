@@ -40,20 +40,7 @@
                         {
                             <div class="form-group row">
                                 <div class="col-1">
-                                    <p>
-                                        <!--COLOCAR A,B,C,D-->
-                                        A
-                                    </p>
-                                </div>
-                                <div class="col-1">
-                                    @Html.RadioButtonFor(z => j.Correcta, "true",
-                               htmlAttributes:
-                                   new
-                                   {
-                                       @class = "rb_custom",
-                                       @Name = "PreguntaId_" + j.PreguntaId,
-                                       @Onclick = "guardaProgreso(" + j.ID + ", " + item.ID + ")"
-                                   })
+                                    <input type="radio" class="rb_custom" name="PreguntaId_@j.PreguntaId" onclick="guardaProgreso(@j.ID ,@item.ID)"/>
                                 </div>
                                 <div class="col-sm-8" align="justify">
                                     <p>
@@ -132,5 +119,8 @@
                 console.log(response);
             }
         });
-    }
+        }
+        function unselect(){
+  document.querySelectorAll('[name=Tipo]').forEach((x) => x.checked=false);
+}
     </script>
