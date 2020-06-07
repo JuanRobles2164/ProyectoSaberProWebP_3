@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ProyectoSaberProWeb.Models;
+using ProyectoSaberProWeb.Util;
 
 namespace ProyectoSaberProWeb.Controllers
 {
@@ -96,6 +97,9 @@ namespace ProyectoSaberProWeb.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    string body = "Se ha accedido a su cuenta el dia: " + DateTime.Today.ToString("D") 
+                    + " desde la direccion IP:" + Request.UserHostAddress;
+                    Utilities.SendEmail(model.Email, body, false);
                     return RedirectToAction("Index", "Administrador");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -188,7 +192,9 @@ namespace ProyectoSaberProWeb.Controllers
                 {
                     //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     await UserManager.AddToRoleAsync(user.Id, "Administrador");
-                    
+                    string body = "Bienvenido \n" + System.Environment.NewLine +
+                         "Su usuario se registro con exito en el sistema GEA SOFTWARE simulador de pruebas saber pro";
+                    Utilities.SendEmail(model.Email, body, false);
                     // Para obtener más información sobre cómo habilitar la confirmación de cuentas y el restablecimiento de contraseña, visite https://go.microsoft.com/fwlink/?LinkID=320771
                     // Enviar correo electrónico con este vínculo
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -477,9 +483,13 @@ namespace ProyectoSaberProWeb.Controllers
                 if (result.Succeeded)
                 {
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
+
                     if (result.Succeeded)
                     {
                         result = await UserManager.AddToRoleAsync(user.Id, model.Rol);
+                        string body = "Bienvenido \n" + System.Environment.NewLine +
+                         "Su usuario se registro con exito en el sistema GEA SOFTWARE simulador de pruebas saber pro";
+                        Utilities.SendEmail(model.Email, body, false);
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                         return RedirectToLocal(returnUrl);
                     }

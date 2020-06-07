@@ -34,7 +34,12 @@ namespace ProyectoSaberProWeb.Models.ViewModels
                 }
             }
             var user = db.Users.Find(idUser);
-            Util.Utilities.SendEmail(user.Email, "El puntaje de la prueba "+ this.PruebaPresentada.Nombre + " fué "+PuntajePrueba + "/"+PuntajePosible, false);
+            string body = System.IO.File.ReadAllText(HttpContext.Current.Server.MapPath("Estudiante/BodyCuerpoMsg.cshtml"));
+            body = body.Replace("#Nombre de la prueba#", PruebaPresentada.Nombre);
+            body = body.Replace("#PuntuacionSacada#",Convert.ToString(PuntajePrueba));
+            body = body.Replace("#PuntuacionTotal#",Convert.ToString(PuntajePosible));
+            //body = "El puntaje de la prueba " + this.PruebaPresentada.Nombre + " fué " + PuntajePrueba + "/" + PuntajePosible
+            Util.Utilities.SendEmail(user.Email, body, true);
         }
         public CalificarPruebaViewModel(ApplicationDbContext db, int? PruebaId , string idUser, int idCompetencia)
         {

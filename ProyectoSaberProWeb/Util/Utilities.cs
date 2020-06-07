@@ -17,17 +17,17 @@ namespace ProyectoSaberProWeb.Util
         }
         public static void SendEmail(string MailAdressTo, string body, bool isBodyHtml)
         {
-            /*MailMessage msg = new MailMessage();
-            msg.From = new MailAddress("CorreoDelSistema");
+            MailMessage msg = new MailMessage();
+            msg.From = new MailAddress("geapsp2020@gmail.com");
             msg.To.Add(MailAdressTo);
             msg.Subject = "GEA";
-            msg.IsBodyHtml = isBodyHtml == true ? true : false;
+            msg.IsBodyHtml = isBodyHtml;
             msg.Body = body;
             SmtpClient sc = new SmtpClient("smtp.gmail.com");
             sc.Port = 25;
-            sc.Credentials = new NetworkCredential("CorreoDelSistema", "La clave del correo");
+            sc.Credentials = new NetworkCredential("geapsp2020@gmail.com", "zqoshuqcjbkkfsgk");
             sc.EnableSsl = true;
-            sc.Send(msg);*/
+            sc.Send(msg);
         }
     }
 }
