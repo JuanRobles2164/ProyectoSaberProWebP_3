@@ -56,13 +56,13 @@ namespace ProyectoSaberProWeb.Controllers
         }*/
 
         // POST: Preguntas/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
+        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(PreguntaViewModel pregunta)
         {
-            
+
             if (ModelState.IsValid)
             {
                 db.preguntas.Add(pregunta.PreguntaCreacion);
@@ -91,7 +91,7 @@ namespace ProyectoSaberProWeb.Controllers
         }
 
         // POST: Preguntas/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
+        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -143,7 +143,7 @@ namespace ProyectoSaberProWeb.Controllers
             }
             base.Dispose(disposing);
         }
-
+        [HttpGet]
         public JsonResult getOpcionesNT(int PreguntaId)
         {
             var YesOrNot = db.opciones.Where(a => a.PreguntaId == PreguntaId).Count();
