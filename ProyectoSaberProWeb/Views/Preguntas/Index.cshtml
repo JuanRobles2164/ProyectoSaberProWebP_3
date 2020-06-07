@@ -68,7 +68,11 @@
                                     </i>
                                 </a>
                                 &nbsp;&nbsp;<!--setIdPregunta(item.ID)-->
-                                <a href="#" onclick="CoV(@item.ID, @item.PruebaId)" data-toggle="modal">
+                                <a href="#" onclick="CoV(@item.ID)" data-toggle="modal" data-target="#createOptionsModal">
+                                    <i class="fas fa-align-center">
+                                    </i>
+                                </a>
+                                <a href="#"  data-toggle="modal" data-target="#detailsOptionsModal">
                                     <i class="fas fa-align-center">
                                     </i>
                                 </a>
@@ -147,149 +151,131 @@
 </div>
 
 <div>
-    <div class="modal fade" id="createOptionsModal" tabindex="-1" role="dialog" aria-labelledby="createOptionsModal" aria-hidden="true">
+    <div class="modal fade" id="createOptionsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalScrollableTitle">Crear opciones</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                @using (Html.BeginForm("Create", "Opciones", FormMethod.Post))
-                {
-                    @Html.AntiForgeryToken()
+            @using (Html.BeginForm("Create", "Opciones", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalScrollableTitle">Crear opciones</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
                     <div class="modal-body">
 
                         @Html.HiddenFor(model => model.OpcionA.PreguntaId)
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.OpcionA.Descripcion, htmlAttributes: new { @class = "control-label" })
-                            <div class="col-md-10">
+                        <div class="form-group row">
+                            <div class="col-sm-12 mb-auto mb-sm-0">
+                                @Html.LabelFor(model => model.OpcionA.Descripcion, htmlAttributes: new { @class = "control-label" })
                                 @Html.EditorFor(model => model.OpcionA.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.OpcionA.Descripcion, "", new { @class = "text-danger" })
                             </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.OpcionA.Correcta, htmlAttributes: new { @class = "control-label" })
-                            <div class="col-md-10">
-                                <div class="checkbox">
-                                    @Html.EditorFor(model => model.OpcionA.Correcta, "true")
-                                    @Html.ValidationMessageFor(model => model.OpcionA.Correcta, "", new { @class = "text-danger" })
-                                </div>
+                            <div class="col-sm-6">
+                                @Html.LabelFor(model => model.OpcionA.Correcta, htmlAttributes: new { @class = "control-label" })
                             </div>
+                            @Html.EditorFor(model => model.OpcionA.Correcta, "true")
+                            @Html.ValidationMessageFor(model => model.OpcionA.Correcta, "", new { @class = "text-danger" })
                         </div>
-                        <br />
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.OpcionB.Descripcion, htmlAttributes: new { @class = "control-label" })
-                            <div class="col-md-10">
+                        <div class="form-group row">
+                            <div class="col-sm-12 mb-auto mb-sm-0">
+                                @Html.LabelFor(model => model.OpcionB.Descripcion, htmlAttributes: new { @class = "control-label" })
                                 @Html.EditorFor(model => model.OpcionB.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.OpcionB.Descripcion, "", new { @class = "text-danger" })
                             </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.OpcionB.Correcta, htmlAttributes: new { @class = "control-label" })
-                            <div class="col-md-10">
-                                <div class="checkbox">
-                                    @Html.EditorFor(model => model.OpcionB.Correcta, "true")
-                                    @Html.ValidationMessageFor(model => model.OpcionB.Correcta, "", new { @class = "text-danger" })
-                                </div>
+                            <div class="col-sm-6">
+                                @Html.LabelFor(model => model.OpcionB.Correcta, htmlAttributes: new { @class = "control-label" })
                             </div>
+                            @Html.EditorFor(model => model.OpcionB.Correcta, "true")
+                            @Html.ValidationMessageFor(model => model.OpcionB.Correcta, "", new { @class = "text-danger" })
                         </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.OpcionC.Descripcion, htmlAttributes: new { @class = "control-label" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.OpcionC.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.OpcionC.Descripcion, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.OpcionC.Correcta, htmlAttributes: new { @class = "control-label" })
-                        <div class="col-md-10">
-                            <div class="checkbox">
-                                @Html.EditorFor(model => model.OpcionC.Correcta, "true")
-                                @Html.ValidationMessageFor(model => model.OpcionC.Correcta, "", new { @class = "text-danger" })
+                        <div class="form-group row">
+                            <div class="col-sm-12 mb-auto mb-sm-0">
+                                @Html.LabelFor(model => model.OpcionC.Descripcion, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.OpcionC.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.OpcionC.Descripcion, "", new { @class = "text-danger" })
                             </div>
-                        </div>
-                    </div>
-                    <br />
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.OpcionD.Descripcion, htmlAttributes: new { @class = "control-label" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.OpcionD.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.OpcionD.Descripcion, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.OpcionD.Correcta, htmlAttributes: new { @class = "control-label" })
-                        <div class="col-md-10">
-                            <div class="checkbox">
-                                @Html.EditorFor(model => model.OpcionD.Correcta, "true")
-                                @Html.ValidationMessageFor(model => model.OpcionD.Correcta, "", new { @class = "text-danger" })
+                            <div class="col-sm-6">
+                                @Html.LabelFor(model => model.OpcionC.Correcta, htmlAttributes: new { @class = "control-label" })
                             </div>
+                            @Html.EditorFor(model => model.OpcionC.Correcta, "true")
+                            @Html.ValidationMessageFor(model => model.OpcionC.Correcta, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12 mb-auto mb-sm-0">
+                                @Html.LabelFor(model => model.OpcionC.Descripcion, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.OpcionD.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.OpcionD.Descripcion, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-sm-6">
+                                @Html.LabelFor(model => model.OpcionD.Correcta, htmlAttributes: new { @class = "control-label" })
+                            </div>
+                            @Html.EditorFor(model => model.OpcionD.Correcta, "true")
+                            @Html.ValidationMessageFor(model => model.OpcionD.Correcta, "", new { @class = "text-danger" })
                         </div>
                     </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                        </div>
+                </div>
+            }
+    </div>
+</div>
+</div>
+    <div>
+        <div class="modal fade" id="detailsOptionsModal" tabindex="-1" role="dialog" aria-labelledby="detailsOptionsModal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalScrollableTitle">Opciones de respuesta</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OpcionA.Descripcion)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OpcionB.Descripcion)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OpcionC.Descripcion)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OpcionD.Descripcion)
+                            </th>
+                            <th>Acciones</th>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(model => model.OpcionA.Correcta)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.OpcionB.Correcta)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.OpcionC.Correcta)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.OpcionD.Correcta)
+                            </td>
+                        </tr>
+
+                    </table>
                     <br />
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                         <button type="submit" class="btn btn-primary">Guardar cambios</button>
                     </div>
-                }
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="modal fade" id="detailsOptionsModal" tabindex="-1" role="dialog" aria-labelledby="detailsOptionsModal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalScrollableTitle">Opciones de respuesta</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <table class="table">
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.OpcionA.Descripcion)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.OpcionB.Descripcion)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.OpcionC.Descripcion)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.OpcionD.Descripcion)
-                    </th>
-                    <th>Acciones</th>
-                </tr>
-
-                <tr>
-                    <td>
-                        @Html.DisplayFor(model => model.OpcionA.Correcta)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => model.OpcionB.Correcta)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => model.OpcionC.Correcta)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => model.OpcionD.Correcta)
-                    </td>
-                </tr>
-
-            </table>
-            <br />
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="submit" class="btn btn-primary">Guardar cambios</button>
-            </div>
-            }
-        </div>
-    </div>
-</div>
 
 <style>
     .fa-pencil-alt {
@@ -319,27 +305,26 @@
         $('#OpcionA_PreguntaId').val(idPregunta);
     }
      $(document).ready(function () {
-        $('rb_custom').attr('checked', '0');
+       $('rb_custom').attr('checked', '0');
      });
-    function CoV(idPregunta, idPrueba) {
-        console.log(idPregunta, idPrueba);
+    function CoV(idPregunta) {
+        console.log(idPregunta,'pregunta');
         $.ajax({
-            url: '@Url.Action("getOpcionesNT", "Preguntas")',
+            url: '/Preguntas/getOpcionesNT',
             type: 'GET',
             async: true,
             data: {
-                'PreguntaId': idPregunta,
-                'PruebaId': idPrueba
+                'id': JSON.stringify(idPregunta)
+                //'PruebaId': idPrueba
             },
             success: function (response) {
+                console.log(response, 'response');
                 if (response > 0) {
-                    getIdPregunta(preguntaId);
-                    $('#createOptionsModal').modal().hide();
-                    $('#detailsOptionModal').modal().show();
+                   // getIdPregunta(idPregunta);
+                    $('#detailsOptionsModal').modal().show();
                 } else {
-                    setIdPregunta(PreguntaId);
+                    setIdPregunta(idPregunta);
                     $('#createOptionsModal').modal().show();
-                    $('#detailsOptionModal').modal().hide();
                 }
             },
             error: function (response) {

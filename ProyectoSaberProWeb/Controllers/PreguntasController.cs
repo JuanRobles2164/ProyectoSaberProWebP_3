@@ -143,11 +143,11 @@ namespace ProyectoSaberProWeb.Controllers
             }
             base.Dispose(disposing);
         }
-
+        [HttpGet]
         public JsonResult getOpcionesNT(int id)
         {
             var YesOrNot = db.opciones.Where(a => a.PreguntaId == id).Count();
-            return Json(YesOrNot);
+            return Json(YesOrNot, JsonRequestBehavior.AllowGet);
         }
     }
 }
