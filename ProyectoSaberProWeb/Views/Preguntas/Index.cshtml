@@ -265,28 +265,16 @@
                     <th>Acciones</th>
                 </tr>
 
-                <tr>
-                    <td>
-                        @Html.DisplayFor(model => model.OpcionA.Correcta)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => model.OpcionB.Correcta)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => model.OpcionC.Correcta)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => model.OpcionD.Correcta)
-                    </td>
+                <tr id="trDetalles">
+                    
                 </tr>
 
             </table>
             <br />
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="submit" class="btn btn-primary">Guardar cambios</button>
             </div>
-            }
+            
         </div>
     </div>
 </div>
@@ -318,32 +306,45 @@
     function setIdPregunta(idPregunta) {
         $('#OpcionA_PreguntaId').val(idPregunta);
     }
-     $(document).ready(function () {
-        $('rb_custom').attr('checked', '0');
-     });
+    function getIdPregunta(PreguntaId) {
+        console.log("Pregunta: " + PreguntaId);
+        $.ajax({
+            url: '@Url.Action("getOpciones", "Preguntas")',
+            type: 'GET',
+            async: true,
+            data: { 'PreguntaId': PreguntaId },
+            success: function (response) {
+                console.log(response);
+                $('#createOptionsModal').modal().show();
+                $('#detailsOptionsModal').modal().hide();
+            },
+            error: function (response) {
+                alert('Error inesperado, comuniquese con el desarrollador');
+                console.log(response);
+            }
+        });
+    }
     function CoV(idPregunta, idPrueba) {
-        console.log(idPregunta, idPrueba);
         $.ajax({
             url: '@Url.Action("getOpcionesNT", "Preguntas")',
             type: 'GET',
             async: true,
-            data: {
-                'PreguntaId': idPregunta,
-                'PruebaId': idPrueba
-            },
+            data: {'PreguntaId': idPregunta},
             success: function (response) {
+                
                 if (response > 0) {
-                    getIdPregunta(preguntaId);
-                    $('#createOptionsModal').modal().hide();
-                    $('#detailsOptionModal').modal().show();
-                } else {
-                    setIdPregunta(PreguntaId);
+                    const OpcionA = document.getElementById('OpcionA_PreguntaId')
+                    OpcionA.value = response;
                     $('#createOptionsModal').modal().show();
-                    $('#detailsOptionModal').modal().hide();
+                    console.log("true "+response);
+                    $('#detailsOptionsModal').modal().hide();
+                } else {
+                    console.log("false "+response);
+                    getIdPregunta(response);
                 }
             },
             error: function (response) {
-                console.log(response);
+                console.log("Error "+response);
             }
         });
     }

@@ -102,12 +102,6 @@ namespace ProyectoSaberProWeb.Models.ViewModels
                                                  .First();
             CompetenciaActualiza.Estado = EstadoCompetencia.Presentada;
             db.SaveChanges();
-            //Consulta las competencias que no ha empezado a responder
-            CompetenciasFaltantes = db.competencias_pruebas.Where(x => x.Estado == EstadoCompetencia.SinResponder 
-                                                                    && x.PruebaId == PruebaId 
-                                                                    && x.UserId == UserId)
-                                        .ToList();
-
         }
         private int PrimeraVez(ApplicationDbContext db, string UserId, int PruebaId)
         {
@@ -158,8 +152,7 @@ namespace ProyectoSaberProWeb.Models.ViewModels
         {
             CompetenciaPresentando = db.competencias.Find(CompetenciaId);
             PruebaPresentando = db.pruebas.Find(PruebaId);
-            ListaPreguntas = db.preguntas.Where(x => x.CompentenciaId == CompetenciaPresentando.ID).ToList();
-            ListaPreguntas = db.preguntas.Where(x => x.CompentenciaId == CompetenciaPresentando.ID).ToList();
+            ListaPreguntas = db.preguntas.Where(x => x.CompentenciaId == CompetenciaPresentando.ID && x.PruebaId == PruebaId).ToList();
             initializeData(db);
         }
     }

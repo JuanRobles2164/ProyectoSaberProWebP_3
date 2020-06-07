@@ -144,10 +144,15 @@ namespace ProyectoSaberProWeb.Controllers
             base.Dispose(disposing);
         }
 
-        public JsonResult getOpcionesNT(int id)
+        public JsonResult getOpcionesNT(int PreguntaId)
         {
-            var YesOrNot = db.opciones.Where(a => a.PreguntaId == id).Count();
-            return Json(YesOrNot);
+            var YesOrNot = db.opciones.Where(a => a.PreguntaId == PreguntaId).Count();
+            return Json(YesOrNot, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult getOpciones(int PreguntaId)
+        {
+            var opciones = db.opciones.Where(x => x.PreguntaId == PreguntaId).ToList();
+            return Json(opciones, JsonRequestBehavior.AllowGet);
         }
     }
 }
