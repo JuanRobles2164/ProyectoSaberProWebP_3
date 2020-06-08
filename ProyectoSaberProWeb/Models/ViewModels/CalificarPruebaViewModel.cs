@@ -13,6 +13,7 @@ namespace ProyectoSaberProWeb.Models.ViewModels
         public Competencia CompetenciaActual { get; set; }
         public Prueba PruebaPresentada { get; set; } = new Prueba();
         public int PuntajeCompetencia { get; set; }
+        public int PuntajePosibleCompetencia { get; set; }
         public int PuntajePosible { get; set; }
         public IEnumerable<Pregunta> ListaPreguntas { get; set; }
         public List<Opcion> OpcionesCorrectas { get; set; } = new List<Opcion>();
@@ -23,16 +24,6 @@ namespace ProyectoSaberProWeb.Models.ViewModels
         /// </summary>
         public void CalcularPuntajePrueba(ApplicationDbContext db, string idUser)
         {
-            var i = OpcionesCorrectas.GetEnumerator();
-            var j = OpcionesRespondidas.GetEnumerator();
-            var k = ListaPreguntas.GetEnumerator();
-            while (i.MoveNext() && j.MoveNext() && k.MoveNext())
-            {
-                if (i.Current.ID == j.Current.OpcionId)
-                {
-                    PuntajePrueba += (int) k.Current.PreguntaPeso;
-                }
-            }
             var user = db.Users.Find(idUser);
             string body = System.IO.File.ReadAllText(HttpContext.Current.Server.MapPath("Estudiante/BodyCuerpoMsg.cshtml"));
             body = body.Replace("#Nombre de la prueba#", PruebaPresentada.Nombre);
@@ -41,34 +32,60 @@ namespace ProyectoSaberProWeb.Models.ViewModels
             //body = "El puntaje de la prueba " + this.PruebaPresentada.Nombre + " fué " + PuntajePrueba + "/" + PuntajePosible
             Util.Utilities.SendEmail(user.Email, body, true);
         }
-        public CalificarPruebaViewModel(ApplicationDbContext db, int? PruebaId , string idUser, int idCompetencia)
-        {
-            
-            Dictionary<int, int> OpcionC = new Dictionary<int, int>();
-            List<int> OR = new List<int>();
-            int OpcionesR;
-            int OpcionesC;
-            CompetenciaActual = db.competencias.Find(idCompetencia);
-            PruebaPresentada = db.pruebas.Find(PruebaId);
-            ListaPreguntas = db.preguntas.Where(a => a.PruebaId == PruebaId && a.CompentenciaId == idCompetencia).ToList();
-            foreach(var p in ListaPreguntas)
+        private void CalcularPuntajeCompetencia(ApplicationDbContext db, string idUser, int idCompetencia, int? PruebaId)
+        { 
+
+            //Todas las preguntas que pertenezcan a una prueba
+            var preguntasPrueba = db.preguntas.Where(x => x.PruebaId == PruebaId).ToList();
+
+            //Todas las preguntas de una prueba y una competencia
+            ListaPreguntas = preguntasPrueba.Where(x => x.CompentenciaId == idCompetencia).ToList();
+
+            //Opciones correctas en una competencia
+            List<Opcion> opcionesCompetencia = new List<Opcion>();
+            //calcula el puntaje posible de la prueba
+            PuntajePosible = 0;
+            PuntajePosible = (int) preguntasPrueba.Sum(x => x.PreguntaPeso);
+            foreach(var i in ListaPreguntas)
             {
-                OpcionesC =  (int) db.opciones.Where(a => a.Correcta == true && a.PreguntaId == p.ID).Select(a => a.ID).First();
-                OpcionesCorrectas.Add(db.opciones.Where(a => a.Correcta == true && a.PreguntaId == p.ID).First());
-                OpcionC.Add(p.ID, OpcionesC);
-                OpcionesR =(int) db.preguntas_estudiantes.Where(a => a.User_Id == idUser && a.PreguntaId == p.ID).Select(a => a.OpcionId).First();
-                OpcionesRespondidas.Add(db.preguntas_estudiantes.Where(a => a.User_Id == idUser && a.PreguntaId == p.ID).First());
-                OR.Add(OpcionesR);
-                foreach (var Or in OR)
+                opcionesCompetencia.Add(db.opciones.Where(x => x.PreguntaId == i.ID && x.Correcta).First());
+            }
+            PuntajePosibleCompetencia = (int) ListaPreguntas.Sum(x => x.PreguntaPeso);
+            foreach (var i in preguntasPrueba)
+            {
+                OpcionesCorrectas.Add(db.opciones.Where(x => x.PreguntaId == i.ID && x.Correcta).First());
+            }
+
+            var respuestasEstudiante = db.preguntas_estudiantes.Where(x => x.User_Id == idUser).ToList();
+            //Puntaje de un alumno para toda la prueba
+            PuntajePrueba = 0;
+            foreach (var i in preguntasPrueba)
+            {
+                var IdOpcionCorrecta = OpcionesCorrectas.Where(x => x.PreguntaId == i.ID).First().ID;
+                var IdOpcionMarcada = respuestasEstudiante.Where(x => x.PreguntaId == i.ID).First().OpcionId;
+
+                if (IdOpcionCorrecta == IdOpcionMarcada)
                 {
-                    int PesoPregunta = (int)db.preguntas.Where(a => a.ID == p.ID).Select(a => a.PreguntaPeso).FirstOrDefault();
-                    if (OpcionC[p.ID] == Or)
-                    {
-                        PuntajeCompetencia += PesoPregunta;
-                    }
-                    PuntajePosible += PesoPregunta;
+                    PuntajePrueba += (int)i.PreguntaPeso;
                 }
             }
+            //Puntaje de un alumno para una competencia
+            PuntajeCompetencia = 0;
+            foreach (var i in ListaPreguntas)
+            {
+                if (OpcionesCorrectas.Where(x => x.PreguntaId == i.ID).First().ID == respuestasEstudiante.Where(x => x.PreguntaId == i.ID).First().OpcionId)
+                {
+                    PuntajeCompetencia += (int) i.PreguntaPeso;
+                }
+            }
+            
+            
+        }
+        public CalificarPruebaViewModel(ApplicationDbContext db, int? PruebaId , string idUser, int idCompetencia)
+        {
+            CalcularPuntajeCompetencia(db, idUser, idCompetencia, PruebaId);
+            CompetenciaActual = db.competencias.Find(idCompetencia);
+            PruebaPresentada = db.pruebas.Find(PruebaId);
             CalcularPuntajePrueba(db, idUser);
         }
     }

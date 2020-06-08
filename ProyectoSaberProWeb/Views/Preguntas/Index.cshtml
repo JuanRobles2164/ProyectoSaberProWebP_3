@@ -158,44 +158,43 @@
                 </div>
                 @using (Html.BeginForm("Create", "Opciones", FormMethod.Post))
                 {
-                    @Html.AntiForgeryToken()
-                    <div class="modal-body">
-
-                        @Html.HiddenFor(model => model.OpcionA.PreguntaId)
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.OpcionA.Descripcion, htmlAttributes: new { @class = "control-label" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.OpcionA.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.OpcionA.Descripcion, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.OpcionA.Correcta, htmlAttributes: new { @class = "control-label" })
-                            <div class="col-md-10">
-                                <div class="checkbox">
-                                    @Html.EditorFor(model => model.OpcionA.Correcta, "true")
-                                    @Html.ValidationMessageFor(model => model.OpcionA.Correcta, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                        <br />
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.OpcionB.Descripcion, htmlAttributes: new { @class = "control-label" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.OpcionB.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.OpcionB.Descripcion, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.OpcionB.Correcta, htmlAttributes: new { @class = "control-label" })
-                            <div class="col-md-10">
-                                <div class="checkbox">
-                                    @Html.EditorFor(model => model.OpcionB.Correcta, "true")
-                                    @Html.ValidationMessageFor(model => model.OpcionB.Correcta, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
+            <div class="modal-body">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.OpcionA.PreguntaId)
+                <div class="form-group">
+                    @Html.LabelFor(model => model.OpcionA.Descripcion, htmlAttributes: new { @class = "control-label" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.OpcionA.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.OpcionA.Descripcion, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.OpcionA.Correcta, htmlAttributes: new { @class = "control-label" })
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.OpcionA.Correcta, "true")
+                            @Html.ValidationMessageFor(model => model.OpcionA.Correcta, "", new { @class = "text-danger" })
                         </div>
                     </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    @Html.LabelFor(model => model.OpcionB.Descripcion, htmlAttributes: new { @class = "control-label" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.OpcionB.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.OpcionB.Descripcion, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.OpcionB.Correcta, htmlAttributes: new { @class = "control-label" })
+                    <div class="col-md-10">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.OpcionB.Correcta, "true")
+                            @Html.ValidationMessageFor(model => model.OpcionB.Correcta, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.OpcionC.Descripcion, htmlAttributes: new { @class = "control-label" })
                         <div class="col-md-10">
@@ -315,8 +314,8 @@
             data: { 'PreguntaId': PreguntaId },
             success: function (response) {
                 console.log(response);
-                $('#createOptionsModal').modal().show();
-                $('#detailsOptionsModal').modal().hide();
+                $('#createOptionsModal').modal('show');
+                $('#detailsOptionsModal').modal('hide');
             },
             error: function (response) {
                 alert('Error inesperado, comuniquese con el desarrollador');
@@ -335,9 +334,9 @@
                 if (response > 0) {
                     const OpcionA = document.getElementById('OpcionA_PreguntaId')
                     OpcionA.value = response;
-                    $('#createOptionsModal').modal().show();
+                    $('#createOptionsModal').modal('show');
                     console.log("true "+response);
-                    $('#detailsOptionsModal').modal().hide();
+                    $('#detailsOptionsModal').modal('hide');
                 } else {
                     console.log("false "+response);
                     getIdPregunta(response);
