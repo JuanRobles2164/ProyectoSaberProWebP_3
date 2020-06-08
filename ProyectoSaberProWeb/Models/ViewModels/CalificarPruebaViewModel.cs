@@ -3,6 +3,7 @@ using ProyectoSaberProWeb.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Web;
 
 namespace ProyectoSaberProWeb.Models.ViewModels
@@ -25,7 +26,7 @@ namespace ProyectoSaberProWeb.Models.ViewModels
         public void CalcularPuntajePrueba(ApplicationDbContext db, string idUser)
         {
             var user = db.Users.Find(idUser);
-            string body = System.IO.File.ReadAllText(HttpContext.Current.Server.MapPath("Estudiante/BodyCuerpoMsg.cshtml"));
+            string body = File.ReadAllText(HttpContext.Current.Server.MapPath("../Views/Estudiante/BodyCuerpoMsg.html"));
             body = body.Replace("#Nombre de la prueba#", PruebaPresentada.Nombre);
             body = body.Replace("#PuntuacionSacada#",Convert.ToString(PuntajePrueba));
             body = body.Replace("#PuntuacionTotal#",Convert.ToString(PuntajePosible));
