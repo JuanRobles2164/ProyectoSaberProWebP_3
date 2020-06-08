@@ -388,6 +388,13 @@ namespace ProyectoSaberProWeb.Controllers
             return listaRoles;
         }
 
+        [AllowAnonymous]
+        public JsonResult consultarCiudadesByDId(int DId)
+        {
+            var ciudades = db.ciudades.Where(x => x.Departamento_Id == DId).ToList();
+            return Json(ciudades, JsonRequestBehavior.AllowGet);
+        }
+
         //
         // GET: /Account/ExternalLoginCallback
         [AllowAnonymous]

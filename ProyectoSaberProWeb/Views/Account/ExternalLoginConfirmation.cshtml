@@ -52,7 +52,7 @@
                                     <div class="form-group row">
                                         <div class="col-sm-6 mb-3 mb-sm-0">
                                             @Html.LabelFor(m => m.Departamento, new { @class = "control-label" })
-                                            @Html.DropDownListFor(m => m.Departamento, new SelectList(ViewBag.Departamentos, "Value", "Text"), new { @class = "form-control" })
+                                            @Html.DropDownListFor(m => m.Departamento, new SelectList(ViewBag.Departamentos, "Value", "Text"), new { @class = "form-control", @id = "lista_departamentos", @onclick="getCiudades()" })
                                             @Html.ValidationMessageFor(m => m.Departamento, "", new { @class = "text-danger" })
                                         </div>
                                         <div class="col-sm-6">
@@ -88,3 +88,24 @@
         </body>
 }
 
+<script type="text/javascript">
+    function getCiudades() {
+        console.log('funciona');
+        const dptoId = $('#lista_departamentos').val();
+        $.ajax({
+            url: '@Url.Action("consultarCiudadesByDId", "Account")',
+            async: true,
+            data: { 'DId': dptoId },
+            success: function (response) {
+                $('#lista_ciudades').empty();
+                response.forEach(element => {
+                    $('#lista_ciudades').append('<option value="'+element.ID+'">'+element.Nombre+'</option>');
+                });
+            },
+            error: function (response) {
+                console.log("Error\n");
+                console.log(response);
+            }
+        });
+    }
+</script>

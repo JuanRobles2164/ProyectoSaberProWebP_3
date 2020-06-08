@@ -90,7 +90,6 @@ namespace ProyectoSaberProWeb.Controllers
                 db.SaveChanges();
             }
             return Json(resultValue);
-            
         }
 
         /*[HttpPost]
