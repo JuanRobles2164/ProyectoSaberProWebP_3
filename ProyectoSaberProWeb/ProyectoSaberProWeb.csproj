@@ -2163,7 +2163,7 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\Estudiante\BodyCuerpoMsg.cshtml" />
+    <Content Include="Views\Estudiante\BodyCuerpoMsg.html" />
     <Content Include="Views\Estudiante\PruebasPresentadas.cshtml" />
   </ItemGroup>
   <ItemGroup>
