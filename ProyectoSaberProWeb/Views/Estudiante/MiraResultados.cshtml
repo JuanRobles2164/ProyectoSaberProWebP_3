@@ -9,7 +9,7 @@
     PUNTAJE PRUEBA: @Model.PuntajePrueba DE @Model.PuntajePosible
 </h3>
 <h3>
-    PUNTAJE DE LA COMPETENCIA: @Model.PuntajeCompetencia
+    PUNTAJE DE LA COMPETENCIA: @Model.PuntajeCompetencia DE @Model.PuntajePosibleCompetencia
 </h3>
 
 <div class="container">
@@ -30,27 +30,26 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    
-                    @foreach(var i in Model.ListaPreguntas)
-                    {
-                    <td>
-                        @i.Descripcion
-                    </td>
-                    <td>
-                        @foreach (var j in Model.OpcionesCorrectas.Where(x => x.PreguntaId == i.ID))
-                        {
-                            @j.ID
-                        }
-                    </td>
-                    <td>
-                        @foreach (var k in Model.OpcionesRespondidas.Where(x => x.PreguntaId == i.ID))
-                        {
-                            @k.ID
-                        }
-                    </td>
-                    }
-                </tr>
+                @foreach (var i in Model.ListaPreguntas)
+                {
+                    <tr>
+                        <td>
+                            @i.Descripcion
+                        </td>
+                        <td>
+                            @foreach (var j in Model.OpcionesCorrectas.Where(x => x.PreguntaId == i.ID))
+                            {
+                                @j.Descripcion
+                            }
+                        </td>
+                        <td>
+                            @foreach (var k in Model.OpcionesMarcadasLabel.Where(x => x.Value.PreguntaId == i.ID))
+                            {
+                                @k.Value.Descripcion
+                            }
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>

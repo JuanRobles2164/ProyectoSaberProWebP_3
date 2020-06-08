@@ -19,6 +19,7 @@ namespace ProyectoSaberProWeb.Models.ViewModels
         public IEnumerable<Pregunta> ListaPreguntas { get; set; }
         public List<Opcion> OpcionesCorrectas { get; set; } = new List<Opcion>();
         public List<Pregunta_Estudiante> OpcionesRespondidas { get; set; } = new List<Pregunta_Estudiante>();
+        public Dictionary<int, Opcion> OpcionesMarcadasLabel { get; set; } = new Dictionary<int, Opcion>();
 
         /// <summary>
         /// Diccionario para saber si el estudiante respondio correctamente la pregunta Dictionary <int (pregunta), int (opcion)>
@@ -26,7 +27,7 @@ namespace ProyectoSaberProWeb.Models.ViewModels
         public void CalcularPuntajePrueba(ApplicationDbContext db, string idUser)
         {
             var user = db.Users.Find(idUser);
-            string body = File.ReadAllText(HttpContext.Current.Server.MapPath("../Views/Estudiante/BodyCuerpoMsg.html"));
+            string body = File.ReadAllText(HttpContext.Current.Server.MapPath("~/Views/Estudiante/BodyCuerpoMsg.html"));
             body = body.Replace("#Nombre de la prueba#", PruebaPresentada.Nombre);
             body = body.Replace("#PuntuacionSacada#",Convert.ToString(PuntajePrueba));
             body = body.Replace("#PuntuacionTotal#",Convert.ToString(PuntajePosible));
@@ -58,6 +59,7 @@ namespace ProyectoSaberProWeb.Models.ViewModels
             }
 
             var respuestasEstudiante = db.preguntas_estudiantes.Where(x => x.User_Id == idUser).ToList();
+            OpcionesRespondidas = respuestasEstudiante;
             //Puntaje de un alumno para toda la prueba
             PuntajePrueba = 0;
             foreach (var i in preguntasPrueba)
@@ -78,6 +80,10 @@ namespace ProyectoSaberProWeb.Models.ViewModels
                 {
                     PuntajeCompetencia += (int) i.PreguntaPeso;
                 }
+            }
+            foreach (var i in OpcionesRespondidas)
+            {
+                OpcionesMarcadasLabel.Add(i.ID, db.opciones.Where(x => x.ID == i.OpcionId).First());
             }
             
             
