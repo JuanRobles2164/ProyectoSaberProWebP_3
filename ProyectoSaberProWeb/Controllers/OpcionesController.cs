@@ -34,14 +34,6 @@ namespace ProyectoSaberProWeb.Controllers
             }
             return Json(opciones);
         }
-
-        // GET: Opciones/Create
-        public ActionResult Create()
-        {
-            ViewBag.PreguntaId = new SelectList(db.preguntas, "ID", "Descripcion");
-            return View();
-        }
-
         // POST: Opciones/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.

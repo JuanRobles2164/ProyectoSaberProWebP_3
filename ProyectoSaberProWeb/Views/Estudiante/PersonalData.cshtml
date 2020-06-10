@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "PersonalData";
+    Layout = "~/Views/Shared/_LayoutAlumno.cshtml";
 }
 
 <h2>PersonalData</h2>
@@ -11,24 +12,56 @@
         @Html.AntiForgeryToken()
 
         @Html.HiddenFor(model => model.UsuarioPerfil.Id)
-
-        @Html.LabelFor(model => model.UsuarioPerfil.Nombres)
-        @Html.EditorFor(model => model.UsuarioPerfil.Nombres)
-
-        @Html.LabelFor(model => model.UsuarioPerfil.Apellidos)
-        @Html.EditorFor(model => model.UsuarioPerfil.Nombres)
-
-        @Html.LabelFor(model => model.UsuarioPerfil.Email)
-        @Html.EditorFor(model => model.UsuarioPerfil.Nombres)
-
-        @Html.LabelFor(model => model.UsuarioPerfil.UserName)
-        @Html.EditorFor(model => model.UsuarioPerfil.UserName)
-
-        @Html.LabelFor(model => model.UsuarioPerfil.Ciudad)
-        @Html.DropDownListFor(model => model.Ciudades, Model.Ciudades)
-
-        <button type="submit">
+        <div class="form-group">
+            @Html.LabelFor(model => model.UsuarioPerfil.Nombres)
+            <div>
+                @Html.TextBoxFor(model => model.UsuarioPerfil.Nombres, new { @class="form-control"})
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.UsuarioPerfil.Apellidos)
+            
+                @Html.TextBoxFor(model => model.UsuarioPerfil.Apellidos, new { @class="form-control"})
+            
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Departamentos)
+            <div class="">
+                @Html.DropDownListFor(model => model.Departamentos, Model.Departamentos, new { @id = "DropDownDepartamentos", @onclick = "getAllCiudades()", @class="form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.UsuarioPerfil.Ciudad)
+            <div>
+                @Html.DropDownListFor(model => model.CiudadId, Model.Ciudades, new { @id = "DropDownCiudades", @class="form-control" })
+            </div>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">
             Editar
         </button>
     }
 </div>
+
+
+<script type="text/javascript">
+    function getAllCiudades() {
+        const dptoId = $('#DropDownDepartamentos').val();
+        $.ajax({
+            url: '@Url.Action("consultarCiudadesByDId", "Account")',
+            async: true,
+            type: 'GET',
+            data: { 'DId': dptoId },
+            success: function (response) {
+                console.log(response);
+                $('#DropDownCiudades').empty();
+                response.forEach(element => {
+                    $('#DropDownCiudades').append("<option value='" + element.ID + "'>" + element.Nombre + "</option>");
+                });
+            },
+            error: function (response) {
+                console.log(response);
+            }
+        });
+        }
+</script>

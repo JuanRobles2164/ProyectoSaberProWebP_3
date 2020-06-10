@@ -85,8 +85,6 @@ namespace ProyectoSaberProWeb.Models.ViewModels
             {
                 OpcionesMarcadasLabel.Add(i.ID, db.opciones.Where(x => x.ID == i.OpcionId).First());
             }
-            
-            
         }
         public CalificarPruebaViewModel(ApplicationDbContext db, int? PruebaId , string idUser, int idCompetencia)
         {

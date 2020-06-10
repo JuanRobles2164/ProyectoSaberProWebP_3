@@ -16,7 +16,7 @@ using Microsoft.Owin.Security;
 
 namespace ProyectoSaberProWeb.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Administrador")]
     public class AdministradorController : Controller
     {
 
@@ -190,13 +190,12 @@ namespace ProyectoSaberProWeb.Controllers
         [HttpPost]
         public ActionResult PersonalData(PersonalDataViewModel pdvm)
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(pdvm).State = System.Data.Entity.EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(pdvm);
+            var user = db.Users.Find(User.Identity.GetUserId());
+            user.Nombres = pdvm.UsuarioPerfil.Nombres;
+            user.Apellidos = pdvm.UsuarioPerfil.Apellidos;
+            user.Ciudad_Id = pdvm.CiudadId;
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
